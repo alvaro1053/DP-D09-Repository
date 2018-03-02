@@ -44,7 +44,16 @@ public class Rende extends DomainEntity {
 	private Collection<Comment>			comments;
 	private List<Question>				questions;
 	private User						user;
+	private Collection<Request>			request;
 
+	@OneToMany(mappedBy = "rende")
+	public Collection<Request> getRequest() {
+		return request;
+	}
+
+	public void setRequest(Collection<Request> request) {
+		this.request = request;
+	}
 
 	@NotNull
 	@Valid
