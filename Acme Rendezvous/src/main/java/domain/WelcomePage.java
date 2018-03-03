@@ -12,11 +12,9 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class WelcomePage extends DomainEntity {
 	
-	private String			englishName;
-	
-	private String			spanishName;
+	private String			name;
 
-	private String			Banner;
+	private String			banner;
 
 	private String			englishWelcome;
 
@@ -25,32 +23,23 @@ public class WelcomePage extends DomainEntity {
 	
 	
 	@NotBlank
-	public String getEnglishName() {
-		return englishName;
+	public String getName() {
+		return name;
 	}
 
-	public void setEnglishName(String englishName) {
-		this.englishName = englishName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	
-	@NotBlank
-	public String getSpanishName() {
-		return spanishName;
-	}
-
-	public void setSpanishName(String spanishName) {
-		this.spanishName = spanishName;
-	}
 
 	@NotBlank
 	@URL
 	public String getBanner() {
-		return Banner;
+		return banner;
 	}
 
 	public void setBanner(String banner) {
-		Banner = banner;
+		this.banner = banner;
 	}
 
 	@NotBlank

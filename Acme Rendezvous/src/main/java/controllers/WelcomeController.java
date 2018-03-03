@@ -13,6 +13,7 @@ package controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,29 +37,27 @@ public class WelcomeController extends AbstractController {
 
 	@RequestMapping(value = "/index")
 
-	public ModelAndView index(@RequestParam(required = false, value = "language", defaultValue = "en") final String language) {
+	public ModelAndView index(@CookieValue(value = "language")String cookieValue) {
 
 		ModelAndView result;
 
 		final String welcomeMessage;
-		final String welcomeName;
+		final String name;
 
 
 
-		if (language.endsWith("s")){
+		if (cookieValue.endsWith("s")){
 			welcomeMessage = this.welcomeService.find().getSpanishWelcome();
-			welcomeName	   = this.welcomeService.find().getSpanishName();
 		}else{
 			welcomeMessage = this.welcomeService.find().getEnglishWelcome();
-			welcomeName	   = this.welcomeService.find().getEnglishName();
 		}
 		
 		
-		
+		name = this.welcomeService.find().getName();
 
 		result = new ModelAndView("welcome/index");
 		result.addObject("welcomeMessage", welcomeMessage);
-		result.addObject("welcomeName", welcomeName);
+		result.addObject("name", name);
 
 		return result;
 

@@ -46,26 +46,11 @@
 	<br />
 	<br />
 	
-
-
-
-	<form:label path="englishName">
-		<spring:message code="welcome.englishName" />:
+	<form:label path="name">
+		<spring:message code="welcome.name" />:
 	</form:label>
-	<form:textarea path="englishName" />
-	<form:errors cssClass="error" path="englishName" />
-	<br />
-	<br />
-
-
-
-
-
-	<form:label path="spanishName">
-		<spring:message code="welcome.spanishName" />:
-	</form:label>
-	<form:textarea path="spanishName" />
-	<form:errors cssClass="error" path="spanishName" />
+	<form:textarea path="name" />
+	<form:errors cssClass="error" path="name" />
 	<br />
 	<br />
 

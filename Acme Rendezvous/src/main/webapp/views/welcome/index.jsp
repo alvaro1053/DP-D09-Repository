@@ -17,7 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
-<h2><jstl:out value="${welcomeName}"/></h2>
+<h2><jstl:out value="${name}"/></h2>
 <br/>
 <p class="welcome"><jstl:out value="${welcomeMessage}"/></p>
 

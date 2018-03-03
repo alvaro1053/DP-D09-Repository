@@ -20,17 +20,7 @@
 
 <div>
 	<ul id="jMenu">
-		<!-- Do not forget the "fNiv" class for the first level links !! -->
-		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="dashboard/admin/display.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
-						
-				</ul>
-			</li>
-		</security:authorize>
-		
+		<!-- Do not forget the "fNiv" class for the first level links !! -->	
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="rende/list.do"><spring:message code="master.page.rendeList" /></a></li>
 		</security:authorize>
@@ -71,7 +61,6 @@
 		
 		<security:authorize access="hasRole('ADMIN')">
 		<li><a class="fNiv" href="user/admin/list.do"><spring:message code="master.page.userList" /></a></li>
-		<li><a class="fNiv" href="welcome/admin/customisation.do"><spring:message code="master.page.adminWelcome" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
@@ -88,6 +77,10 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
+					<security:authorize access="hasRole('ADMIN')">
+						<li><a href="dashboard/admin/display.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
+						<li><a href="welcome/admin/customisation.do"><spring:message code="master.page.adminWelcome" /></a></li>
+					</security:authorize>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
