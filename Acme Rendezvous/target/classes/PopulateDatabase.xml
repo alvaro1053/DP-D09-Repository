@@ -808,7 +808,14 @@
 
 	
 	
+	<bean class="domain.WelcomePage" id="welcomePage">
+	<property name="englishName" value="Adventure meetups" />
+	<property name="spanishName" value="Hora de aventuras" />
+	<property name="englishWelcome" value="Your place to organise your adventure meetups!" />
+	<property name="spanishWelcome" value="Tu sitio para organizar quedadas de aventura" />
+	<property name="banner" value="https://i.imgur.com/mz4KOzY.png"/>
 	
+	</bean>
 	
 	
 	

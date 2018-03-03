@@ -15,7 +15,7 @@
 
 
 <div>
-	<a href="/Acme-Rendezvous"><img src="images/logo.png" alt="Sample Co., Inc." /></a>
+	<a href="/Acme-Rendezvous"><img src="${bannerWelcome}" alt="Sample Co., Inc." /></a>
 </div>
 
 <div>
@@ -71,6 +71,7 @@
 		
 		<security:authorize access="hasRole('ADMIN')">
 		<li><a class="fNiv" href="user/admin/list.do"><spring:message code="master.page.userList" /></a></li>
+		<li><a class="fNiv" href="welcome/admin/customisation.do"><spring:message code="master.page.adminWelcome" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">

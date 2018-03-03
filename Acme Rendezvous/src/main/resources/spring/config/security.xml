@@ -83,8 +83,8 @@
 		<security:intercept-url pattern="/question/list.do" access="permitAll" /> 
 		
 		
-
-		
+		<!-- Acme Rendezvous Customization welcome -->
+		<security:intercept-url pattern="/welcome/admin/**" access="hasRole('ADMIN')" /> 
 	
 
 

@@ -17,20 +17,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
-<security:authorize access="hasRole('USER')">
+<h2><jstl:out value="${welcomeName}"/></h2>
+<br/>
+<p class="welcome"><jstl:out value="${welcomeMessage}"/></p>
 
-<p class="welcome"><spring:message code="welcome.greeting.prefix" /> <spring:message code="welcome.greeting.again" /> <spring:message code="welcome.greeting.suffix" /></p>
-
-</security:authorize>
-
-<security:authorize access="hasRole('ADMIN')">
-
-<p class="welcome"><spring:message code="welcome.greeting.prefix" /> <spring:message code="welcome.greeting.admin" /></p>
-
-</security:authorize>
-
-<security:authorize access="isAnonymous()">
-
-<p class="welcome"><spring:message code="welcome.greeting.prefix" /> <spring:message code="welcome.greeting.suffix" /></p>
-
-</security:authorize>

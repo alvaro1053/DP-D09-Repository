@@ -60,7 +60,7 @@ public class Category extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToMany(mappedBy = "service")
+	@OneToMany(mappedBy = "category")
 	public Collection<Service> getServices() {
 		return services;
 	}

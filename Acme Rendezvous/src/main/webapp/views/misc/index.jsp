@@ -17,12 +17,4 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
-<security:authorize access="hasRole('USER')">
-	<jsp:forward page="/rende/user/list.do" />
-</security:authorize>
-<security:authorize access="hasRole('ADMIN')">
-	<jsp:forward page="/rende/admin/list.do" />
-</security:authorize>
-<security:authorize access="isAnonymous()">
-	<jsp:forward page="/rende/list.do" />
-</security:authorize>
+<jsp:forward page="/welcome/index.do" />
