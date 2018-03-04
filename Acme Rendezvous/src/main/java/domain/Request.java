@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Request extends DomainEntity {
 
 	private String						comment;
-	private String						creditCard;
+	private CreditCard					creditCard;
 	private Rende 						rende;
 	private Service 					service;
 	
@@ -33,11 +33,11 @@ public class Request extends DomainEntity {
 	}
 	
 	@NotNull
-	@CreditCardNumber
-	public String getCreditCard() {
+	@Valid
+	public CreditCard getCreditCard() {
 		return creditCard;
 	}
-	public void setCreditCard(String creditCard) {
+	public void setCreditCard(CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
 	
@@ -52,7 +52,7 @@ public class Request extends DomainEntity {
 	}
 	
 	@NotNull
-	@OneToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Service getService() {
 		return service;
 	}

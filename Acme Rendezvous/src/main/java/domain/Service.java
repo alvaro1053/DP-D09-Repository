@@ -2,10 +2,13 @@
 package domain;
 
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -24,7 +27,7 @@ public class Service extends DomainEntity {
 	private Boolean						isDeleted;
 	private Manager 					manager;
 	private Category 					category;
-	private Request						request;
+	private Collection<Request>			request;
 	
 	
 	
@@ -79,13 +82,15 @@ public class Service extends DomainEntity {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
-	@OneToOne(optional = false)
-	public Request getRequest() {
+	@Valid
+	@OneToMany
+	public Collection<Request> getRequest() {
 		return request;
 	}
-	public void setRequest(Request request) {
+	public void setRequest(Collection<Request> request) {
 		this.request = request;
 	}
+	
+	
 
 }
