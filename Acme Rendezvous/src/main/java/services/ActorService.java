@@ -27,6 +27,8 @@ public class ActorService {
 
 	@Autowired
 	private AdminService	adminService;
+	@Autowired
+	private ManagerService	managerService;
 
 
 	// Constructors
@@ -46,6 +48,8 @@ public class ActorService {
 			result = this.userService.findOne(actorId);
 			if (result == null)
 				result = this.adminService.findOne(actorId);
+				if(result == null)
+					result = this.managerService.findOne(actorId);
 		}
 		return result;
 	}
