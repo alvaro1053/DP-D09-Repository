@@ -88,6 +88,9 @@
 		
 		<!-- Acme Rendezvous Services -->
 		<security:intercept-url pattern="/service/list.do" access="hasAnyRole('ADMIN','USER','MANAGER')" /> 
+		
+		<!-- Acme Rendezvous Categories -->
+		<security:intercept-url pattern="/admin/list.do" access="hasRole('ADMIN')" /> 
 
 
 		<security:form-login 

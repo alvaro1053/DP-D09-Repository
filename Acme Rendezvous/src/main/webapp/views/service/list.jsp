@@ -15,7 +15,13 @@
 	
 <display:table pagesize="5" class="displaytag" 
 	name="services" requestURI="service/list.do" id="row">
-		
+<!--  	
+	<select name="category">
+        <c:forEach var="item" items="${dept}">
+           <option value="${item.key}">${item.value}</option>
+        </c:forEach>
+     </select>
+-->		
 	<!-- Esta es una forma provisional (NIVEL C)  -->
 	<security:authorize access="hasRole('MANAGER')">
 		<display:column>

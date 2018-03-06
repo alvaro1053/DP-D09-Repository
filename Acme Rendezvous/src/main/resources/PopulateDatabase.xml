@@ -1043,12 +1043,37 @@
 		
 		
 		<!-- Categories -->
-			<!-- Category1 -->
+			<!-- Category1 -->		
 		<bean class="domain.Category" id="category1">
-		<property name="name" value="Cleanup "/>
-		<property name="description" value="Services about the cleaning"/>
+		<property name="name" value="CATEGORY" />	
+		<property name="description" value="ROOT CATEGORY"/>
+		
 		<property name="parentCategories">
 		<list>
+		</list>
+		</property>
+	
+		<property name="childCategories">
+		<list>
+		<ref bean="category2" />
+		<ref bean="category3"/>
+		</list>
+		</property>
+		<property name="services">
+		<list>
+		</list>
+		</property>
+		</bean>		
+		
+		
+			<!-- Category2 -->
+		<bean class="domain.Category" id="category2">
+		<property name="name" value="Cleanup "/>
+		<property name="description" value="Services about the cleaning"/>
+		
+		<property name="parentCategories">
+		<list>
+		<ref bean="category1" />
 		</list>
 		</property>
 		
@@ -1066,18 +1091,19 @@
 		
 		</bean>
 		
-					<!-- Category2 -->
-		<bean class="domain.Category" id="category2">
+					<!-- Category3 -->
+		<bean class="domain.Category" id="category3">
 		<property name="name" value="Cookery"/>
 		<property name="description" value="Services about the cookery"/>
 		<property name="parentCategories">
 		<list>
+		<ref bean="category1" />
 		</list>
 		</property>
 		
 		<property name="childCategories">
 		<list>
-		<ref bean="category3"/>
+		<ref bean="category4"/>
 		</list>
 		</property>
 		
@@ -1090,14 +1116,14 @@
 		
 		</bean>
 		
-					<!-- Category3 -->
-		<bean class="domain.Category" id="category3">
+					<!-- Category4 -->
+		<bean class="domain.Category" id="category4">
 		<property name="name" value="Desserts"/>
 		<property name="description" value="Services about desserts"/>
 		
 		<property name="parentCategories">
 		<list>
-		<ref bean="category2"/>
+		<ref bean="category3"/>
 		</list>
 		</property>
 		
