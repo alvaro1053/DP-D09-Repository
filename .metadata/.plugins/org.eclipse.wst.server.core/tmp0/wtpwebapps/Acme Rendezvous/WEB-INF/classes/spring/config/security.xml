@@ -85,7 +85,13 @@
 		
 		<!-- Acme Rendezvous Customization welcome -->
 		<security:intercept-url pattern="/welcome/admin/**" access="hasRole('ADMIN')" /> 
-	
+		
+		<!-- Acme Rendezvous Services -->
+		<security:intercept-url pattern="/service/list.do" access="hasAnyRole('ADMIN','USER','MANAGER')" /> 
+		<!-- Acme Rendezvous Request -->
+		<security:intercept-url pattern="/request/user/list.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/request/user/create.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/request/manager/list.do" access="hasRole('MANAGER')" /> 
 
 
 		<security:form-login 

@@ -40,6 +40,12 @@
 		<bean class="converters.StringToQuestionConverter" />
 		<bean class="converters.QuestionToStringConverter" />
 		
+		<bean class="converters.StringToRequestConverter" />
+		<bean class="converters.RequestToStringConverter" />
+		
+		<bean class="converters.StringToServiceConverter" />
+		<bean class="converters.ServiceToStringConverter" />
+		
 	</util:list>
 	
 </beans>

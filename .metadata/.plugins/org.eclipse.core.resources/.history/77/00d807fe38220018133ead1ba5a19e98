@@ -1,0 +1,153 @@
+
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.omg.CORBA.Principal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.validation.Validator;
+
+import repositories.RequestRepository;
+import domain.Actor;
+import domain.Admin;
+import domain.CreditCard;
+import domain.Manager;
+import domain.Request;
+import domain.Rende;
+import domain.User;
+
+@Service
+@Transactional
+public class RequestService {
+
+	// Managed Repository
+	@Autowired
+	private RequestRepository		requestRepository;
+
+	// Supporting Repository
+	@Autowired
+	private UserService				userService;
+
+	@Autowired
+	private ActorService			actorService;
+	
+	@Autowired
+	private ManagerService			managerService;
+
+	// Constructors
+	public RequestService() {
+		super();
+	}
+
+	// Simple CRUD methods
+	public Request create() {
+		User principal;
+		Request request;
+		principal = this.userService.findByPrincipal();
+		Assert.notNull(principal);
+
+		request = new Request();
+
+		return request;
+	}
+
+	public Request save(final Request request) {
+		User principal;
+		Request result;
+		List<Request> updated,updated2;
+
+		Assert.notNull(request);
+
+		principal = this.userService.findByPrincipal();
+
+		Assert.notNull(principal);
+
+		result = this.requestRepository.save(request);
+		
+		Rende rende = result.getRende();
+		final Collection<Request> requests = rende.getRequest();
+		updated = new ArrayList<Request>(requests);
+		updated.add(result);
+		rende.setRequest(updated);
+		
+		domain.Service service = result.getService();
+		Collection<Request> requests2 = service.getRequest();
+		updated2 = new ArrayList<Request>(requests2);
+		updated2.add(result);
+		service.setRequest(updated2);
+
+		return result;
+	}
+
+	public void delete(final Request request) {
+		Assert.notNull(request);
+		List<Request> updated,updated2;
+		this.userService.findByPrincipal();
+		
+		
+
+		final Rende rende = request.getRende();
+		final Collection<Request> requests = rende.getRequest();
+		updated = new ArrayList<Request>(requests);
+		updated.remove(request);
+		rende.setRequest(updated);
+		
+		domain.Service service = request.getService();
+		Collection<Request> requests2 = service.getRequest();
+		updated2 = new ArrayList<Request>(requests2);
+		updated2.remove(request);
+		service.setRequest(updated2);
+		
+
+		this.requestRepository.delete(request);
+	}
+	
+
+	public Request findOne(final int id) {
+		final Actor principal = this.actorService.findByPrincipal();
+		final Request res = this.requestRepository.findOne(id);
+		if (principal instanceof User)
+			Assert.isTrue(((User) principal).getRendes().contains(res.getRende()) || ((User) principal).getrSVPS().contains(res.getRende()) || principal instanceof Admin);
+		return res;
+	}
+
+	public Collection<Request> findByUserId(int id){
+		User user = this.userService.findByPrincipal();
+		Assert.notNull(user);
+		Collection<Request> res = this.requestRepository.selectByUserId(id);
+		return res;
+	}
+	
+	public Collection<Request> findByManagerId(int id){
+		Manager manager = this.managerService.findByPrincipal();
+		Assert.notNull(manager);
+		Collection<Request> res = this.requestRepository.selectByManagerId(id);
+		return res;
+	}
+	public CreditCard reconstructCreditCard(String cookie){
+		String[] creditCard= cookie.split(".",6);
+		String holder = creditCard[0];
+		String brand = creditCard[1];
+		String number = creditCard[2];
+		Integer expirationMonth = Integer.parseInt(creditCard[3]);
+		Integer expirationYear = Integer.parseInt(creditCard[4]);
+		Integer CVV = Integer.parseInt(creditCard[5]);
+		
+		CreditCard creditCard2 = new CreditCard();
+		creditCard2.setHolderName(holder);
+		creditCard2.setBrandName(brand);
+		creditCard2.setNumber(number);
+		creditCard2.setExpirationMonth(expirationMonth);
+		creditCard2.setExpirationYear(expirationYear);
+		creditCard2.setCVV(CVV);
+		
+		
+		return creditCard2;
+	}
+	
+}

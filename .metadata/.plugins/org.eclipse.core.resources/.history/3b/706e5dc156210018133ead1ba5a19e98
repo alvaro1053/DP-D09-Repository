@@ -1,0 +1,79 @@
+
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+
+<security:authorize access="hasRole('USER')" var="isUser"/>
+<jstl:choose>
+<jstl:when test="${isUser }">
+
+<form:form action="service/user/request.do" modelAttribute="request">
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="service" />
+	
+	
+	
+<fieldset>
+ <legend><spring:message code="service.creditCard" /></legend>
+<spring:message code="service.creditCard.holder.name" var="holder"  />
+<acme:textbox code="${holder}" path="request.creditCard.holderName"/>
+
+<spring:message code="service.creditCard.brand.name" var="brand"  />
+<acme:textbox code="${brand}" path="request.creditCard.holderName"/>
+
+<spring:message code="service.creditCard.number" var="creditCardNumber"  />
+<acme:textbox code="${creditCardNumber}" path="request.creditCard.number"/>
+
+<spring:message code="service.creditCard.number" var="creditCardNumber"  />
+<acme:textbox code="${creditCardNumber}" path="request.creditCard.number"/>
+
+<spring:message code="service.creditCard.expirationMonth" var="expirationMonth"  />
+<acme:textbox code="${expirationMonth}" path="request.creditCard.expirationMonth"/>
+
+<spring:message code="service.creditCard.expirationYear" var="expirationYear"  />
+<acme:textbox code="${expirationYear}" path="request.creditCard.expirationYear"/>
+
+<spring:message code="service.creditCard.CVV" var="CVV"  />
+<acme:textbox code="${CVV}" path="request.creditCard.CVV"/>
+
+
+</fieldset>
+	
+
+
+
+	<spring:message code="service.save" var="saveservice"  />
+	<spring:message code="service.delete" var="deleteservice"  />
+	<spring:message code="service.cancel" var="cancelservice"  />
+	<spring:message code="service.confirm" var="confirmservice"  />
+	
+	
+	<input type="submit" name="save"
+		value="${saveservice}" />&nbsp; 
+<security:authorize access="hasRole('ADMIN')">
+	<jstl:if test="${serviceForm.id != 0}">
+  	<input type="submit" name="delete" value="${deleteservice}"
+   		onclick="return confirm('${confirmservice}')" />&nbsp;
+	</jstl:if>
+ </security:authorize>
+
+	<input type="button" name="cancel"
+		value="${cancelservice}"
+		onclick="javascript: relativeRedir('service/user/list.do?rendeId=${serviceForm.rende}');" />
+	<br />
+</form:form>
+</jstl:when>
+ <jstl:otherwise>
+ <spring:message code="service.NoUser" />
+</jstl:otherwise>
+</jstl:choose>

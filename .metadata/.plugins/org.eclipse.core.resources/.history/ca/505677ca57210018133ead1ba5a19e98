@@ -1,0 +1,86 @@
+request.name   					= Nombre
+request.description   			= Descripción
+request.moment   					= Momento
+request.user						= Usuario
+request.format     				= {0,date,dd/MM/yyyy HH:mm} 
+
+request.edit 						= Editar requestzvous
+request.list   					= Lista de requestzvous
+
+request.save    					= Guardar
+request.cancel    				= Cancelar
+request.delete					= Eliminar
+request.confirm					= ¿Seguro que desea eliminar la requestzvous?
+
+request.newRende					= Crear nueva Rendezvous
+request.choose.rende            = Rendezvous para elegir
+
+request.commit.error   			= No se puede realizar la operación
+request.commit.ok   				= Operación realizada con éxito
+request.unauthorizedAccess.message  = Usted no tiene permiso para acceder a esta página
+request.nopermission  			= ¡No tiene permiso para editar esta Rendezvous!
+request.comments          		= Comentarios
+request.questions       			= Preguntas
+request.linked                    = Enlazados
+request.picture           		= Imagen
+request.coordenates               = Coordenadas
+request.coordenates.latitude      = Latitud
+request.coordenates.longitude     = Longitud
+request.adultOnly                 = Solo adultos
+request.creator                   = Creador
+
+
+request.isDraft					= Modo borrador
+
+request.rsvp						= RSVP
+request.successful				= Su RSVP ha sido REGISTRADA satisfactoriamente
+request.successfullyCancelled		= Su RSVP ha sido CANCELADA satisfactoriamente
+
+
+request.isDraft					= Modo borrador
+request.filter.creator            = Mis requestzvous
+request.filter.RZVP               = Mis RSVPs
+request.choose                    = Elegir
+request.all                       = Mostrar todo
+request.momentPattern             = dd/MM/yyyy HH:mm
+request.empty                     = No hay nada para mostrar
+request.attendants                = Asistentes
+request.permision              	= No tienes permisos para ver esto.
+request.display                   = Mostrar
+request.announcement 				= Anuncios
+
+
+request.expired 					= Expirados
+request.info						= Información
+
+request.passed					= El requestzvous ha expirado
+
+request.listDeleted				= Borrada
+
+request.isDeleted					= La requestzvous actual se encuentra eliminada
+request.deleted					= Has eliminado la requestzvous
+
+request.question.remove           = Eliminar pregunta
+request.questions                 = Preguntas
+request.question                  = Pregunta
+request.question.add              = Añadir pregunta
+
+request.yes                       = Sí
+request.no                        = No
+
+request.cancelRSVP  				= Cancelar RSVP
+
+request.moment.error 				= La fecha no puede ser en pasado
+
+request.cannot.underage			= Tienes que tener +18 años
+
+request.creditCard             = Tarjeta de crédito
+request.creditCard.holder.name = Nombre del propietario
+request.creditCard.brand.name  = Nombre de la marca
+request.creditCard.number.name = Número de la tarjeta de crédito
+request.creditCard.expirationMonth.name = Mes de caducidad
+request.creditCard.expirationYear.name = Año de caducidad
+request.creditCard.CVV.name = CVV
+
+
+request.NoUser                 = Debes ser un Usuario para pedir un Servicio

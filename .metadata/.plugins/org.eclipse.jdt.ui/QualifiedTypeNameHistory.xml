@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="domain.Request"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+<fullyQualifiedTypeName name="domain.Service"/>
+<fullyQualifiedTypeName name="java.lang.Throwable"/>
+<fullyQualifiedTypeName name="domain.User"/>
+<fullyQualifiedTypeName name="services.RequestService"/>
+<fullyQualifiedTypeName name="org.omg.CORBA.Principal"/>
+<fullyQualifiedTypeName name="javax.naming.spi.DirStateFactory.Result"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
+<fullyQualifiedTypeName name="javax.servlet.http.Cookie"/>
+<fullyQualifiedTypeName name="domain.CreditCard"/>
+<fullyQualifiedTypeName name="javax.validation.constraints.Digits"/>
+<fullyQualifiedTypeName name="javax.validation.constraints.Pattern"/>
+</qualifiedTypeNameHistroy>

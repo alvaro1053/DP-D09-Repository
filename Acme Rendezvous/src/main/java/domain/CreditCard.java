@@ -3,7 +3,9 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
@@ -16,9 +18,9 @@ public class CreditCard {
 	private String	holderName;
 	private String	brandName;
 	private String	number;
-	private int		expirationMonth;
-	private int		expirationYear;
-	private int		CVV;
+	private Integer		expirationMonth;
+	private Integer		expirationYear;
+	private Integer		CVV;
 
 
 	@NotBlank
@@ -38,6 +40,7 @@ public class CreditCard {
 
 	@NotBlank
 	@CreditCardNumber
+	@Pattern(regexp= "^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35/d{3})/d{11})$")
 	public String getNumber() {
 		return this.number;
 	}
@@ -46,26 +49,26 @@ public class CreditCard {
 	}
 	@NotNull
 	@Range(min = 1, max = 12)
-	public int getExpirationMonth() {
+	public Integer getExpirationMonth() {
 		return this.expirationMonth;
 	}
-	public void setExpirationMonth(final int expirationMonth) {
+	public void setExpirationMonth(final Integer expirationMonth) {
 		this.expirationMonth = expirationMonth;
 	}
 	@NotNull
 	@Range(min = 10, max = 99)
-	public int getExpirationYear() {
+	public Integer getExpirationYear() {
 		return this.expirationYear;
 	}
-	public void setExpirationYear(final int expirationYear) {
+	public void setExpirationYear(final Integer expirationYear) {
 		this.expirationYear = expirationYear;
 	}
 	@NotNull
 	@Range(min = 100, max = 999)
-	public int getCVV() {
+	public Integer getCVV() {
 		return this.CVV;
 	}
-	public void setCVV(final int cVV) {
+	public void setCVV(final Integer cVV) {
 		this.CVV = cVV;
 	}
 }

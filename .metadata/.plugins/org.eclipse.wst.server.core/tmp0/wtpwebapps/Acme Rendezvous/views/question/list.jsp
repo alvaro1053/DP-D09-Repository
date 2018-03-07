@@ -27,7 +27,7 @@
 	<spring:message code="question.delete" var="delete" />
 	<display:column title="${delete}"
 		sortable="false">
- 		<a href="question$/user/delete.do?questionId=${row.id}" onclick="return confirm('${confirmQuestion}')">${delete}</a>
+ 		<a href="question/user/delete.do?questionId=${row.id}" onclick="return confirm('${confirmQuestion}')">${delete}</a>
 	</display:column>
 	</jstl:if>
 	</security:authorize>

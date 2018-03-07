@@ -185,6 +185,12 @@ public final class login_jsp extends org.apache.jasper.runtime.HttpJspBase
               return;
             out.write("\r\n");
             out.write("\t\t\t</a>\r\n");
+            out.write("\t<br />\t\t\r\n");
+            out.write("\t<a href=\"manager/register.do\"> ");
+            if (_jspx_meth_spring_005fmessage_005f5(_jspx_th_form_005fform_005f0, _jspx_page_context, _jspx_push_body_count_form_005fform_005f0))
+              return;
+            out.write("\r\n");
+            out.write("\t\t\t</a>\r\n");
             out.write("\t\r\n");
             out.write("\t\r\n");
             int evalDoAfterBody = _jspx_th_form_005fform_005f0.doAfterBody();
@@ -502,7 +508,7 @@ public final class login_jsp extends org.apache.jasper.runtime.HttpJspBase
     _jspx_th_spring_005fmessage_005f4.setPageContext(_jspx_page_context);
     _jspx_th_spring_005fmessage_005f4.setParent((javax.servlet.jsp.tagext.Tag) _jspx_th_form_005fform_005f0);
     // /views/security/login.jsp(44,29) name = code type = null reqTime = true required = false fragment = false deferredValue = false expectedTypeName = null deferredMethod = false methodSignature = null
-    _jspx_th_spring_005fmessage_005f4.setCode("security.login.regiser");
+    _jspx_th_spring_005fmessage_005f4.setCode("security.login.register.user");
     int[] _jspx_push_body_count_spring_005fmessage_005f4 = new int[] { 0 };
     try {
       int _jspx_eval_spring_005fmessage_005f4 = _jspx_th_spring_005fmessage_005f4.doStartTag();
@@ -516,6 +522,33 @@ public final class login_jsp extends org.apache.jasper.runtime.HttpJspBase
     } finally {
       _jspx_th_spring_005fmessage_005f4.doFinally();
       _005fjspx_005ftagPool_005fspring_005fmessage_0026_005fcode_005fnobody.reuse(_jspx_th_spring_005fmessage_005f4);
+    }
+    return false;
+  }
+
+  private boolean _jspx_meth_spring_005fmessage_005f5(javax.servlet.jsp.tagext.JspTag _jspx_th_form_005fform_005f0, javax.servlet.jsp.PageContext _jspx_page_context, int[] _jspx_push_body_count_form_005fform_005f0)
+          throws java.lang.Throwable {
+    javax.servlet.jsp.PageContext pageContext = _jspx_page_context;
+    javax.servlet.jsp.JspWriter out = _jspx_page_context.getOut();
+    //  spring:message
+    org.springframework.web.servlet.tags.MessageTag _jspx_th_spring_005fmessage_005f5 = (org.springframework.web.servlet.tags.MessageTag) _005fjspx_005ftagPool_005fspring_005fmessage_0026_005fcode_005fnobody.get(org.springframework.web.servlet.tags.MessageTag.class);
+    _jspx_th_spring_005fmessage_005f5.setPageContext(_jspx_page_context);
+    _jspx_th_spring_005fmessage_005f5.setParent((javax.servlet.jsp.tagext.Tag) _jspx_th_form_005fform_005f0);
+    // /views/security/login.jsp(48,32) name = code type = null reqTime = true required = false fragment = false deferredValue = false expectedTypeName = null deferredMethod = false methodSignature = null
+    _jspx_th_spring_005fmessage_005f5.setCode("security.login.register.manager");
+    int[] _jspx_push_body_count_spring_005fmessage_005f5 = new int[] { 0 };
+    try {
+      int _jspx_eval_spring_005fmessage_005f5 = _jspx_th_spring_005fmessage_005f5.doStartTag();
+      if (_jspx_th_spring_005fmessage_005f5.doEndTag() == javax.servlet.jsp.tagext.Tag.SKIP_PAGE) {
+        return true;
+      }
+    } catch (java.lang.Throwable _jspx_exception) {
+      while (_jspx_push_body_count_spring_005fmessage_005f5[0]-- > 0)
+        out = _jspx_page_context.popBody();
+      _jspx_th_spring_005fmessage_005f5.doCatch(_jspx_exception);
+    } finally {
+      _jspx_th_spring_005fmessage_005f5.doFinally();
+      _005fjspx_005ftagPool_005fspring_005fmessage_0026_005fcode_005fnobody.reuse(_jspx_th_spring_005fmessage_005f5);
     }
     return false;
   }

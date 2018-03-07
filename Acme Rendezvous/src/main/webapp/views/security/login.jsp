@@ -42,11 +42,11 @@
 	<br />
 	<br />
 	<a href="user/register.do"> <spring:message
-					code="security.login.regiser.user" />
+					code="security.login.register.user" />
 			</a>
 	<br />		
 	<a href="manager/register.do"> <spring:message
-					code="security.login.regiser.manager" />
+					code="security.login.register.manager" />
 			</a>
 	
 	

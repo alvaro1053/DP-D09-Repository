@@ -1,0 +1,85 @@
+service.name   					= Name
+service.description   			= Description
+service.moment   					= Moment
+service.user						= User
+service.format    			 	= {0,date,yyyy/MM/dd HH:mm}
+
+service.edit 						= Edit servicezvous
+service.list   					= List of servicezvous
+	
+service.save    					= Save
+service.cancel    				= Cancel
+service.delete					= Delete
+service.confirm					= Are you sure you want to delete the servicezvous?
+
+service.newRende					= Create new Rendezvous
+service.choose.rende            = Rendezvous to request
+
+service.commit.error   			= Cannot commit this operation
+service.commit.ok   				= Operation completed succesfully!
+service.unauthorizedAccess.message  = You do not have access to this page
+service.nopermission  			= ¡You do not have permission to edit this Rendezvous!
+service.comments          		= Comments
+service.questions         		= Questions
+service.linked                    = Linked
+service.picture          			= Picture
+service.coordenates               = Coordenates
+service.coordenates.latitude      = Latitude
+service.coordenates.longitude     = Longitude
+service.adultOnly                 = Adult only
+service.creator                   = Creator
+service.announcement 				= Announcements
+
+service.isDraft					= Draft mode
+
+service.expired 					= Expired
+service.info						= Details
+
+service.passed					= The servicezvous has expired
+
+service.rsvp						= RSVP
+service.successful				= Your RSVP has been REGISTERED successfully
+service.successfullyCancelled		= Your RSVP has been CANCELLED successfully
+
+
+service.isDraft					= Draft mode
+service.filter.creator            = My servicezvous
+service.filter.RZVP               = My RSVPs
+service.choose                    = Choose
+service.all                       = Show all
+service.momentPattern             = yyyy/dd/MM/ HH:mm
+service.empty                     = Nothing to show
+service.attendants                = Attendants
+service.permision               	 = You musn't see this.
+service.display                   = Display
+
+service.listDeleted				= Deleted
+
+service.isDeleted					= The current servicezvous is eliminated
+service.deleted					= You have the deleted the servicezvous
+
+service.yes                       = Yes
+service.no                        = No
+
+service.cancelRSVP 				= Cancel RSVP
+
+service.question.remove           = Remove question
+service.questions                 = Questions
+service.question                  = Question
+service.question.add              = Add question
+
+service.moment.error 				= Date cannot be in past
+
+service.cannot.underage			= You have to be over 18 years old
+
+service.cant.cancell          	= You can't cancell if you are the creator of the Rendezvous
+
+service.creditCard             = CreditCard
+service.creditCard.holder.name = Holder name
+service.creditCard.brand.name  = Brand name
+service.creditCard.number.name = CreditCard number
+service.creditCard.expirationMonth.name = Expiration month
+service.creditCard.expirationYear.name = Expiration year
+service.creditCard.CVV.name = CVV
+
+service.NoUser                 = You must be an user to request a Service

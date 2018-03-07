@@ -1,0 +1,124 @@
+
+package services;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+
+import repositories.RequestRepository;
+import domain.Actor;
+import domain.Admin;
+import domain.Request;
+import domain.Rende;
+import domain.User;
+
+@Service
+@Transactional
+public class RequestService {
+
+	// Managed Repository
+	@Autowired
+	private RequestRepository		requestRepository;
+
+	// Supporting Repository
+	@Autowired
+	private UserService				userService;
+
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private Validator				validatorService;
+
+
+	// Constructors
+	public RequestService() {
+		super();
+	}
+
+	// Simple CRUD methods
+	public Request create() {
+		User principal;
+		Request request;
+		principal = this.userService.findByPrincipal();
+		Assert.notNull(principal);
+
+		request = new Request();
+
+		return request;
+	}
+
+	public Request save(final Request request) {
+		User principal;
+		Request result;
+
+		Assert.notNull(request);
+
+		principal = this.userService.findByPrincipal();
+
+		Assert.notNull(principal);
+
+		result = this.requestRepository.save(request);
+
+		return result;
+	}
+
+	public void delete(final Request request) {
+		Assert.notNull(request);
+		List<Request> updated;
+		final Actor principal = this.actorService.findByPrincipal();
+		if (principal instanceof User)
+			Assert.isTrue(((User) principal).getRendes().contains(request.getRende()) || principal instanceof Admin);
+
+		for (final ReplyRequest rc : request.getReplyRequests())
+			this.replyRequestService.delete(rc);
+
+		final Rende rende = request.getRende();
+		final List<Request> requests = rende.getRequests();
+		updated = new ArrayList<Request>(requests);
+		updated.remove(request);
+		rende.setRequests(updated);
+
+		this.requestRepository.delete(request);
+	}
+	public Collection<Request> SelectRepliedByUserId(final int id) {
+		final User principal = this.userService.findByPrincipal();
+		Assert.notNull(principal);
+		final Collection<Request> res = this.requestRepository.repliedByUserId(id);
+		return res;
+	}
+
+	public Request findOne(final int id) {
+		final Actor principal = this.actorService.findByPrincipal();
+		final Request res = this.requestRepository.findOne(id);
+		if (principal instanceof User)
+			Assert.isTrue(((User) principal).getRendes().contains(res.getRende()) || ((User) principal).getrSVPS().contains(res.getRende()) || principal instanceof Admin);
+		return res;
+	}
+
+	public List<ReplyRequest> reconstruct(final ReplyRequestForm replyRequestForm, final BindingResult binding) {
+		final User principal = this.userService.findByPrincipal();
+		List<ReplyRequest> replies = new ArrayList<ReplyRequest>();
+		if (replyRequestForm.getId() == 0) {
+			final List<Request> requests = replyRequestForm.getRequests();
+			replies = replyRequestForm.getReplies();
+
+			for (int i = 0; i < requests.size(); i++) {
+				replies.get(i).setRequest(requests.get(i));
+				replies.get(i).setUser(principal);
+				this.validatorService.validate(replies.get(i), binding);
+
+			}
+
+		}
+
+		return replies;
+	}
+}

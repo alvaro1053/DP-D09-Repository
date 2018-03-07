@@ -1,0 +1,86 @@
+service.name   					= Nombre
+service.description   			= Descripción
+service.moment   					= Momento
+service.user						= Usuario
+service.format     				= {0,date,dd/MM/yyyy HH:mm} 
+
+service.edit 						= Editar servicezvous
+service.list   					= Lista de servicezvous
+
+service.save    					= Guardar
+service.cancel    				= Cancelar
+service.delete					= Eliminar
+service.confirm					= ¿Seguro que desea eliminar la servicezvous?
+
+service.newRende					= Crear nueva Rendezvous
+service.choose.rende            = Rendezvous para elegir
+
+service.commit.error   			= No se puede realizar la operación
+service.commit.ok   				= Operación realizada con éxito
+service.unauthorizedAccess.message  = Usted no tiene permiso para acceder a esta página
+service.nopermission  			= ¡No tiene permiso para editar esta Rendezvous!
+service.comments          		= Comentarios
+service.questions       			= Preguntas
+service.linked                    = Enlazados
+service.picture           		= Imagen
+service.coordenates               = Coordenadas
+service.coordenates.latitude      = Latitud
+service.coordenates.longitude     = Longitud
+service.adultOnly                 = Solo adultos
+service.creator                   = Creador
+
+
+service.isDraft					= Modo borrador
+
+service.rsvp						= RSVP
+service.successful				= Su RSVP ha sido REGISTRADA satisfactoriamente
+service.successfullyCancelled		= Su RSVP ha sido CANCELADA satisfactoriamente
+
+
+service.isDraft					= Modo borrador
+service.filter.creator            = Mis servicezvous
+service.filter.RZVP               = Mis RSVPs
+service.choose                    = Elegir
+service.all                       = Mostrar todo
+service.momentPattern             = dd/MM/yyyy HH:mm
+service.empty                     = No hay nada para mostrar
+service.attendants                = Asistentes
+service.permision              	= No tienes permisos para ver esto.
+service.display                   = Mostrar
+service.announcement 				= Anuncios
+
+
+service.expired 					= Expirados
+service.info						= Información
+
+service.passed					= El servicezvous ha expirado
+
+service.listDeleted				= Borrada
+
+service.isDeleted					= La servicezvous actual se encuentra eliminada
+service.deleted					= Has eliminado la servicezvous
+
+service.question.remove           = Eliminar pregunta
+service.questions                 = Preguntas
+service.question                  = Pregunta
+service.question.add              = Añadir pregunta
+
+service.yes                       = Sí
+service.no                        = No
+
+service.cancelRSVP  				= Cancelar RSVP
+
+service.moment.error 				= La fecha no puede ser en pasado
+
+service.cannot.underage			= Tienes que tener +18 años
+
+service.creditCard             = Tarjeta de crédito
+service.creditCard.holder.name = Nombre del propietario
+service.creditCard.brand.name  = Nombre de la marca
+service.creditCard.number.name = Número de la tarjeta de crédito
+service.creditCard.expirationMonth.name = Mes de caducidad
+service.creditCard.expirationYear.name = Año de caducidad
+service.creditCard.CVV.name = CVV
+
+
+service.NoUser                 = Debes ser un Usuario para pedir un Servicio

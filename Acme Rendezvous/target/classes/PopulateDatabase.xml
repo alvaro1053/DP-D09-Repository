@@ -1121,7 +1121,7 @@
 <bean class="domain.CreditCard" id="creditCard1">
 <property name="holderName" value="Juan Cuesta Sanabria" />
 <property name="brandName" value="MasterCard" />
-<property name="number" value="5220 2777 7103 1876"  />
+<property name="number" value="5220277771031876"  />
 <property name="expirationMonth" value="7" />
 <property name="expirationYear" value="22" />
 <property name="CVV" value="621" />
@@ -1130,7 +1130,7 @@
 <bean class="domain.CreditCard" id="creditCard2">
 <property name="holderName" value="Isabel Cuesta Fernandez" />
 <property name="brandName" value="Visa" />
-<property name="number" value="5632 1524 7854 5969"  />
+<property name="number" value="5632152478545969"  />
 <property name="expirationMonth" value="11" />
 <property name="expirationYear" value="24" />
 <property name="CVV" value="541" />
