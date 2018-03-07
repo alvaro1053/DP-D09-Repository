@@ -49,6 +49,10 @@
 		<li><a class="fNiv" href="announcement/list.do"><spring:message code="master.page.announcementList" /></a></li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('ADMIN')">
+		<li><a class="fNiv" href="category/admin/list.do"><spring:message code="master.page.categoryList" /></a></li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('USER')">
 			<li><a class="fNiv"><spring:message	code="master.page.announcement" /></a>
 				<ul>

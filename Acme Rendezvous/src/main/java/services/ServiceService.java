@@ -95,6 +95,12 @@ public class ServiceService {
 
 	}
 
+	public Collection<domain.Service> findByCategory(final int categoryId){
+		Collection<domain.Service> result;
+		result = this.serviceRepository.findByCategory(categoryId);
+		Assert.notNull(result);
+		return result;
+	}
 
 
 	

@@ -1,3 +1,4 @@
+
 package converters;
 
 import javax.transaction.Transactional;
@@ -8,34 +9,32 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import repositories.ServiceRepository;
-
 import domain.Service;
-
 
 @Component
 @Transactional
-public class StringToServiceConverter implements Converter<String, Service>{
+public class StringToServiceConverter implements Converter<String, Service> {
 
-	
 	@Autowired
-	ServiceRepository serviceRepository;
-	
+	ServiceRepository	serviceRepository;
+
+
 	@Override
-	public Service convert(final String text){
+	public Service convert(final String text) {
 		Service result;
 		int id;
-		
-		try{
-			if(StringUtils.isEmpty(text)){
+
+		try {
+			if (StringUtils.isEmpty(text))
 				result = null;
-			}else{
+			else {
 				id = Integer.valueOf(text);
 				result = this.serviceRepository.findOne(id);
 			}
-		}catch(final Throwable oops){
+		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);
 		}
-		
+
 		return result;
 	}
 }

@@ -92,6 +92,9 @@
 		<security:intercept-url pattern="/request/user/list.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/request/user/create.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/request/manager/list.do" access="hasRole('MANAGER')" /> 
+		
+		<!-- Acme Rendezvous Categories -->
+		<security:intercept-url pattern="/admin/list.do" access="hasRole('ADMIN')" /> 
 
 
 		<security:form-login 

@@ -39,6 +39,10 @@
 		
 		<bean class="converters.StringToQuestionConverter" />
 		<bean class="converters.QuestionToStringConverter" />
+		<bean class="converters.CategoryToStringConverter" />
+		<bean class="converters.StringToCategoryConverter" />
+		<bean class="converters.StringToServiceConverter" />
+		<bean class="converters.ServiceToStringConverter" />
 		
 		<bean class="converters.StringToRequestConverter" />
 		<bean class="converters.RequestToStringConverter" />
