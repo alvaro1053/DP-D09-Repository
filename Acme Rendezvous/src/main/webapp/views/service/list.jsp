@@ -26,7 +26,7 @@
 	<security:authorize access="hasRole('MANAGER')">
 		<display:column>
 			<jstl:if test="${principal.id == row.manager.id && row.isDeleted == false}">
-				<a href="service/manager/edit.do?serviceId=${row.id}"><spring:message code ="service.edit"/></a>
+				<a href="manager/service/edit.do?serviceId=${row.id}"><spring:message code ="service.edit"/></a>
 			</jstl:if>
 		</display:column>
 	</security:authorize>
@@ -35,7 +35,7 @@
 	<security:authorize access="hasRole('ADMIN')">
 		<spring:message code="service.confirm" var="confirmRende"  />
 		<display:column>
-				<a href="service/admin/delete.do?serviceId=${row.id}" onclick="return confirm('${confirmRende}')"><spring:message code ="service.delete" /></a>
+				<a href="admin/service/delete.do?serviceId=${row.id}" onclick="return confirm('${confirmRende}')"><spring:message code ="service.delete" /></a>
 		</display:column>
 	</security:authorize>
 
@@ -55,22 +55,20 @@
 	<display:column title="${picture}" > <img src="${row.picture}"  width="auto" height="200"> </display:column>
 <!-- Info -->
 	<spring:message code="rende.isDeleted" var="isDeleted"/>
-		<display:column title="${info}">
-		<jstl:if test="${row.isDeleted}">
-				<img class="alarmImg" src="images/deleted.png" alt="${isDeleted}" title="${isDeleted}"/>
-			</jstl:if>
-		</display:column>
 		
-		<!-- Request -->
-	<security:authorize access="hasRole('USER')">
-	<spring:message code="service.request" var="request"/>
-		<display:column title="${info}">
-			<a href="request/user/create.do?serviceId=${row.id}" >${request}</a>
-		</display:column>
-		</security:authorize>
+		<jstl:if test="${row.isDeleted}">
+			<display:column title="${info}">
+				<img class="alarmImg" src="images/deleted.png" alt="${isDeleted}" title="${isDeleted}"/>
+			</display:column>
+		</jstl:if>
+		
 	
 	
 </display:table>
+
+
+
+<a href = "manager/service/create.do"><spring:message code = "service.create"/></a>
 
 
 

@@ -57,10 +57,7 @@ public class CategoryService {
 
 	public Collection<Category> findAll() {
 		Collection<Category> result;
-		Admin principal;
-			
-		principal = this.adminService.findByPrincipal();
-		Assert.notNull(principal); 
+
 
 		result = this.categoryRepository.findAll();
 
