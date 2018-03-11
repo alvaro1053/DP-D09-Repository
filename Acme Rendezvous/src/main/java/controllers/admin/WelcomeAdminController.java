@@ -38,6 +38,7 @@ public class WelcomeAdminController extends AbstractController {
 	public ModelAndView customization(){
 		ModelAndView result;
 		final Admin principal = this.adminService.findByPrincipal();
+		Assert.notNull(principal);
 		
 		WelcomePage welcome;
 		

@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.omg.CORBA.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.validation.Validator;
 
 import repositories.RequestRepository;
 import domain.Actor;
@@ -87,7 +85,6 @@ public class RequestService {
 	public void delete(final Request request) {
 		Assert.notNull(request);
 		List<Request> updated,updated2;
-		this.userService.findByPrincipal();
 		
 		
 
@@ -148,6 +145,13 @@ public class RequestService {
 		
 		
 		return creditCard2;
+	}
+
+	public Collection<Request> findByServiceId(final int serviceId) {
+		Collection<Request> result;
+		
+		result = this.requestRepository.findByServiceId(serviceId);
+		return result;
 	}
 	
 }

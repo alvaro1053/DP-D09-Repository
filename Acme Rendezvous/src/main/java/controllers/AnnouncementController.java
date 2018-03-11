@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
 import services.AnnouncementService;
 import services.RendeService;
 import domain.Announcement;
@@ -26,8 +25,6 @@ public class AnnouncementController extends AbstractController {
 	@Autowired
 	RendeService			rendeService;
 
-	@Autowired
-	private ActorService	actorService;
 
 
 	//Constructor

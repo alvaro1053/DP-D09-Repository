@@ -15,7 +15,6 @@ import org.springframework.validation.Validator;
 import repositories.ServiceRepository;
 import domain.Manager;
 import domain.Request;
-import domain.User;
 import forms.ServiceForm;
 
 
@@ -29,10 +28,10 @@ public class ServiceService {
 
 	// Supporting services
 	@Autowired
-	private UserService				userService;
-
-	@Autowired
 	private ManagerService		managerService;
+	
+	@Autowired
+	private RequestService		requestService;
 	
 	@Autowired
 	private Validator validator;
@@ -66,26 +65,33 @@ public class ServiceService {
 
 	// Other business methods
 	public void delete(final domain.Service service) {
-		User principal;
+		Manager principal;
 		Assert.notNull(service);
 		Assert.isTrue(service.getId() != 0);
+		Collection<Request> requestToBeUpdated;
 
-		principal = this.userService.findByPrincipal();
+		principal = this.managerService.findByPrincipal();
 		Assert.notNull(principal);
 
-		Assert.isTrue(this.findByUserId(principal.getId()).contains(service));
+		Assert.isTrue(this.findByManagerId(principal.getId()).contains(service));
 		service.setIsDeleted(true);
+		
+		requestToBeUpdated = this.requestService.findByServiceId(service.getId());
+		
+		for(Request r : requestToBeUpdated){
+			this.requestService.delete(r);
+		}
 
-		this.serviceRepository.save(service);
+		this.serviceRepository.delete(service);
 	}
 
 
 	
-	public Collection<domain.Service> findByUserId(final int id) {
-		User principal;
+	public Collection<domain.Service> findByManagerId(final int id) {
+		Manager principal;
 		Collection<domain.Service> result;
 
-		principal = this.userService.findByPrincipal();
+		principal = this.managerService.findByPrincipal();
 		Assert.notNull(principal);
 		result = this.serviceRepository.selectByManagerId(id);
 

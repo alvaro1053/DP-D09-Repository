@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,8 +42,6 @@ public class ServicesManagerController {
 	@Autowired
 	private CategoryService	categoryService;
 	
-	@Autowired
-	private Validator		validator;
 
 
 
@@ -96,7 +93,7 @@ public class ServicesManagerController {
 		
 	}
 	
-	@RequestMapping(value="/edit", method= RequestMethod.POST)
+	@RequestMapping(value="/edit", method= RequestMethod.POST, params="save")
 	public ModelAndView save(@Valid final ServiceForm serviceForm, final BindingResult binding){
 		ModelAndView result;
 		Service service;
@@ -118,6 +115,32 @@ public class ServicesManagerController {
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(service, "service.commit.error");
 			}
+		return result;
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(final ServiceForm serviceForm){
+		ModelAndView result;
+		Service service;
+		Manager principal;
+		
+		principal = this.managerService.findByPrincipal();
+		service = this.serviceService.findOne(serviceForm.getId());
+		
+		if(service.getManager() != principal){
+			result = new ModelAndView("redirect:/service/list.do");
+		}else{
+			try{
+				this.serviceService.delete(service);
+				result = new ModelAndView("redirect:/service/list.do");
+			}catch(Throwable oops){
+				String message = "service.commit.error";
+				result = this.createEditModelAndView(serviceForm, message);
+			}
+			
+		}
+		
+		
 		return result;
 	}
 
