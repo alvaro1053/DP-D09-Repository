@@ -110,7 +110,7 @@ public final class edit_jsp extends org.apache.jasper.runtime.HttpJspBase
     _jspx_th_form_005fform_005f0.setPageContext(_jspx_page_context);
     _jspx_th_form_005fform_005f0.setParent(null);
     // /views/service/edit.jsp(16,0) name = action type = null reqTime = true required = false fragment = false deferredValue = false expectedTypeName = null deferredMethod = false methodSignature = null
-    _jspx_th_form_005fform_005f0.setAction("manager/service/edit.do");
+    _jspx_th_form_005fform_005f0.setAction("service/manager/edit.do");
     // /views/service/edit.jsp(16,0) name = modelAttribute type = null reqTime = true required = false fragment = false deferredValue = false expectedTypeName = null deferredMethod = false methodSignature = null
     _jspx_th_form_005fform_005f0.setModelAttribute("serviceForm");
     int[] _jspx_push_body_count_form_005fform_005f0 = new int[] { 0 };

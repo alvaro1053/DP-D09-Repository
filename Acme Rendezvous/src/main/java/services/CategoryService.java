@@ -91,7 +91,6 @@ public class CategoryService {
 		Admin principal;
 		Collection<Category> parentCategories;
 		Collection<Category> childCategories;
-//		Boolean isNameUniqueRoot;
 		Category root;
 
 		Assert.notNull(category);
@@ -103,26 +102,9 @@ public class CategoryService {
 		root = this.findRootCategory();
 
 		Assert.isTrue(category.getId() != root.getId());
-/* ESTO PARA QUÉ?
-		final Set<Category> forbiddenNamesCategories = new HashSet<Category>();
-
-		parentCategories = new ArrayList<Category>(category.getParentCategories());
-		for (final Category parent : parentCategories) {
-			final Collection<Category> children = parent.getChildCategories();
-			forbiddenNamesCategories.addAll(children);
-		}
-
-		isNameUniqueRoot = true;
-
-		forbiddenNamesCategories.remove(category);
-
-		for (final Category cat : forbiddenNamesCategories)
-			if (cat.getName().equals(category.getName())) {
-				isNameUniqueRoot = false;
-				break;
-			}
-		Assert.isTrue(isNameUniqueRoot);
-*/
+		Assert.isTrue(category.getName() != root.getName());
+		
+		
 		result = this.categoryRepository.save(category);
 		Assert.notNull(result);
 

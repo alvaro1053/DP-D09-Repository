@@ -12,7 +12,10 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	
-	
+<jstl:if test="${wasSucessful}">	
+	<spring:message code="${successfulMessage}" />
+</jstl:if>
+
 <display:table pagesize="5" class="displaytag" 
 	name="services" requestURI="service/list.do" id="row">
 <!--  	
@@ -26,16 +29,16 @@
 	<security:authorize access="hasRole('MANAGER')">
 		<display:column>
 			<jstl:if test="${principal.id == row.manager.id && row.isDeleted == false}">
-				<a href="manager/service/edit.do?serviceId=${row.id}"><spring:message code ="service.edit"/></a>
+				<a href="service/manager/edit.do?serviceId=${row.id}"><spring:message code ="service.edit"/></a>
 			</jstl:if>
 		</display:column>
 	</security:authorize>
 	
 	
 	<security:authorize access="hasRole('ADMIN')">
-		<spring:message code="service.confirm" var="confirmRende"  />
+		<spring:message code="service.confirmCancel" var="confirmCancel"  />
 		<display:column>
-				<a href="admin/service/delete.do?serviceId=${row.id}" onclick="return confirm('${confirmRende}')"><spring:message code ="service.delete" /></a>
+				<a href="service/admin/cancel.do?serviceId=${row.id}" onclick="return confirm('${confirmCancel}')"><spring:message code ="service.cancel" /></a>
 		</display:column>
 	</security:authorize>
 
@@ -53,17 +56,18 @@
 		<spring:message code="service.picture"
 		var="picture" />
 	<display:column title="${picture}" > <img src="${row.picture}"  width="auto" height="200"> </display:column>
-<!-- Info -->
-	<spring:message code="rende.isDeleted" var="isDeleted"/>
+			
 		
-		
-			<display:column title="${info}">
+
+	<spring:message code="service.isCanceled" var="isCanceled"/>
+	<spring:message code="service.info" var="info"/>
+		<display:column title="${info}">
 			<jstl:if test="${row.isDeleted}">
-				<img class="alarmImg" src="images/deleted.png" alt="${isDeleted}" title="${isDeleted}"/>
-				</jstl:if>
-			</display:column>
+				<img class="alarmImg" src="images/cancel.png" alt="${isCanceled}" title="${isCanceled}"/>
+			</jstl:if>
+		</display:column>
 		
-<!-- Request -->
+		<!-- Request -->
 
 <security:authorize access="hasRole('USER')">
 
@@ -72,15 +76,13 @@
 				<a href="request/user/create.do?serviceId=${row.id}">${request}</a>
 			</display:column>
 </security:authorize>
-			
-		
 	
 	
 </display:table>
 
-
-
-<a href = "manager/service/create.do"><spring:message code = "service.create"/></a>
+<security:authorize access="hasRole('MANAGER')">
+	<a href = "service/manager/create.do"><spring:message code = "service.create"/></a>
+</security:authorize>
 
 
 

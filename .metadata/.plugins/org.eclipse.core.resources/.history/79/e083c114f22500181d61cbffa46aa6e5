@@ -56,18 +56,18 @@
 		<spring:message code="service.picture"
 		var="picture" />
 	<display:column title="${picture}" > <img src="${row.picture}"  width="auto" height="200"> </display:column>
-			
+<!-- Info -->
+<<<<<<< HEAD
+	<spring:message code="rende.isDeleted" var="isDeleted"/>
 		
-
-	<spring:message code="service.isCanceled" var="isCanceled"/>
-	<spring:message code="service.info" var="info"/>
-		<display:column title="${info}">
+		
+			<display:column title="${info}">
 			<jstl:if test="${row.isDeleted}">
-				<img class="alarmImg" src="images/cancel.png" alt="${isCanceled}" title="${isCanceled}"/>
-			</jstl:if>
-		</display:column>
+				<img class="alarmImg" src="images/deleted.png" alt="${isDeleted}" title="${isDeleted}"/>
+				</jstl:if>
+			</display:column>
 		
-		<!-- Request -->
+<!-- Request -->
 
 <security:authorize access="hasRole('USER')">
 
@@ -76,6 +76,17 @@
 				<a href="request/user/create.do?serviceId=${row.id}">${request}</a>
 			</display:column>
 </security:authorize>
+			
+		
+=======
+	<spring:message code="service.isCanceled" var="isCanceled"/>
+	<spring:message code="service.info" var="info"/>
+		<display:column title="${info}">
+			<jstl:if test="${row.isDeleted}">
+				<img class="alarmImg" src="images/deleted.png" alt="${isCanceled}" title="${isCanceled}"/>
+			</jstl:if>
+		</display:column>
+>>>>>>> cf2eb0a2c29f78bce11089b695673304caa4c2a0
 	
 	
 </display:table>

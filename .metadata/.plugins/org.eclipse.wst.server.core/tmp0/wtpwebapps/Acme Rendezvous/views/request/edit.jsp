@@ -66,7 +66,7 @@
 
 	<input type="button" name="cancel"
 		value="${cancelservice}"
-		onclick="javascript: relativeRedir('service/user/list.do');" />
+		onclick="javascript: relativeRedir('service/list.do');" />
 	<br />
 </form:form>
 </jstl:when>

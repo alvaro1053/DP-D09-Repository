@@ -63,7 +63,7 @@
 	<spring:message code="service.info" var="info"/>
 		<display:column title="${info}">
 			<jstl:if test="${row.isDeleted}">
-				<img class="alarmImg" src="images/cancel.png" alt="${isCanceled}" title="${isCanceled}"/>
+				<img class="alarmImg" src="images/deleted.png" alt="${isCanceled}" title="${isCanceled}"/>
 			</jstl:if>
 		</display:column>
 		

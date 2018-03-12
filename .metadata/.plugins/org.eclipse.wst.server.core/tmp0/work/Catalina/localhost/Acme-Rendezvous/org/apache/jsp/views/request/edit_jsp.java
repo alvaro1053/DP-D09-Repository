@@ -322,7 +322,7 @@ public final class edit_jsp extends org.apache.jasper.runtime.HttpJspBase
           out.write("\t\tvalue=\"");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate("${cancelservice}", java.lang.String.class, (javax.servlet.jsp.PageContext)_jspx_page_context, null, false));
           out.write("\"\r\n");
-          out.write("\t\tonclick=\"javascript: relativeRedir('service/user/list.do');\" />\r\n");
+          out.write("\t\tonclick=\"javascript: relativeRedir('service/list.do');\" />\r\n");
           out.write("\t<br />\r\n");
           int evalDoAfterBody = _jspx_th_form_005fform_005f0.doAfterBody();
           if (evalDoAfterBody != javax.servlet.jsp.tagext.BodyTag.EVAL_BODY_AGAIN)
