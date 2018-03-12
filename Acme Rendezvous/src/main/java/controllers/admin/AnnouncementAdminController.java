@@ -20,7 +20,7 @@ public class AnnouncementAdminController extends AbstractController {
 
 	//Autowired
 	@Autowired
-	AnnouncementService	announcementService;
+	private AnnouncementService	announcementService;
 
 
 	//Constructor

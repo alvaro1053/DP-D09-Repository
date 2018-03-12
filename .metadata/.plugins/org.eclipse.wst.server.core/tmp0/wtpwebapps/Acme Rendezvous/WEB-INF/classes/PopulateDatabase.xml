@@ -15,6 +15,8 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
+
+	
 	
 	<!-- User accounts -->
 
@@ -334,7 +336,7 @@
 	<bean class="domain.Rende" id="rende2">
 	<property name="name" value="Rendevous 2" />
 	<property name="Description" value="This is the rendevous 2, and its not +18" />
-	<property name="moment" value="2018/03/27 12:26"/>
+	<property name="moment" value="2018/04/27 12:26"/>
 	<property name="picture" value="https://vignette.wikia.nocookie.net/mrmen/images/5/52/Small.gif/revision/latest?cb=20100731114437"/>
 	<property name="coordenates" ref="location2"/>
 	
@@ -392,7 +394,7 @@
 	<bean class="domain.Rende" id="rende3">
 	<property name="name" value="Rendevous 3" />
 	<property name="Description" value="This is the rendevous 3, and its not +18" />
-	<property name="moment" value="2018/03/12 06:22"/>
+	<property name="moment" value="2018/07/27 06:22"/>
 	<property name="picture" value="https://vignette.wikia.nocookie.net/mrmen/images/5/52/Small.gif/revision/latest?cb=20100731114437"/>
 	<property name="coordenates" ref="location1"/>
 	
@@ -1043,12 +1045,37 @@
 		
 		
 		<!-- Categories -->
-			<!-- Category1 -->
+			<!-- Category1 -->		
 		<bean class="domain.Category" id="category1">
-		<property name="name" value="Cleanup "/>
-		<property name="description" value="Services about the cleaning"/>
+		<property name="name" value="CATEGORY" />	
+		<property name="description" value="ROOT CATEGORY"/>
+		
 		<property name="parentCategories">
 		<list>
+		</list>
+		</property>
+	
+		<property name="childCategories">
+		<list>
+		<ref bean="category2" />
+		<ref bean="category3"/>
+		</list>
+		</property>
+		<property name="services">
+		<list>
+		</list>
+		</property>
+		</bean>		
+		
+		
+			<!-- Category2 -->
+		<bean class="domain.Category" id="category2">
+		<property name="name" value="Cleanup "/>
+		<property name="description" value="Services about the cleaning"/>
+		
+		<property name="parentCategories">
+		<list>
+		<ref bean="category1" />
 		</list>
 		</property>
 		
@@ -1066,18 +1093,19 @@
 		
 		</bean>
 		
-					<!-- Category2 -->
-		<bean class="domain.Category" id="category2">
+					<!-- Category3 -->
+		<bean class="domain.Category" id="category3">
 		<property name="name" value="Cookery"/>
 		<property name="description" value="Services about the cookery"/>
 		<property name="parentCategories">
 		<list>
+		<ref bean="category1" />
 		</list>
 		</property>
 		
 		<property name="childCategories">
 		<list>
-		<ref bean="category3"/>
+		<ref bean="category4"/>
 		</list>
 		</property>
 		
@@ -1090,14 +1118,14 @@
 		
 		</bean>
 		
-					<!-- Category3 -->
-		<bean class="domain.Category" id="category3">
+					<!-- Category4 -->
+		<bean class="domain.Category" id="category4">
 		<property name="name" value="Desserts"/>
 		<property name="description" value="Services about desserts"/>
 		
 		<property name="parentCategories">
 		<list>
-		<ref bean="category2"/>
+		<ref bean="category3"/>
 		</list>
 		</property>
 		

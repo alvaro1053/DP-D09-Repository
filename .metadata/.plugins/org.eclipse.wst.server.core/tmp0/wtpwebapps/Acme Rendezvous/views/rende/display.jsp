@@ -84,7 +84,6 @@
 </security:authorize>
 
 
-
 <!-- Attendants -->
 <tr>
 <td> <strong> <spring:message code="rende.attendants" /> : </strong> </td>
@@ -122,7 +121,6 @@
 </jstl:choose>
 </td>
 </tr>
-
 </table>
 
 <table>

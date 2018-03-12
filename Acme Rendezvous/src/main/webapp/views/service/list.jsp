@@ -56,11 +56,23 @@
 <!-- Info -->
 	<spring:message code="rende.isDeleted" var="isDeleted"/>
 		
-		<jstl:if test="${row.isDeleted}">
+		
 			<display:column title="${info}">
+			<jstl:if test="${row.isDeleted}">
 				<img class="alarmImg" src="images/deleted.png" alt="${isDeleted}" title="${isDeleted}"/>
+				</jstl:if>
 			</display:column>
-		</jstl:if>
+		
+<!-- Request -->
+
+<security:authorize access="hasRole('USER')">
+
+<spring:message code="service.request" var="request"/>
+<display:column title="${request}">
+				<a href="request/user/create.do?serviceId=${row.id}">${request}</a>
+			</display:column>
+</security:authorize>
+			
 		
 	
 	
