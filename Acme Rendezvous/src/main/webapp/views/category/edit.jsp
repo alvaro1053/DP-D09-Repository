@@ -16,7 +16,8 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-
+<jstl:choose>
+<jstl:when test="${permiso}">
 
 <form:form action="category/admin/edit.do" modelAttribute="category">
 
@@ -81,7 +82,11 @@
 
 </form:form>
 
-
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="category.commit.error" />
+</jstl:otherwise>
+</jstl:choose>
 
 
 
