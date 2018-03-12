@@ -26,7 +26,7 @@ import forms.ServiceForm;
 
 
 @Controller
-@RequestMapping("/manager/service")
+@RequestMapping("/service/manager")
 public class ServicesManagerController {
 	// Services
 
@@ -111,7 +111,7 @@ public class ServicesManagerController {
 		else
 			try {
 				this.serviceService.save(service);
-				result = new ModelAndView("redirect:../../manager/service/list.do");
+				result = new ModelAndView("redirect:../../service/manager/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(service, "service.commit.error");
 			}
@@ -127,7 +127,7 @@ public class ServicesManagerController {
 		principal = this.managerService.findByPrincipal();
 		service = this.serviceService.findOne(serviceForm.getId());
 		
-		if(service.getManager() != principal){
+		if(service.getManager() != principal || !service.getRequest().isEmpty()){
 			result = new ModelAndView("redirect:/service/list.do");
 		}else{
 			try{

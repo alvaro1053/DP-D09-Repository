@@ -13,7 +13,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 
-<form:form action="manager/service/edit.do" modelAttribute="serviceForm">
+<form:form action="service/manager/edit.do" modelAttribute="serviceForm">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />

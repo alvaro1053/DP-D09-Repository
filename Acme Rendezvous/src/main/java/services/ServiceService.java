@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ServiceRepository;
+import domain.Admin;
 import domain.Manager;
 import domain.Request;
 import forms.ServiceForm;
@@ -29,10 +30,10 @@ public class ServiceService {
 	// Supporting services
 	@Autowired
 	private ManagerService		managerService;
-	
+
 	@Autowired
-	private RequestService		requestService;
-	
+	private AdminService		adminService;
+
 	@Autowired
 	private Validator validator;
 
@@ -68,19 +69,12 @@ public class ServiceService {
 		Manager principal;
 		Assert.notNull(service);
 		Assert.isTrue(service.getId() != 0);
-		Collection<Request> requestToBeUpdated;
 
 		principal = this.managerService.findByPrincipal();
 		Assert.notNull(principal);
 
 		Assert.isTrue(this.findByManagerId(principal.getId()).contains(service));
 		service.setIsDeleted(true);
-		
-		requestToBeUpdated = this.requestService.findByServiceId(service.getId());
-		
-		for(Request r : requestToBeUpdated){
-			this.requestService.delete(r);
-		}
 
 		this.serviceRepository.delete(service);
 	}
@@ -177,7 +171,19 @@ public class ServiceService {
 	}
 
 
-	
+	public domain.Service saveAdmin(domain.Service service) {
+		Admin admin;
+		domain.Service result;
+		
+		admin = this.adminService.findByPrincipal();
+		Assert.notNull(admin);
+		
+		result = this.serviceRepository.save(service);
+		
+		
+		return result;
+	}
+
 
 
 
