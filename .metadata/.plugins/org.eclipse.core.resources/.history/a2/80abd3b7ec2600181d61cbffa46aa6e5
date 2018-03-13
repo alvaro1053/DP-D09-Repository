@@ -1,0 +1,124 @@
+package services;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+import domain.Rende;
+
+import utilities.AbstractTest;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:spring/junit.xml"})
+@Transactional
+public class RendeServiceTest extends AbstractTest {
+
+	@Autowired
+	private RendeService rendeService;
+	
+	@Test
+	public void diverListAllAndEditRende(){
+		Object testingData[][]= {
+				{"user1",this.getEntityId("rende1"),null}, //Editar un rende que es suyo
+				{"user2",this.getEntityId("rende2"),IllegalArgumentException.class}, //Acceder a todos los rendes siendo menor de edad 
+				{"user1",this.getEntityId("rende4"),IllegalArgumentException.class},  //Editar un rende que no es suyo
+				{"manager1",this.getEntityId("rende4"),IllegalArgumentException.class},//Editar un rende como manager
+				{"admin",this.getEntityId("rende2"),IllegalArgumentException.class}, //Editar un rende como admin (Solo debería poder borrar)
+				{null,this.getEntityId("rende2"),IllegalArgumentException.class} //Acceder a todos los rendes sin estar loggeado
+		};
+		
+		for (int i = 0; i < testingData.length;i++){
+			templateListAllAndEditRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+		
+		}
+	}
+
+	
+	protected void templateListAllAndEditRende(String username, Integer rendeId, Class<?> expected){
+		Class<?> caught;
+		caught = null;
+		try{
+			authenticate(username);
+			rendeService.findAll();
+			Rende rende = rendeService.findOne(rendeId);
+			rende.setName("Prueba");
+			rendeService.save(rende);
+			rendeService.flush();
+			unauthenticate();
+		} catch(Throwable oops){
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
+	
+	@Test
+	public void diverFind(){ //Equivalente a display
+		Object testing[][]= {
+				{"user1",this.getEntityId("rende1"),null}, //Display un rende de adultos siendo mayor de edad
+				{"user1",this.getEntityId("rende2"),null}, //Display un rende que no es de adultos siendo mayor de edad
+				{"user2",this.getEntityId("rende1"),IllegalArgumentException.class}, //Display de un rende de adultos siendo menor de edad
+				{"user2",this.getEntityId("rende2"),null}, //Display de un rende que no es de adultos siendo menor de edad
+				{null,this.getEntityId("rende1"),IllegalArgumentException.class}, //Display de un rende que es de adultos siendo anónimo
+				{null,this.getEntityId("rende2"),null}, //Display de un rende que no es de adultos siendo anónimo
+				{"admin",this.getEntityId("rende1"),null}, //Display un rende de adultos siendo mayor de edad y admin
+				{"admin",this.getEntityId("rende2"),null}, //Display un rende que no es de adultos siendo mayor de edad y admin
+				{"manager1",this.getEntityId("rende1"),null}, //Display un rende de adultos siendo mayor de edad y manager
+				{"manager1",this.getEntityId("rende2"),null}, //Display un rende que no es de adultos siendo mayor de edad y manager
+		};
+		int size = testing.length;
+		for (int i = 0; i < size;i++){
+			templateFind((String) testing[i][0], (Integer) testing[i][1],(Class<?>) testing[i][2]); 
+		
+		}
+	}
+
+	
+	protected void templateFind(String username, Integer rendeId, Class<?> expected){
+		Class<?> caught;
+		caught = null;
+		try{
+			authenticate(username);
+			Rende rende = rendeService.findOne(rendeId);
+			unauthenticate();
+		} catch(Throwable oops){
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
+	
+	@Test
+	public void diverListAllAndDeleteRende(){
+		Object testingData[][]= {
+				{null,this.getEntityId("rende1"),IllegalArgumentException.class} //Borrar rende sin autentificar
+		};
+		
+		for (int i = 0; i < testingData.length;i++){
+			templateListAllAndDeleteRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+		
+		}
+	}
+
+	
+	protected void templateListAllAndDeleteRende(String username, Integer rendeId, Class<?> expected){
+		Class<?> caught;
+		caught = null;
+		try{
+			authenticate(username);
+			rendeService.selectNotAdultRendes(); //Solo los que no son adultos para tambien poder probar los usuarios menores de edad y los no registrados
+			Rende rende = rendeService.findOne(rendeId);
+			rendeService.deleteByAdmin(rende);
+			rendeService.flush();
+			unauthenticate();
+		} catch(Throwable oops){
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+
+	
+}

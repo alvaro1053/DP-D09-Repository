@@ -1,0 +1,56 @@
+package services;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+import domain.Rende;
+
+import utilities.AbstractTest;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:spring/junit.xml"})
+@Transactional
+public class RendeServiceTest extends AbstractTest {
+
+	@Autowired
+	private RendeService rendeService;
+	
+	@Test
+	public void diverListAllAndEditRende(){
+		Object testingData[][]= {
+				{"user1",this.getEntityId("rende1"),null}, //Editar un rende que es suyo
+				{"user2",this.getEntityId("rende2"),IllegalArgumentException.class}, //Acceder a todos los rendes siendo menor de edad 
+				{"user1",this.getEntityId("rende4"),IllegalArgumentException.class},  //Editar un rende que no es suyo
+				{"manager1",this.getEntityId("rende4"),IllegalArgumentException.class},//Editar un rende como manager
+				{"admin",this.getEntityId("rende2"),IllegalArgumentException.class}, //Editar un rende como admin (Solo debería poder borrar)
+				{null,this.getEntityId("rende2"),IllegalArgumentException.class} //Acceder a todos los rendes sin estar loggeado
+		};
+		
+		for (int i = 0; i < testingData.length;i++){
+			templateListAllAndEditRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+		
+		}
+	}
+
+	
+	protected void templateListAllAndEditRende(String username, Integer rendeId, Class<?> expected){
+		Class<?> caught;
+		caught = null;
+		try{
+			authenticate(username);
+			rendeService.findAll();
+			Rende rende = rendeService.findOne(rendeId);
+			rende.setName("Prueba");
+			rendeService.save(rende);
+			unauthenticate();
+		} catch(Throwable oops){
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
+}
