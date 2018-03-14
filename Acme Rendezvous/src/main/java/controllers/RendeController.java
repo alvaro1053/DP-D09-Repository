@@ -51,32 +51,7 @@ public class RendeController extends AbstractController {
 		result.addObject("categories", categories);
 		result.addObject("uri", uri);
 		return result;
-	}
- /*
-
-	@RequestMapping(value = "/list", method = RequestMethod.GET, params = {
-			"filterCategories"
-		})
-		public ModelAndView filterCategories(@RequestParam final Category filterCategory) {
-			final ModelAndView result;
-			Collection<Rende> res = new ArrayList<Rende>();
-			Collection<Category> categories;
-			categories = categoryService.findAll();	
-			
-			for(Category c: categories){
-				if (c.getChildCategories().size()!=0) {
-					res=rendeService.findRendezvousByCategory(filterCategory.getId());
-				}else {
-					result = new ModelAndView("rende/list");
-					return result;
-				}
-			}
-			result = new ModelAndView("rende/list");
-			result.addObject("rendes", res);
-			result.addObject("categories", categories);
-			return result;
-		}
-*/		
+	}	
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET, params = {
 			"filterCategory"

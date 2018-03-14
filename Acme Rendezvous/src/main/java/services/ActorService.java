@@ -80,13 +80,15 @@ public class ActorService {
 
 	public Actor findByPrincipal() {
 		Actor result;
-		UserAccount userAccount;
-
+		UserAccount userAccount = null;
+		try{
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
 		result = this.findByUserAccount(userAccount);
 		Assert.notNull(result);
-
+		} catch (IllegalArgumentException oops){
+			result = null;
+		}
 		return result;
 
 	}

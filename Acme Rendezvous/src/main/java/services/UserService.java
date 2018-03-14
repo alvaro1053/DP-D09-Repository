@@ -30,11 +30,19 @@ public class UserService {
 	// Managed Repository
 	@Autowired
 	private UserRepository	UserRepository;
+	
+	// Supporting services
+
+	@Autowired
+	private ManagerService 	managerService;
+	
+	@Autowired
+	private AdminService 	adminService;
+	
 	@Autowired
 	private Validator		validator;
 
 
-	// Supporting services
 
 	// Constructors
 
@@ -59,18 +67,42 @@ public class UserService {
 	public User save(final User User) {
 		User saved;
 		Assert.notNull(User);
+		
+		//TEST 1 - Testing if someone is trying to register while he/she is alredy being registered to the system at the moment
+		Boolean isNotRegisteredAlready = true;
+		
+		try{
+			this.findByPrincipal();
+			isNotRegisteredAlready = false;
+		}catch(Throwable oops){
+		}
+		
+		try{
+			this.adminService.findByPrincipal();
+			isNotRegisteredAlready = false;
+		}catch(Throwable oops){
+		}
+		
+		try{
+			this.managerService.findByPrincipal();
+			isNotRegisteredAlready = false;
+		}catch(Throwable oops){
+		}
+		
+		Assert.isTrue(isNotRegisteredAlready);
+		
+		//TEST 1 ======================================
+		
 
 		if (User.getId() == 0) {
 			final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 			User.getUserAccount().setPassword(passwordEncoder.encodePassword(User.getUserAccount().getPassword(), null));
-		} else {
-			User principal;
-			principal = this.findByPrincipal();
-			Assert.notNull(principal);
-
 		}
+		
 
 		saved = this.UserRepository.save(User);
+		
+		Assert.isTrue(this.UserRepository.findAll().contains(User));
 
 		return saved;
 	}

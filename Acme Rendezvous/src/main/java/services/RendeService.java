@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.RendeRepository;
+import domain.Actor;
 import domain.Admin;
 import domain.Announcement;
 
@@ -56,9 +57,12 @@ public class RendeService {
 
 	@Autowired
 	private ReplyQuestionService	replyQuestionService;
-
+	
 	@Autowired
-	private RequestService			requestService;
+	private RequestService	requestService;
+	
+	@Autowired
+	private ActorService	actorService;
 
 	// Constructors
 
@@ -82,8 +86,17 @@ public class RendeService {
 
 	//  An actor who is not authenticated must be able to browse the list of Rendes and display them
 	public Collection<Rende> findAll() {
+		Actor principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
 		final Collection<Rende> result = this.rendeRepository.findAll();
 		Assert.notNull(result);
+		if (principal instanceof User){
+			final LocalDate now = new LocalDate();
+			final LocalDate nacimiento = new LocalDate(principal.getDateBirth());
+			final int años = Years.yearsBetween(nacimiento, now).getYears();
+			Assert.isTrue(años > 18 );
+		}
+		
 		return result;
 	}
 
@@ -169,7 +182,11 @@ public class RendeService {
 		principal = this.userService.findByPrincipal();
 
 		Assert.notNull(principal);
-
+		
+		if (rendeToSave.getId() != 0){
+		Assert.isTrue(principal.getRendes().contains(rendeToSave));
+		}
+		
 		result = this.rendeRepository.save(rendeToSave);
 
 		if (rendeToSave.getId() == 0) {
@@ -184,6 +201,8 @@ public class RendeService {
 
 		}
 
+		
+		
 		return result;
 	}
 	public Collection<Rende> findByUserId(final int id) {
@@ -215,9 +234,21 @@ public class RendeService {
 	}
 
 	public Rende findOne(final int RendeId) {
+		Actor principal = this.actorService.findByPrincipal();
 		Rende result;
 
 		result = this.rendeRepository.findOne(RendeId);
+		if (principal == null){
+			Assert.isTrue(result.getAdultOnly()== false);
+		}
+		if (principal != null){
+			final LocalDate now = new LocalDate();
+			final LocalDate nacimiento = new LocalDate(principal.getDateBirth());
+			final int años = Years.yearsBetween(nacimiento, now).getYears();
+			if (años < 18){
+				Assert.isTrue(result.getAdultOnly() == false);
+			}
+		}
 
 		return result;
 
@@ -405,5 +436,7 @@ public class RendeService {
 		final Collection<Rende> rende = this.rendeRepository.selectLinkedById(rendeId);
 		return rende;
 	}
-
+	public void flush(){
+		this.rendeRepository.flush();
+	}
 }

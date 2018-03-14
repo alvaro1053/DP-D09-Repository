@@ -22,7 +22,7 @@ public void diverFindByPrincipal(){
 			{"user1",null}, 
 			{"admin",null},
 			{"manager1",null},
-			{"null",IllegalArgumentException.class}};
+			{"null",IllegalArgumentException.class}};	// Si el usuario a encontrar no está determinado, deberá devolver un error
 	for (int i = 0; i < testingData.length;i++){
 		templateFindByPrincipal((String) testingData[i][0], (Class<?>) testingData[i][1]); 
 	
@@ -41,5 +41,8 @@ protected void templateFindByPrincipal(String username, Class<?> expected){
 	}
 	checkExceptions(expected, caught);
 }
+
+
+
 
 }
