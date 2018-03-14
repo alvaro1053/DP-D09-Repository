@@ -24,6 +24,9 @@ public interface RendeRepository extends JpaRepository<Rende, Integer> {
 	@Query("select distinct a from Category c join c.services r join r.request re join re.rende a where c.id=?1")	
     public Collection<Rende> findRendezvousByCategory(Integer categoryId);	
 	
+	@Query("select distinct a from Category c join c.services r join r.request re join re.rende a where c.id=?1 AND a.adultOnly = false")	
+    public Collection<Rende> findRendezvousByCategoryUnderAge(Integer categoryId);	
+	
 	@Query("select distinct a from Category c join c.services r join r.request re join re.rende a")	
     public Collection<Rende> findRendezvousWithCategories();	
 	

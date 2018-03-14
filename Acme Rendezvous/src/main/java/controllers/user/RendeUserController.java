@@ -127,14 +127,18 @@ public class RendeUserController extends AbstractController {
 			final LocalDate nacimiento = new LocalDate(principal.getDateBirth());
 			final int años = Years.yearsBetween(nacimiento, now).getYears();
 			
-			if(filterCategory.equals(categoryService.findRootCategory())){
-				if(años<18){
+			if(años<18){
+				if(filterCategory.equals(categoryService.findRootCategory())){
 					res=rendeService.findRendezvousWithCategoriesUnderAge();
 				}else{
-					res=rendeService.findRendezvousWithCategories();
+						res=rendeService.findRendezvousByCategoryUnderAge(filterCategory.getId());
 				}
 			}else{
-				res=rendeService.findRendezvousByCategory(filterCategory.getId());
+				if(filterCategory.equals(categoryService.findRootCategory())){
+					res=rendeService.findRendezvousWithCategories();
+				}else{
+					res=rendeService.findRendezvousByCategory(filterCategory.getId());
+				}
 			}
 			
 			result = new ModelAndView("rende/list");

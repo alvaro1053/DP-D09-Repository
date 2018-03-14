@@ -66,7 +66,7 @@ public class RendeController extends AbstractController {
 			if(filterCategory.equals(categoryService.findRootCategory())){
 				res=rendeService.findRendezvousWithCategoriesUnderAge();
 			}else{
-				res=rendeService.findRendezvousByCategory(filterCategory.getId());
+				res=rendeService.findRendezvousByCategoryUnderAge(filterCategory.getId());
 			}
 			
 			result = new ModelAndView("rende/list");

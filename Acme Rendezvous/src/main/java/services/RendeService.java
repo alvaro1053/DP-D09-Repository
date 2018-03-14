@@ -316,6 +316,15 @@ public class RendeService {
 		return result;
 	}
 	
+	public Collection<Rende> findRendezvousByCategoryUnderAge(Integer categoryId){
+		Collection<Rende> result;
+		
+		result = this.rendeRepository.findRendezvousByCategoryUnderAge(categoryId);
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
 	
 
 	//Reconstruct --------------------------------------------
