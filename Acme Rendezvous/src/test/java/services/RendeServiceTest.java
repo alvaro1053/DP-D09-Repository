@@ -80,9 +80,10 @@ public class RendeServiceTest extends AbstractTest {
 	protected void templateFind(String username, Integer rendeId, Class<?> expected){
 		Class<?> caught;
 		caught = null;
+		
 		try{
 			authenticate(username);
-			Rende rende = rendeService.findOne(rendeId);
+			rendeService.findOne(rendeId);
 			unauthenticate();
 		} catch(Throwable oops){
 			caught = oops.getClass();
