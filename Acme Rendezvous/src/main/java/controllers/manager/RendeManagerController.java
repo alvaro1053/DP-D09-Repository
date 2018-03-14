@@ -1,17 +1,13 @@
 
 package controllers.manager;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
-import javax.validation.Valid;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +18,7 @@ import services.ManagerService;
 import controllers.AbstractController;
 import domain.Rende;
 import domain.Manager;
-import forms.RendeForm;
+
 
 @Controller
 @RequestMapping("/rende/manager")

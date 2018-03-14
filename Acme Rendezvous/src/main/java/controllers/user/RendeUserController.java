@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CategoryService;
 import services.RendeService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Category;
 import domain.Rende;
 import domain.User;
 import forms.RendeForm;
@@ -36,6 +38,8 @@ public class RendeUserController extends AbstractController {
 	@Autowired
 	private UserService		userService;
 
+	@Autowired
+	private CategoryService	categoryService;
 
 	// Constructors
 
@@ -49,6 +53,8 @@ public class RendeUserController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Rende> rendes;
+		Collection<Category>categories;
+		categories = this.categoryService.findAll();
 		final String uri = "/user";
 		final User principal = this.userService.findByPrincipal();
 		Boolean mayorDeEdad = true;
@@ -65,6 +71,7 @@ public class RendeUserController extends AbstractController {
 		result.addObject("mayor", mayorDeEdad);
 		result.addObject("principal", principal);
 		result.addObject("rendes", rendes);
+		result.addObject("categories", categories);
 		result.addObject("uri", uri);
 		return result;
 	}
@@ -75,6 +82,8 @@ public class RendeUserController extends AbstractController {
 	public ModelAndView filter(@RequestParam final int filter) {
 		final ModelAndView result;
 		Collection<Rende> res = new ArrayList<Rende>();
+		Collection<Category>categories;
+		categories = this.categoryService.findAll();
 		final User principal = this.userService.findByPrincipal();
 		final String uri = "/user";
 		final Boolean mayor = true;
@@ -96,10 +105,47 @@ public class RendeUserController extends AbstractController {
 		result.addObject("principal", principal);
 		result.addObject("uri", uri);
 		result.addObject("rendes", res);
+		result.addObject("categories", categories);
+
 
 		return result;
 
 	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET, params = {
+			"filterCategory"
+		})
+		public ModelAndView filterCategory(@RequestParam final Category filterCategory) {
+			final ModelAndView result;
+			Collection<Rende> res = new ArrayList<Rende>();
+			Collection<Category> categories;
+			categories = categoryService.findAll();	
+			final User principal = this.userService.findByPrincipal();
+			final String uri = "/user";
+			final Boolean mayor = true;
+			final LocalDate now = new LocalDate();
+			final LocalDate nacimiento = new LocalDate(principal.getDateBirth());
+			final int años = Years.yearsBetween(nacimiento, now).getYears();
+			
+			if(filterCategory.equals(categoryService.findRootCategory())){
+				if(años<18){
+					res=rendeService.findRendezvousWithCategoriesUnderAge();
+				}else{
+					res=rendeService.findRendezvousWithCategories();
+				}
+			}else{
+				res=rendeService.findRendezvousByCategory(filterCategory.getId());
+			}
+			
+			result = new ModelAndView("rende/list");
+			result.addObject("rendes", res);
+			result.addObject("categories", categories);
+			result.addObject("principal", principal);
+			result.addObject("uri", uri);
+			result.addObject("mayor", mayor);
+
+			return result;
+		}
 
 	//Display
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -218,7 +264,9 @@ public class RendeUserController extends AbstractController {
 		User principal;
 		Boolean successful;
 		Boolean successfullyCancelled;
-
+		Collection<Category> categories;
+		
+		categories = categoryService.findAll();	
 		rende = this.rendeService.findOne(rendeId);
 		principal = this.userService.findByPrincipal();
 
@@ -239,7 +287,7 @@ public class RendeUserController extends AbstractController {
 			result = this.createListModelAndView(null);
 			result.addObject("successful", successful);
 		}
-
+		result.addObject("categories", categories);
 		return result;
 	}
 

@@ -56,9 +56,13 @@ public class CategoryAdminController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		Category category;
+		Boolean permiso;
 
 		category = this.categoryService.create();
+		permiso = !(this.categoryService.findRootCategory().equals(category));
+
 		result = this.createEditModelAndView(category);
+		result.addObject("permiso", permiso);
 
 		return result;
 	}

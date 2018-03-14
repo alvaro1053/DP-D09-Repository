@@ -1,6 +1,7 @@
 
 package controllers.admin;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.joda.time.LocalDate;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AdminService;
+import services.CategoryService;
 import services.RendeService;
 import controllers.AbstractController;
 import domain.Admin;
+import domain.Category;
 import domain.Rende;
+
 
 @Controller
 @RequestMapping("rende/admin")
@@ -27,6 +31,9 @@ public class RendeAdminController extends AbstractController {
 
 	@Autowired
 	RendeService	rendeService;
+	
+	@Autowired
+	CategoryService	categoryService;
 
 
 	public RendeAdminController() {
@@ -36,16 +43,46 @@ public class RendeAdminController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
-
+		Collection<Category>categories;
+		categories = this.categoryService.findAll();
 		result = this.createListModelAndView(null);
 
+		result.addObject("categories", categories);
 		return result;
 	}
 
+	@RequestMapping(value = "/list", method = RequestMethod.GET, params = {
+			"filterCategory"
+		})
+		public ModelAndView filterCategory(@RequestParam final Category filterCategory) {
+			final ModelAndView result;
+			Collection<Rende> res = new ArrayList<Rende>();
+			Collection<Category> categories;
+			categories = categoryService.findAll();	
+			final Admin principal = this.adminService.findByPrincipal();
+			final String uri = "/admin";
+
+			
+			if(filterCategory.equals(categoryService.findRootCategory())){
+				res=rendeService.findRendezvousWithCategories();
+			}else{
+				res=rendeService.findRendezvousByCategory(filterCategory.getId());
+			}
+			
+			result = new ModelAndView("rende/list");
+			result.addObject("rendes", res);
+			result.addObject("categories", categories);
+			result.addObject("principal", principal);
+			result.addObject("uri", uri);
+			return result;
+		}
+	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int rendeId) {
 		ModelAndView result = null;
 		Rende rende;
+		Collection<Category> categories;
+		categories = categoryService.findAll();	
 
 		rende = this.rendeService.findOne(rendeId);
 		try {
@@ -57,6 +94,7 @@ public class RendeAdminController extends AbstractController {
 			result = this.createListModelAndView(messageError);
 		}
 
+		result.addObject("categories", categories);
 		return result;
 	}
 

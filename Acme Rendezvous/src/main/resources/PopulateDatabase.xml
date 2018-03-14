@@ -394,11 +394,7 @@
 	<bean class="domain.Rende" id="rende3">
 	<property name="name" value="Rendevous 3" />
 	<property name="Description" value="This is the rendevous 3, and its not +18" />
-<<<<<<< HEAD
 	<property name="moment" value="2018/07/27 06:22"/>
-=======
-	<property name="moment" value="2018/04/12 06:22"/>
->>>>>>> cf2eb0a2c29f78bce11089b695673304caa4c2a0
 	<property name="picture" value="https://vignette.wikia.nocookie.net/mrmen/images/5/52/Small.gif/revision/latest?cb=20100731114437"/>
 	<property name="coordenates" ref="location1"/>
 	
@@ -959,7 +955,7 @@
 	<property name="picture" value="https://www2.dimensiondata.com/-/media/dd/corporate/content-images/search-and-social-images/services/managed-services/managedservices1600x800.jpg"/>
 	<property name="isDeleted" value="false"/>
 	<property name="manager" ref="manager1"/>
-	<property name ="category" ref="category1"/>
+	<property name ="category" ref="category2"/>
 	<property name="request">
 	<list>
 	<ref bean ="request1"/>
@@ -974,7 +970,7 @@
 	<property name="picture" value=""/>
 	<property name="isDeleted" value="false"/>
 	<property name="manager" ref="manager1"/>
-	<property name ="category" ref="category2"/>
+	<property name ="category" ref="category4"/>
 	<property name="request">
 	<list>
 	</list>
@@ -988,7 +984,7 @@
 	<property name="picture" value=""/>
 	<property name="isDeleted" value="true"/>
 	<property name="manager" ref="manager3"/>
-	<property name ="category" ref="category1"/>
+	<property name ="category" ref="category2"/>
 	<property name="request">
 	<list>
 	<ref bean ="request3"/>
@@ -1141,7 +1137,7 @@
 		
 		<property name="services">
 		<list>
-		<ref bean="service4"/>
+		<ref bean="service2"/>
 		</list>
 		</property>
 		

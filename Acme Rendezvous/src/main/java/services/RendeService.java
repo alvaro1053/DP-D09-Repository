@@ -17,11 +17,13 @@ import org.springframework.validation.Validator;
 import repositories.RendeRepository;
 import domain.Admin;
 import domain.Announcement;
+
 import domain.Comment;
 import domain.Question;
 import domain.Rende;
 import domain.ReplyComment;
 import domain.ReplyQuestion;
+import domain.Request;
 import domain.User;
 import forms.RendeForm;
 
@@ -55,6 +57,8 @@ public class RendeService {
 	@Autowired
 	private ReplyQuestionService	replyQuestionService;
 
+	@Autowired
+	private RequestService			requestService;
 
 	// Constructors
 
@@ -118,6 +122,8 @@ public class RendeService {
 		final Collection<Announcement> announcementsToRemove = rende.getAnnouncements();
 
 		final Collection<Rende> linkedsToOthers = this.selectLinkedById(rende.getId());
+		
+		final Collection<Request> requestToRemove = rende.getRequest();
 
 		for (final ReplyComment rC : repliesToRemove)
 			this.replyCommentService.delete(rC);
@@ -129,6 +135,8 @@ public class RendeService {
 			this.replyQuestionService.delete(rQ);
 		for (final Question q : questionsToRemove)
 			this.questionService.delete(q);
+		for (final Request req : requestToRemove)//
+			this.requestService.delete(req);
 		for (final Rende r : linkedsToOthers) {
 			final Collection<Rende> rendesLinked = r.getLinked();
 			final Collection<Rende> updated = new ArrayList<Rende>(rendesLinked);
@@ -248,7 +256,36 @@ public class RendeService {
 		result = user;
 		return result;
 	}
-
+	
+	
+	public Collection<Rende> findRendezvousByCategory(Integer categoryId){
+		Collection<Rende> result;
+		
+		result = this.rendeRepository.findRendezvousByCategory(categoryId);
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public Collection<Rende> findRendezvousWithCategories(){
+		Collection<Rende> result;
+		
+		result = this.rendeRepository.findRendezvousWithCategories();
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public Collection<Rende> findRendezvousWithCategoriesUnderAge(){
+		Collection<Rende> result;
+		
+		result = this.rendeRepository.findRendezvousWithCategoriesUnderAge();
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	
 
 	//Reconstruct --------------------------------------------
 
