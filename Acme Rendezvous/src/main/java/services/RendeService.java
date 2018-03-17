@@ -18,6 +18,7 @@ import repositories.RendeRepository;
 import domain.Actor;
 import domain.Admin;
 import domain.Announcement;
+
 import domain.Comment;
 import domain.Question;
 import domain.Rende;
@@ -62,7 +63,6 @@ public class RendeService {
 	
 	@Autowired
 	private ActorService	actorService;
-
 
 	// Constructors
 
@@ -136,7 +136,7 @@ public class RendeService {
 
 		final Collection<Rende> linkedsToOthers = this.selectLinkedById(rende.getId());
 		
-		final Collection<Request> requestsToRemove = rende.getRequest();
+		final Collection<Request> requestToRemove = rende.getRequest();
 
 		for (final ReplyComment rC : repliesToRemove)
 			this.replyCommentService.delete(rC);
@@ -148,8 +148,8 @@ public class RendeService {
 			this.replyQuestionService.delete(rQ);
 		for (final Question q : questionsToRemove)
 			this.questionService.delete(q);
-		for (final Request r : requestsToRemove)
-			this.requestService.delete(r);
+		for (final Request req : requestToRemove)//
+			this.requestService.delete(req);
 		for (final Rende r : linkedsToOthers) {
 			final Collection<Rende> rendesLinked = r.getLinked();
 			final Collection<Rende> updated = new ArrayList<Rende>(rendesLinked);
@@ -287,7 +287,45 @@ public class RendeService {
 		result = user;
 		return result;
 	}
-
+	
+	
+	public Collection<Rende> findRendezvousByCategory(Integer categoryId){
+		Collection<Rende> result;
+		
+		result = this.rendeRepository.findRendezvousByCategory(categoryId);
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public Collection<Rende> findRendezvousWithCategories(){
+		Collection<Rende> result;
+		
+		result = this.rendeRepository.findRendezvousWithCategories();
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public Collection<Rende> findRendezvousWithCategoriesUnderAge(){
+		Collection<Rende> result;
+		
+		result = this.rendeRepository.findRendezvousWithCategoriesUnderAge();
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public Collection<Rende> findRendezvousByCategoryUnderAge(Integer categoryId){
+		Collection<Rende> result;
+		
+		result = this.rendeRepository.findRendezvousByCategoryUnderAge(categoryId);
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	
 
 	//Reconstruct --------------------------------------------
 

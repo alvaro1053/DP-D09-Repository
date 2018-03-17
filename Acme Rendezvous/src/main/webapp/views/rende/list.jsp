@@ -11,8 +11,14 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-	
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>	
 
+	<form action="rende${uri}/list.do" method="get">
+		<acme:select items="${categories}" name="filterCategory" itemLabel="name" code="rende.category" path="categories"/>
+	<spring:message code="rende.choose" var="choose"/>
+	<input type="submit" value="${choose}">
+	</form>
+	<br/>
 	
 <security:authorize access="hasRole('USER')">
 	<form action="rende${uri}/list.do" method="get">

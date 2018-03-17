@@ -955,7 +955,7 @@
 	<property name="picture" value="https://www2.dimensiondata.com/-/media/dd/corporate/content-images/search-and-social-images/services/managed-services/managedservices1600x800.jpg"/>
 	<property name="isDeleted" value="false"/>
 	<property name="manager" ref="manager1"/>
-	<property name ="category" ref="category1"/>
+	<property name ="category" ref="category2"/>
 	<property name="request">
 	<list>
 	<ref bean ="request1"/>
@@ -970,7 +970,7 @@
 	<property name="picture" value=""/>
 	<property name="isDeleted" value="false"/>
 	<property name="manager" ref="manager1"/>
-	<property name ="category" ref="category2"/>
+	<property name ="category" ref="category4"/>
 	<property name="request">
 	<list>
 	</list>
@@ -984,7 +984,7 @@
 	<property name="picture" value=""/>
 	<property name="isDeleted" value="true"/>
 	<property name="manager" ref="manager3"/>
-	<property name ="category" ref="category1"/>
+	<property name ="category" ref="category2"/>
 	<property name="request">
 	<list>
 	<ref bean ="request3"/>
@@ -1137,7 +1137,7 @@
 		
 		<property name="services">
 		<list>
-		<ref bean="service4"/>
+		<ref bean="service2"/>
 		</list>
 		</property>
 		
