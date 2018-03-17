@@ -16,6 +16,7 @@ import repositories.UserRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 import domain.Comment;
 import domain.Rende;
 import domain.ReplyComment;
@@ -32,12 +33,9 @@ public class UserService {
 	private UserRepository	UserRepository;
 	
 	// Supporting services
-
-	@Autowired
-	private ManagerService 	managerService;
 	
 	@Autowired
-	private AdminService 	adminService;
+	private ActorService 	actorService;
 	
 	@Autowired
 	private Validator		validator;
@@ -67,31 +65,11 @@ public class UserService {
 	public User save(final User User) {
 		User saved;
 		Assert.notNull(User);
+		Actor principal = this.actorService.findByPrincipal();
 		
-		//TEST 1 - Testing if someone is trying to register while he/she is alredy being registered to the system at the moment
-		Boolean isNotRegisteredAlready = true;
-		
-		try{
-			this.findByPrincipal();
-			isNotRegisteredAlready = false;
-		}catch(Throwable oops){
-		}
-		
-		try{
-			this.adminService.findByPrincipal();
-			isNotRegisteredAlready = false;
-		}catch(Throwable oops){
-		}
-		
-		try{
-			this.managerService.findByPrincipal();
-			isNotRegisteredAlready = false;
-		}catch(Throwable oops){
-		}
-		
-		Assert.isTrue(isNotRegisteredAlready);
-		
-		//TEST 1 ======================================
+		//TEST ASSERT - Testing if someone is trying to register while he/she is alredy being registered to the system at the moment
+		Assert.isTrue(principal == null);
+		//TEST ASSERT ======================================
 		
 
 		if (User.getId() == 0) {
@@ -102,8 +80,9 @@ public class UserService {
 
 		saved = this.UserRepository.save(User);
 		
+		//TEST ASSERT - Testing if the user is in the system after saving him/her
 		Assert.isTrue(this.UserRepository.findAll().contains(User));
-
+		//TEST ASSERT =========================================
 		return saved;
 	}
 
