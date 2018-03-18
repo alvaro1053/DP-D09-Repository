@@ -4,12 +4,17 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+
 import repositories.ReplyQuestionRepository;
+import domain.Actor;
 import domain.Question;
 import domain.ReplyQuestion;
 import domain.User;
@@ -25,6 +30,8 @@ public class ReplyQuestionService {
 	// Supporting Repository
 	@Autowired
 	private UserService				userService;
+	@Autowired
+	private ActorService				actorService;
 
 
 	// Constructors
@@ -87,7 +94,27 @@ public class ReplyQuestionService {
 
 	}
 	public Collection<ReplyQuestion> selectByRendeId(final int rendeId) {
-		final Collection<ReplyQuestion> res = this.replyQuestionRepository.selectByRendeId(rendeId);
+		final Collection<ReplyQuestion> res;
+		boolean canSee = true;
+		try{
+			Actor actor = this.actorService.findByPrincipal();
+			
+			if(actor != null){
+				final LocalDate now = new LocalDate();
+				final LocalDate nacimiento = new LocalDate(actor.getDateBirth());
+				final int años = Years.yearsBetween(nacimiento, now).getYears();
+				boolean mayorDeEdad = años > 18;
+				if(mayorDeEdad == false){
+					canSee = false;
+				}
+			}
+		}catch(Throwable oops){
+		}
+		if(canSee){
+			res = this.replyQuestionRepository.selectByRendeId(rendeId);
+		}else{
+			res = new ArrayList<ReplyQuestion>();
+		}
 		return res;
 	}
 
