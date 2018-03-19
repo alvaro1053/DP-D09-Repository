@@ -93,7 +93,6 @@ public class ActorForm extends DomainEntity {
 	}
 
 	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-	
 	public String getPhone() {
 		return this.phone;
 	}
