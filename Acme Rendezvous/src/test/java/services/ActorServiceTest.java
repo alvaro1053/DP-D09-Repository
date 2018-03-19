@@ -17,7 +17,7 @@ public class ActorServiceTest extends AbstractTest {
 	private ActorService actorService;
 	
 @Test
-public void diverFindByPrincipal(){
+public void driverFindByPrincipal(){
 	Object testingData[][]= {
 			{"user1",null}, 
 			{"admin",null},
