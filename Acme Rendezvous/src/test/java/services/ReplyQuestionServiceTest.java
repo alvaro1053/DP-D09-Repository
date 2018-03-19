@@ -31,7 +31,7 @@ public class ReplyQuestionServiceTest extends AbstractTest {
 	
 	
 	//================================================================
-	//Este test consestirá en probar que un usuario no autentificado
+	//Este test probará que un usuario no autentificado
 	//pueda mostar la información de un usuario que haya reservado
 	//algún rendezvous, entraremos en detalle en el test específico,
 	//y mostrar las respuestas a las preguntas que un usuario ha 

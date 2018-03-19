@@ -18,11 +18,9 @@ public class AdminServiceTest extends AbstractTest {
 	
 
 	//================================================================
-	//Este test consestirá en probar que un usuario no autentificado
-	//pueda mostar la información de un usuario que haya reservado
-	//algún rendezvous, entraremos en detalle en el test específico,
-	//y mostrar las respuestas a las preguntas que un usuario ha 
-	//registrado.
+	//Este test consistirá en probar que el administrador sea el
+	//único que puede ver la información estadística de las queries.
+	//
 	//
 	//Requisito funcional bajo testing Acme Rendezvous 1.0 - C (6. 3),
 	//(17. 2) y (22. 1)
@@ -30,9 +28,9 @@ public class AdminServiceTest extends AbstractTest {
 	@Test
 	public void driverStatisticsOfAdmin(){
 		Object testingData[][]= {
-				
 				{"admin",null},
-				{"user1",IllegalArgumentException.class}
+				{"user1",IllegalArgumentException.class},
+				{"manager1", IllegalArgumentException.class}
 				
 		};
 		for (int i = 0; i < testingData.length;i++){

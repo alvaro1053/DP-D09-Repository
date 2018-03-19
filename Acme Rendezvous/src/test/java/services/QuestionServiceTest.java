@@ -24,7 +24,7 @@ public class QuestionServiceTest extends AbstractTest {
 	
 	
 	//================================================================
-	//Este test consestirá en probar que un usuario pueda eliminar
+	//Este test consistirá en probar que un usuario pueda eliminar
 	//una pregunta que este asociada a un rendezvous que él mismo 
 	//haya creado.
 	//
