@@ -226,7 +226,7 @@ public class ServiceServiceTest extends AbstractTest {
 	protected void templateCreateService(String username, String name, String description, String picture, Boolean isDeleted, int idCategory, Class<?> expected){
 		Class<?> caught;
 		caught = null;
-			
+
 		try{
 			authenticate(username);
 			ServiceForm serviceForm = this.serviceService.create();

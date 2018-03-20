@@ -81,8 +81,12 @@ public class QuestionService {
 		Assert.notNull(question);
 		List<Question> updated;
 		final Actor principal = this.actorService.findByPrincipal();
+		
+		Assert.isTrue(principal instanceof User || principal instanceof Admin);
+		
 		if (principal instanceof User)
-			Assert.isTrue(((User) principal).getRendes().contains(question.getRende()) || principal instanceof Admin);
+			Assert.isTrue(((User) principal).getRendes().contains(question.getRende()));
+		
 
 		for (final ReplyQuestion rc : question.getReplyQuestions())
 			this.replyQuestionService.delete(rc);
