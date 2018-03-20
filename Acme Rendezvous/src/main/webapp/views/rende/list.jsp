@@ -21,16 +21,19 @@
 	<br/>
 	<br/>
 	<spring:message code="rende.CategoryInfo" var="categoryInfo"/>
-	<jstl:if test="${filterCategoryId!=0}">
+	<jstl:if test="${!(filterCategoryId==0)}">
 	<fieldset>
 	<legend>${categoryInfo}</legend>
-	<h3>${filterCategory.name}</h3>
-	<h5>${filterCategory.description}</h5>
+	<spring:message code="rende.CategoryInfo.name" var="categoryInfoName"/>
+	<h4 id ="hDeCategory">${categoryInfoName} : ${filterCategory.name}</h4>
+	<spring:message code="rende.CategoryInfo.description" var="categoryInfoDescription"/>
+	<h4 id = "hDeCategory">${categoryInfoDescription} : ${filterCategory.description}</h4>
 	</fieldset>
 	</jstl:if>
 		
 	</form>
 	<br/>
+	
 	
 <security:authorize access="hasRole('USER')">
 	<form action="rende${uri}/list.do" method="get">

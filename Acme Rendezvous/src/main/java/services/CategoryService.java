@@ -71,7 +71,7 @@ public class CategoryService {
 
 		result = this.categoryRepository.findOne(categoryId);
 
-		//Assert.notNull(result); 
+		//Assert.notNull(result); Quito el Assert para que si no le paso ninguna categoría en el controlador con filterCategory me deje hacerlo.
 
 		return result;
 	}
