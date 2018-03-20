@@ -27,7 +27,8 @@ public class ReplyCommentUserController extends AbstractController {
 
 	@Autowired
 	private ReplyCommentService	replyCommentService;
-
+	
+	@Autowired
 	private UserService			userService;
 
 	@Autowired
