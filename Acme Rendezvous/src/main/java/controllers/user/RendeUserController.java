@@ -56,22 +56,27 @@ public class RendeUserController extends AbstractController {
 		Collection<Category>categories;
 		categories = this.categoryService.findAll();
 		final String uri = "/user";
+		int filterCategoryId = 0;
 		final User principal = this.userService.findByPrincipal();
 		Boolean mayorDeEdad = true;
 		final LocalDate now = new LocalDate();
 		final LocalDate nacimiento = new LocalDate(principal.getDateBirth());
 		final int años = Years.yearsBetween(nacimiento, now).getYears();
+		
+		
 		if (años < 18) {
 			mayorDeEdad = false;
 			rendes = this.rendeService.selectNotAdultRendes();
-		} else
+		} else{
 			rendes = this.rendeService.findAll();
+		}
 
 		result = new ModelAndView("rende/list");
 		result.addObject("mayor", mayorDeEdad);
 		result.addObject("principal", principal);
 		result.addObject("rendes", rendes);
 		result.addObject("categories", categories);
+		result.addObject("filterCategoryId", filterCategoryId);
 		result.addObject("uri", uri);
 		return result;
 	}
@@ -113,37 +118,45 @@ public class RendeUserController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET, params = {
-			"filterCategory"
+			"filterCategoryId"
 		})
-		public ModelAndView filterCategory(@RequestParam final Category filterCategory) {
+		public ModelAndView filterCategory(@RequestParam final int filterCategoryId) {
 			final ModelAndView result;
 			Collection<Rende> res = new ArrayList<Rende>();
 			Collection<Category> categories;
+			Category filterCategory;
 			categories = categoryService.findAll();	
 			final User principal = this.userService.findByPrincipal();
 			final String uri = "/user";
+			filterCategory	= this.categoryService.findOne(filterCategoryId);
 			final Boolean mayor = true;
 			final LocalDate now = new LocalDate();
 			final LocalDate nacimiento = new LocalDate(principal.getDateBirth());
 			final int años = Years.yearsBetween(nacimiento, now).getYears();
 			
+			
 			if(años<18){
-				if(filterCategory.equals(categoryService.findRootCategory())){
+				if(filterCategoryId==0){
+					res=rendeService.selectNotAdultRendes();
+				}else if(filterCategory.equals(categoryService.findRootCategory())){
 					res=rendeService.findRendezvousWithCategoriesUnderAge();
 				}else{
-						res=rendeService.findRendezvousByCategoryUnderAge(filterCategory.getId());
+						res=rendeService.findRendezvousByCategoryUnderAge(filterCategoryId);
 				}
 			}else{
-				if(filterCategory.equals(categoryService.findRootCategory())){
+				if(filterCategoryId==0){
+					res=rendeService.findAll();
+				}else if(filterCategory.equals(categoryService.findRootCategory())){
 					res=rendeService.findRendezvousWithCategories();
 				}else{
-					res=rendeService.findRendezvousByCategory(filterCategory.getId());
+					res=rendeService.findRendezvousByCategory(filterCategoryId);
 				}
 			}
 			
 			result = new ModelAndView("rende/list");
 			result.addObject("rendes", res);
 			result.addObject("categories", categories);
+			result.addObject("filterCategory", filterCategory);
 			result.addObject("principal", principal);
 			result.addObject("uri", uri);
 			result.addObject("mayor", mayor);

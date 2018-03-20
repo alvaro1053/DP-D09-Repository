@@ -71,7 +71,7 @@ public class CategoryService {
 
 		result = this.categoryRepository.findOne(categoryId);
 
-		Assert.notNull(result);
+		//Assert.notNull(result); 
 
 		return result;
 	}

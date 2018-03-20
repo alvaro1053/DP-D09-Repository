@@ -74,7 +74,7 @@ public class ServiceServiceTest extends AbstractTest {
 		Object testingData[][]= {
 				
 /*
-4.2 An actor who is authenticated as an administrator must be able to cancel a service that he or she finds inappropriate.
+6.1 An actor who is authenticated as an administrator must be able to cancel a service that he or she finds inappropriate.
  Such services cannot be re-quested for any rendezvous. They must be flagged appropriately when listed.
 */
 				//==========================================================================//

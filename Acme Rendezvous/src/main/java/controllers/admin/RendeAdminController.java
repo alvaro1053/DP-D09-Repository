@@ -44,15 +44,17 @@ public class RendeAdminController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Category>categories;
+		int filterCategoryId = 0;
 		categories = this.categoryService.findAll();
 		result = this.createListModelAndView(null);
 
 		result.addObject("categories", categories);
+		result.addObject("filterCategoryId", filterCategoryId);
 		return result;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET, params = {
-			"filterCategory"
+			"filterCategoryId"
 		})
 		public ModelAndView filterCategory(@RequestParam final int filterCategoryId) {
 			final ModelAndView result;
@@ -64,8 +66,9 @@ public class RendeAdminController extends AbstractController {
 			final Admin principal = this.adminService.findByPrincipal();
 			final String uri = "/admin";
 
-			
-			if(filterCategory.equals(categoryService.findRootCategory())){
+			if(filterCategoryId==0){
+				res=rendeService.findAll();
+			}else if(filterCategory.equals(categoryService.findRootCategory())){
 				res=rendeService.findRendezvousWithCategories();
 			}else{
 				res=rendeService.findRendezvousByCategory(filterCategoryId);
