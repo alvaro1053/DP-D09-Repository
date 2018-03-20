@@ -17,7 +17,8 @@
 		<acme:select items="${categories}" name="filterCategory" itemLabel="name" code="rende.category" path="categories"/>
 	<spring:message code="rende.choose" var="choose"/>
 	<input type="submit" value="${choose}">
-		
+	
+	<h3>${filterCategory}</h3>	
 	</form>
 	<br/>
 	

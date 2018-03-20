@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ServiceRepository;
+import domain.Actor;
 import domain.Admin;
 import domain.Manager;
 import domain.Request;
@@ -33,6 +34,10 @@ public class ServiceService {
 
 	@Autowired
 	private AdminService		adminService;
+	
+	@Autowired
+	private ActorService		actorService;
+
 
 	@Autowired
 	private Validator validator;
@@ -59,6 +64,8 @@ public class ServiceService {
 
 	//  An actor who is not authenticated must be able to browse the list of Services and display them
 	public Collection<domain.Service> findAll() {
+		Actor principal = this.actorService.findByPrincipal();
+		Assert.notNull(principal);
 		final Collection<domain.Service> result = this.serviceRepository.findAll();
 		Assert.notNull(result);
 		return result;
@@ -177,9 +184,12 @@ public class ServiceService {
 		
 		admin = this.adminService.findByPrincipal();
 		Assert.notNull(admin);
+				
+		service.setIsDeleted(true);
 		
 		result = this.serviceRepository.save(service);
-		
+		//Al cancelar un servicio se eliminan sus requests.
+		result.getRequest().removeAll(service.getRequest());
 		
 		return result;
 	}

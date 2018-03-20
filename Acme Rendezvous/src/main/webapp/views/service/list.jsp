@@ -18,13 +18,7 @@
 
 <display:table pagesize="5" class="displaytag" 
 	name="services" requestURI="service/list.do" id="row">
-<!--  	
-	<select name="category">
-        <c:forEach var="item" items="${dept}">
-           <option value="${item.key}">${item.value}</option>
-        </c:forEach>
-     </select>
--->		
+
 	<!-- Esta es una forma provisional (NIVEL C)  -->
 	<security:authorize access="hasRole('MANAGER')">
 		<display:column>
@@ -38,7 +32,9 @@
 	<security:authorize access="hasRole('ADMIN')">
 		<spring:message code="service.confirmCancel" var="confirmCancel"  />
 		<display:column>
+			<jstl:if test="${row.isDeleted == false}">
 				<a href="service/admin/cancel.do?serviceId=${row.id}" onclick="return confirm('${confirmCancel}')"><spring:message code ="service.cancel" /></a>
+			</jstl:if>
 		</display:column>
 	</security:authorize>
 
@@ -53,7 +49,7 @@
 	<display:column property="description" title="${descriptionHeader}"
 		sortable="true" />
 <!-- Picture -->
-		<spring:message code="service.picture"
+	<spring:message code="service.picture"
 		var="picture" />
 	<display:column title="${picture}" > <img src="${row.picture}"  width="auto" height="200"> </display:column>
 			
@@ -66,6 +62,33 @@
 				<img class="alarmImg" src="images/cancel.png" alt="${isCanceled}" title="${isCanceled}"/>
 			</jstl:if>
 		</display:column>
+		
+		<!-- requests -->
+	<spring:message code="service.requests"
+		var="requestHeader" />
+	<display:column title="${requestHeader}">
+	<jstl:choose>
+			<jstl:when test="${not empty row.request}">
+
+				<ul>
+					<jstl:forEach items="${row.request}" var="requests">
+
+						<li><jstl:out value="${requests.rende.name}">
+							</jstl:out></li>
+
+
+					</jstl:forEach>
+				</ul>
+
+			</jstl:when>
+			<jstl:otherwise>
+
+				<spring:message code="service.requests.empty" />
+
+			</jstl:otherwise>
+
+		</jstl:choose>
+	</display:column>
 		
 		<!-- Request -->
 
