@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Admin;
+import domain.Manager;
 import domain.Rende;
+import domain.Service;
 
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
@@ -70,4 +72,29 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	@Query("select sqrt(sum(c.repliesComments.size*c.repliesComments.size)/count(c.repliesComments.size)-(avg(c.repliesComments.size)*avg(c.repliesComments.size))) from Comment c")
 	Double desviationOfRepliesPerComment();
 
+	//Acme-Rendezvous 2.0
+	
+	@Query("select s from Service s where s.request.size = (select max(s2.request.size) from Service s2)")
+	Collection<Service> topSellingServices();
+	
+	@Query("select m from Manager m where ( m.services.size > 1 * (select avg(m2.services.size) from Manager m2))")
+	Collection<Manager> ManagersWithMoreServicesThanTheAverage();
+	
+	@Query("select avg(re.service.category) from Rende r join r.request re") //Creo que no funciona
+	Double AverageCategoriesPerRendezvous();
+	
+	@Query("select avg(r.request.size) from Rende r")
+	Double AverageServicesRequestedPerRende();
+	
+	@Query("select max(r.request.size) from Rende r")
+	Double MaxServicesRequestedPerRende();
+	
+	@Query("select min(r.request.size) from Rende r")
+	Double MinServicesRequestedPerRende();
+	
+	@Query("select sqrt(sum(r.request.size* r.request.size)/count(r.request.size)-(avg(r.request.size)*avg(r.request.size))) from Rende r")
+	Double StandardDesviationServicesRequestedPerRende();
+	
+	@Query("select s from Service s order by s.request.size desc")
+	Collection<Rende> top5SellingServices(); //Limitar en servicio a 5
 }

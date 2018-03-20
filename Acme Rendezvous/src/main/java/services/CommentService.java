@@ -50,10 +50,11 @@ public class CommentService {
 		super();
 	}
 
-	public Comment create() {
+	public Comment create(final int rendeId) {
 		User principal;
 		Comment comment;
 		Date moment;
+		Rende rende;
 		final Collection<ReplyComment> repliesComments = new ArrayList<ReplyComment>();
 
 		moment = new Date(System.currentTimeMillis() - 1);
@@ -62,6 +63,9 @@ public class CommentService {
 		Assert.notNull(principal);
 
 		comment = new Comment();
+		
+		rende = this.rendeService.findOne(rendeId);
+		Assert.isTrue(principal.getrSVPS().contains(rende));
 
 		comment.setMoment(moment);
 		comment.setRepliesComments(repliesComments);
@@ -134,11 +138,11 @@ public class CommentService {
 	public Comment reconstruct(final CommentForm commentForm, final BindingResult binding) {
 		Comment comment;
 		if (commentForm.getId() == 0) {
-			comment = this.create();
+			final Rende rende = this.rendeService.findOne(commentForm.getRende());
+			comment = this.create(rende.getId());
 			comment.setUser(this.userService.findByPrincipal());
 			comment.setPicture(commentForm.getPicture());
 
-			final Rende rende = this.rendeService.findOne(commentForm.getRende());
 			comment.setRende(rende);
 
 			comment.setText(commentForm.getText());
@@ -153,5 +157,9 @@ public class CommentService {
 
 		this.validator.validate(commentForm, binding);
 		return comment;
+	}
+	
+	public void flush(){
+		this.commentRepository.flush();
 	}
 }

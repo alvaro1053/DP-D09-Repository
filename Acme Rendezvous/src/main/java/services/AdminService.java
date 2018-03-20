@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import repositories.AdminRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Admin;
+import domain.Manager;
 import domain.Rende;
 
 @Service
@@ -263,5 +266,78 @@ public class AdminService {
 		res = this.adminRepository.desviationOfRepliesPerQuestion();
 		return res;
 	}
+	
+	
+	//Acme 2.0
+	
+	public Collection<domain.Service> topSellingServices(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Collection<domain.Service> res = this.adminRepository.topSellingServices();
+		return res;
+		
+	}
+	
+	public Collection<Manager> ManagersWithMoreServicesThanTheAverage(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Collection<domain.Manager> res = this.adminRepository.ManagersWithMoreServicesThanTheAverage();
+		return res;
+		
+	}
+	
+	
+	public Collection<Rende> top5SellingServices(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		List<domain.Rende> res = new ArrayList<Rende>(this.adminRepository.top5SellingServices());
+		List<Rende> top = res.subList(0, 4);
+		return top;
+		
+	}
 
+	public Double AverageCategoriesPerRendezvous(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.AverageCategoriesPerRendezvous();
+		return res;
+	}
+	
+	public Double AverageServicesRequestedPerRende(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.AverageServicesRequestedPerRende();
+		return res;
+	}
+	
+	public Double MaxServicesRequestedPerRende(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.MaxServicesRequestedPerRende();
+		return res;
+	}
+	
+	public Double MinServicesRequestedPerRende(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.MinServicesRequestedPerRende();
+		return res;
+	}
+	
+	public Double StandardDesviationServicesRequestedPerRende(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.StandardDesviationServicesRequestedPerRende();
+		return res;
+	}
+	
+	
 }

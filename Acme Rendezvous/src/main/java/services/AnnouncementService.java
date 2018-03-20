@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import repositories.AnnouncementRepository;
 import domain.Admin;
 import domain.Announcement;
+import domain.Manager;
 import domain.Rende;
 import domain.User;
 
@@ -30,7 +31,10 @@ public class AnnouncementService {
 
 	@Autowired
 	private AdminService			adminService;
-
+	
+	
+	@Autowired
+	private ActorService			actorService;
 
 	// Constructors
 
@@ -46,11 +50,13 @@ public class AnnouncementService {
 		principal = this.userService.findByPrincipal();
 		Assert.notNull(principal);
 		Announcement = new Announcement();
+		Assert.notNull(Announcement);
 		return Announcement;
 	}
 
 	//  An actor who is not authenticated must be able to browse the list of Announcements and display them
 	public Collection<Announcement> findAll() {
+
 		final Collection<Announcement> result = this.announcementRepository.findAll();
 		Assert.notNull(result);
 		return result;
@@ -124,19 +130,32 @@ public class AnnouncementService {
 
 	public Collection<Announcement> announcementsChronological(final int rendeId) {
 		Collection<Announcement> result;
-
+		
+		Assert.isTrue(!(this.actorService.findByPrincipal() instanceof Manager));
+	
 		result = this.announcementRepository.announcementsChronological(rendeId);
-
+		Assert.notNull(result);
+		
 		return result;
+		
 	}
 
 	public Collection<Announcement> announcementsChronologicalByUser(final int userId) {
 		Collection<Announcement> result;
+//		User principal = this.userService.findByPrincipal();
+		User given = this.userService.findOne(userId);
 		
 		Assert.notNull(userId);
 		result = this.announcementRepository.announcementsChronologicalByUser(userId);
-
+		Assert.isTrue(!(given.getrSVPS().isEmpty()));
+		
+		Assert.notNull(result);
+		
 		return result;
+	}
+	
+	public void flush(){
+		this.announcementRepository.flush();
 	}
 
 }

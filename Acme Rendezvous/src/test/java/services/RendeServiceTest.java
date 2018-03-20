@@ -38,11 +38,6 @@ public class RendeServiceTest extends AbstractTest {
 	private EntityManager entityManager;
 
 	
-	@Before
-	public void clearCache(){
-		this.entityManager.clear();
-	}
-	
 	
 	@Test
 	public void diverListRende(){
@@ -71,7 +66,9 @@ public class RendeServiceTest extends AbstractTest {
 		};
 		
 		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
 			templateListRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+		this.rollbackTransaction();
 		}
 	}
 
@@ -118,7 +115,9 @@ public class RendeServiceTest extends AbstractTest {
 		};
 		
 		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
 			templateListFilterRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+			this.rollbackTransaction();
 		}
 	}
 
@@ -166,7 +165,9 @@ public class RendeServiceTest extends AbstractTest {
 		};
 		
 		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
 			templateDisplayRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+			this.rollbackTransaction();
 		}
 	}
 
@@ -207,7 +208,9 @@ public class RendeServiceTest extends AbstractTest {
 		};
 		
 		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
 			templateEditRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+			this.rollbackTransaction();
 		}
 	}
 
@@ -238,7 +241,7 @@ public class RendeServiceTest extends AbstractTest {
 		Object testingData[][]= {
 			//En este test debe de saltar error cualquier rol que intente borrar un rende que no sea un admin
 				//Acme Rendezvous (6.2)
-				//{"admin",this.getEntityId("rende2"),null},
+				{"admin",this.getEntityId("rende2"),null},
 				{"user1",this.getEntityId("rende1"),IllegalArgumentException.class},
 				{"user2",this.getEntityId("rende1"),IllegalArgumentException.class}, 
 				{"user1",this.getEntityId("rende4"),IllegalArgumentException.class},  
@@ -249,8 +252,9 @@ public class RendeServiceTest extends AbstractTest {
 		};
 		
 		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
 			templateDeleteByAdmin((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
-		
+			this.rollbackTransaction();
 		}
 	}
 
@@ -277,46 +281,47 @@ public class RendeServiceTest extends AbstractTest {
 		Object testingData[][]= {
 				//TEST POSITIVO: Los usuarios pueden crear rendezvous 5.2
 				//En este caso la URL está vacía pues es opcional
-				{"user1","name","Description",new Date(2019,01,02),"",
+				{"user1","name","Description",new Date(119,01,02),"",
 					14.02,82.2,true,false,false,null},
 				//TEST POSITIVO: Lo mismo pero con un User2
-					{"user2","name","Description",new Date(2017,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
+					{"user2","name","Description",new Date(119,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
 						14.02,82.2,true,false,false,null}, 
 				//TEST POSITIVO: Con URL
-				{"user1","name","Description",new Date(2019,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
+				{"user1","name","Description",new Date(119,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
 					14.02,82.2,true,false,false,null}, 
 					//TEST NEGATIVO: El name no puede estar en blanco
-				{"user1","","Description",new Date(2019,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
+				{"user1","","Description",new Date(119,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
 					14.02,82.2,true,false,false,ConstraintViolationException.class}, 
 					//TEST NEGATIVO: Ni la descripción
-				{"user1","name","",new Date(2019,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
+				{"user1","name","",new Date(119,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
 					14.02,82.2,true,false,false,ConstraintViolationException.class}, 
 					//TEST NEGATIVO: La fecha no puede ser en pasado
-				{"user1","name","Description",new Date(2017,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
+				{"user1","name","Description",new Date(117,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
 					14.02,82.2,true,false,false,ConstraintViolationException.class}, 
 					//TEST NEGATIVO: Las pictures deben de ser una URL
-				{"user1","name","Description",new Date(2017,01,02),"estonoesunaURL",
+				{"user1","name","Description",new Date(119,01,02),"estonoesunaURL",
 					14.02,82.2,true,false,false,ConstraintViolationException.class}, 
 					//TEST NEGATIVO: Rango de coordenadas en el límite
-				{"user1","name","Description",new Date(2017,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
-					90.0,180.0,true,false,false,ConstraintViolationException.class}, 
+				{"user1","name","Description",new Date(119,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
+					90.0,180.0,true,false,false,null}, 
 				//TEST NEGATIVO: Creando un rende para mayor de edad siendo menor
-				{"user2","name","Description",new Date(2017,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
-					14.02,82.2,true,true,false,ConstraintViolationException.class}, 
+				{"user2","name","Description",new Date(119,01,02),"https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",
+					14.02,82.2,true,true,false,IllegalArgumentException.class}, 
 			 //TESTS NEGATIVOS: Cualquier otro rol no debería poder crear un rende
-			/*	{"manager1","name","Description",new Date(2019,01,02),"",
+				{"manager1","name","Description",new Date(2019,01,02),"",
 					14.02,82.2,true,false,false,IllegalArgumentException.class},
 				{"admin","name","Description",new Date(2019,01,02),"",
 					14.02,82.2,true,false,false,IllegalArgumentException.class},
 				{null,"name","Description",new Date(2019,01,02),"",
-					14.02,82.2,true,false,false,IllegalArgumentException.class},*/
+					14.02,82.2,true,false,false,IllegalArgumentException.class},
 				
 		};
 		
 		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
 			templateCreateRende((String) testingData[i][0],(String)  testingData[i][1], (String) testingData[i][2], (Date)  testingData[i][3],(String) testingData[i][4],(Double) testingData[i][5],
 					(Double) testingData[i][6],(Boolean) testingData[i][7],(Boolean) testingData[i][8],(Boolean) testingData[i][9],(Class<?>) testingData[i][10]); 
-		
+			this.rollbackTransaction();
 		}
 	}
 
@@ -369,9 +374,10 @@ public class RendeServiceTest extends AbstractTest {
 		};
 		int size = testing.length;
 		for (int i = 0; i < size; i++) {
+			this.startTransaction();
 			templateRSVP((String) testing[i][0], (Integer) testing[i][1],
 					(Class<?>) testing[i][2], (Boolean) testing[i][3]);
-
+			this.rollbackTransaction();
 		}
 	}
 

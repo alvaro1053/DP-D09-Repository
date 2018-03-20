@@ -14,9 +14,21 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>	
 
 	<form action="rende${uri}/list.do" method="get">
-		<acme:select items="${categories}" name="filterCategory" itemLabel="name" code="rende.category" path="categories"/>
+	<acme:select items="${categories}" name="filterCategoryId" itemLabel="name" code="rende.category" path="categories"/>
 	<spring:message code="rende.choose" var="choose"/>
 	<input type="submit" value="${choose}">
+	
+	<br/>
+	<br/>
+	<spring:message code="rende.CategoryInfo" var="categoryInfo"/>
+	<jstl:if test="${filterCategoryId!=0}">
+	<fieldset>
+	<legend>${categoryInfo}</legend>
+	<h3>${filterCategory.name}</h3>
+	<h5>${filterCategory.description}</h5>
+	</fieldset>
+	</jstl:if>
+		
 	</form>
 	<br/>
 	

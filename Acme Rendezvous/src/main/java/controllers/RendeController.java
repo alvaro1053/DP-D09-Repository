@@ -43,35 +43,42 @@ public class RendeController extends AbstractController {
 		ModelAndView result;
 		Collection<Rende> rendes;
 		Collection<Category>categories;
+		int filterCategoryId = 0;
 		final String uri = "";
 		rendes = this.rendeService.selectNotAdultRendes();
 		categories = this.categoryService.findAll();
 		result = new ModelAndView("rende/list");
 		result.addObject("rendes", rendes);
 		result.addObject("categories", categories);
+		result.addObject("filterCategoryId", filterCategoryId);
 		result.addObject("uri", uri);
 		return result;
 	}	
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET, params = {
-			"filterCategory"
+			"filterCategoryId"
 		})
-		public ModelAndView filterCategory(@RequestParam final Category filterCategory) {
+		public ModelAndView filterCategory(@RequestParam final int filterCategoryId) {
 			final ModelAndView result;
 			Collection<Rende> res = new ArrayList<Rende>();
 			Collection<Category> categories;
+			Category filterCategory;
 			final String uri = "";
+			filterCategory	= this.categoryService.findOne(filterCategoryId);
 			categories = categoryService.findAll();	
 			
-			if(filterCategory.equals(categoryService.findRootCategory())){
+			if(filterCategoryId==0){
+				res=rendeService.selectNotAdultRendes();
+			}else if(filterCategory.equals(categoryService.findRootCategory())){
 				res=rendeService.findRendezvousWithCategoriesUnderAge();
 			}else{
-				res=rendeService.findRendezvousByCategoryUnderAge(filterCategory.getId());
+				res=rendeService.findRendezvousByCategoryUnderAge(filterCategoryId);
 			}
 			
 			result = new ModelAndView("rende/list");
 			result.addObject("rendes", res);
 			result.addObject("categories", categories);
+			result.addObject("filterCategory", filterCategory);
 			result.addObject("uri", uri);
 
 			return result;

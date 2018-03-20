@@ -29,6 +29,9 @@ public class ReplyCommentService {
 
 	@Autowired
 	private AdminService			adminService;
+	
+	@Autowired
+	private CommentService			commentService;
 
 
 	//Constructor
@@ -36,9 +39,10 @@ public class ReplyCommentService {
 		super();
 	}
 
-	public ReplyComment create() {
+	public ReplyComment create(final int commentId) {
 		User principal;
 		ReplyComment replyComment;
+		Comment comment;
 		//		Date moment;//no deberíamos guardar ek momento de la respuesta
 
 		//		moment = new Date(System.currentTimeMillis() - 1);
@@ -48,6 +52,10 @@ public class ReplyCommentService {
 
 		replyComment = new ReplyComment();
 
+		comment=this.commentService.findOne(commentId);
+		Assert.notNull(comment);
+//		Assert.isTrue(replyComment.getComment().equals(comment));//que el comentario al que hago reply sea el mismo al que me pasan
+		
 		replyComment.setUser(principal);
 		//		replyComment.setMoment(moment);
 

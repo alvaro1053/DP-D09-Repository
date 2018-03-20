@@ -27,7 +27,6 @@ public class ReplyCommentUserController extends AbstractController {
 
 	@Autowired
 	private ReplyCommentService	replyCommentService;
-	
 	@Autowired
 	private UserService			userService;
 
@@ -48,17 +47,19 @@ public class ReplyCommentUserController extends AbstractController {
 	public ModelAndView create(@RequestParam final int commentId) {
 		final ModelAndView result;
 		final User principal = this.userService.findByPrincipal();
-		final ReplyComment replyComment = this.replyCommentService.create();
+		final ReplyComment replyComment = this.replyCommentService.create(commentId);
 		Boolean permisos = true;
 		final Comment comment = this.commentService.findOne(commentId);
-		if (comment == null)
+		if (comment == null){
 			permisos = false;
-		else if (!(principal.getrSVPS().contains(comment.getRende())))
+		}
+		else if (!(principal.getrSVPS().contains(comment.getRende()))){
 			permisos = false;
-		else
+		}
+		else{
 			replyComment.setComment(comment);
+		}
 		result = this.createEditModelAndView(replyComment, permisos);
-
 		return result;
 	}
 

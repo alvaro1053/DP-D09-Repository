@@ -44,34 +44,40 @@ public class RendeAdminController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Category>categories;
+		int filterCategoryId = 0;
 		categories = this.categoryService.findAll();
 		result = this.createListModelAndView(null);
 
 		result.addObject("categories", categories);
+		result.addObject("filterCategoryId", filterCategoryId);
 		return result;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET, params = {
-			"filterCategory"
+			"filterCategoryId"
 		})
-		public ModelAndView filterCategory(@RequestParam final Category filterCategory) {
+		public ModelAndView filterCategory(@RequestParam final int filterCategoryId) {
 			final ModelAndView result;
 			Collection<Rende> res = new ArrayList<Rende>();
 			Collection<Category> categories;
+			Category filterCategory;
 			categories = categoryService.findAll();	
+			filterCategory	= this.categoryService.findOne(filterCategoryId);
 			final Admin principal = this.adminService.findByPrincipal();
 			final String uri = "/admin";
 
-			
-			if(filterCategory.equals(categoryService.findRootCategory())){
+			if(filterCategoryId==0){
+				res=rendeService.findAll();
+			}else if(filterCategory.equals(categoryService.findRootCategory())){
 				res=rendeService.findRendezvousWithCategories();
 			}else{
-				res=rendeService.findRendezvousByCategory(filterCategory.getId());
+				res=rendeService.findRendezvousByCategory(filterCategoryId);
 			}
 			
 			result = new ModelAndView("rende/list");
 			result.addObject("rendes", res);
 			result.addObject("categories", categories);
+			result.addObject("filterCategory", filterCategory);
 			result.addObject("principal", principal);
 			result.addObject("uri", uri);
 			return result;
