@@ -147,6 +147,7 @@ public class UserServiceTest extends AbstractTest {
 	
 	@Test
 	public void driverRegistringNewUsersPos(){
+
 		Date over18 = new Date();
 //		Date under18 = new Date();
 		

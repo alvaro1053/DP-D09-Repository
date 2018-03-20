@@ -20,7 +20,7 @@ public class RendeServiceTest extends AbstractTest {
 	private RendeService rendeService;
 	
 	@Test
-	public void diverListAllAndEditRende(){
+	public void driverListAllAndEditRende(){
 		Object testingData[][]= {
 				{"user1",this.getEntityId("rende1"),null}, //Editar un rende que es suyo
 				{"user2",this.getEntityId("rende2"),IllegalArgumentException.class}, //Acceder a todos los rendes siendo menor de edad 
@@ -56,7 +56,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 	
 	@Test
-	public void diverFind(){ //Equivalente a display
+	public void driverFind(){ //Equivalente a display
 		Object testing[][]= {
 				{"user1",this.getEntityId("rende1"),null}, //Display un rende de adultos siendo mayor de edad
 				{"user1",this.getEntityId("rende2"),null}, //Display un rende que no es de adultos siendo mayor de edad
@@ -93,7 +93,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 	
 	@Test
-	public void diverListAllAndDeleteRende(){
+	public void driverListAllAndDeleteRende(){
 		Object testingData[][]= {
 				{"user1",this.getEntityId("rende1"),IllegalArgumentException.class}, //Borrar un rende que es suyo
 				{"user2",this.getEntityId("rende2"),IllegalArgumentException.class}, //Acceder a un rende que es para mayor de edad además de intentar borrarlo
