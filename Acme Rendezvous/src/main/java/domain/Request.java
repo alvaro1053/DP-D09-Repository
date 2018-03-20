@@ -22,7 +22,7 @@ public class Request extends DomainEntity {
 	private Service 					service;
 	
 	
-	@NotBlank
+	
 	public String getComment() {
 		return comment;
 	}

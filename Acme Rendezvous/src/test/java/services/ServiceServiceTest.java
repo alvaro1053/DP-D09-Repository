@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
+import domain.Announcement;
 import domain.Location;
 import domain.Rende;
 import domain.Service;
@@ -201,13 +202,13 @@ public class ServiceServiceTest extends AbstractTest {
 	
 	
 	@Test
-	public void diverCreateRende(){
+	public void diverCreateService(){
 		Object testingData[][]= {
-				//TEST POSITIVO: Los usuarios pueden crear rendezvous 5.2
-				//En este caso la URL está vacía pues es opcional
+				//TEST POSITIVO: Los manager pueden crear services 5.2
+				//En este caso la URL está vacía pues es opcional. 
 				{"manager1","name","Description","https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",false,
 					this.getEntityId("category1"),null},
-				//TEST POSITIVO: Lo mismo pero con un User2
+				//TEST POSITIVO: Lo mismo pero con un User2, NO debe poder crear un service
 					{"user2","name","Description","",false,
 						this.getEntityId("category1"),IllegalArgumentException.class}, 
 				
@@ -215,17 +216,19 @@ public class ServiceServiceTest extends AbstractTest {
 		
 		for (int i = 0; i < testingData.length;i++){
 			this.startTransaction();
-			templateCreateRende((String) testingData[i][0],(String)  testingData[i][1], (String) testingData[i][2],(String) testingData[i][3],
+			templateCreateService((String) testingData[i][0],(String)  testingData[i][1], (String) testingData[i][2],(String) testingData[i][3],
 			(Boolean) testingData[i][4],(int) testingData[i][5],(Class<?>) testingData[i][6]); 
 			this.rollbackTransaction();
 		}
 	}
 
 	
-	protected void templateCreateRende(String username, String name, String description, String picture, Boolean isDeleted, int idCategory, Class<?> expected){
+	protected void templateCreateService(String username, String name, String description, String picture, Boolean isDeleted, int idCategory, Class<?> expected){
 		Class<?> caught;
 		caught = null;
 			
+		try{
+			authenticate(username);
 			ServiceForm serviceForm = this.serviceService.create();
 			serviceForm.setName(name);
 			serviceForm.setDescription(description);
@@ -233,8 +236,7 @@ public class ServiceServiceTest extends AbstractTest {
 			serviceForm.setCategory(this.categoryService.findOne(idCategory));
 			BindingResult binding = null;
 			
-			try{
-			authenticate(username);
+
 			Service service = serviceService.reconstruct(serviceForm, binding);
 			this.serviceService.save(service);
 			serviceService.flush();
