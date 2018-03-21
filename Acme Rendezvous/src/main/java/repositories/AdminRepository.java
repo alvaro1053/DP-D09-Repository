@@ -74,10 +74,10 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 
 	//Acme-Rendezvous 2.0
 	
-	@Query("select s from Service s where s.request.size = (select max(s2.request.size) from Service s2)")
+	@Query("select s.name from Service s where s.request.size = (select max(s2.request.size) from Service s2)")
 	Collection<Service> topSellingServices();
 	
-	@Query("select m from Manager m where ( m.services.size > 1 * (select avg(m2.services.size) from Manager m2))")
+	@Query("select m.name from Manager m where ( m.services.size > 1 * (select avg(m2.services.size) from Manager m2))")
 	Collection<Manager> ManagersWithMoreServicesThanTheAverage();
 	
 	@Query("select avg(re.service.category) from Rende r join r.request re") //Creo que no funciona
@@ -95,6 +95,6 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	@Query("select sqrt(sum(r.request.size* r.request.size)/count(r.request.size)-(avg(r.request.size)*avg(r.request.size))) from Rende r")
 	Double StandardDesviationServicesRequestedPerRende();
 	
-	@Query("select s from Service s order by s.request.size desc")
+	@Query("select s.name from Service s order by s.request.size desc")
 	Collection<Rende> top5SellingServices(); //Limitar en servicio a 5
 }

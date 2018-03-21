@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AdminService;
 
 import controllers.AbstractController;
+import domain.Manager;
 import domain.Rende;
+import domain.Service;
 
 
 @Controller
@@ -42,7 +44,13 @@ public class DashboardAdminController extends AbstractController {
 		desviationOfRSVPPerUser, averageOfAnnouncementPerRende, desviationOfAnnouncementPerRende, averageOfQuestionsPerRende, desviationOfQuestionsPerRende,
 		averageOfRepliesPerComment, desviationOfRepliesPerComment, averageOfRepliesPerQuestion, desviationOfRepliesPerQuestion;
 		Collection<Rende> top10RendesByAttendants, rendesWithMoreAnnouncementsThanTheAverage, rendesWithMoreLinkedThanTheAverage;
-		Double ratioOfUsersWithRendesCreated;
+		Double ratioOfUsersWithRendesCreated; 
+		
+		Collection<Service> topSellingServices;
+		Collection<Manager> ManagersWithMoreServicesThanTheAverage;
+		Double AverageCategoriesPerRendezvous, AverageServicesRequestedPerRende, MaxServicesRequestedPerRende,
+		MinServicesRequestedPerRende, StandardDesviationServicesRequestedPerRende;
+		Collection<Rende> top5SellingServices;
 
 		//Stadistics
 		averageOfRendesPerUser = this.adminService.averageOfRendesPerUser();
@@ -70,7 +78,17 @@ public class DashboardAdminController extends AbstractController {
 		
 		averageOfRepliesPerQuestion= this.adminService.averageOfRepliesPerQuestion();
 		desviationOfRepliesPerQuestion= this.adminService.desviationOfRepliesPerQuestion();
-
+		
+		//Acme-Rendezvous 2.0
+		topSellingServices = this.adminService.topSellingServices();
+		ManagersWithMoreServicesThanTheAverage = this.adminService.ManagersWithMoreServicesThanTheAverage();
+		AverageCategoriesPerRendezvous = this.adminService.AverageCategoriesPerRendezvous();
+		AverageServicesRequestedPerRende = this.adminService.AverageServicesRequestedPerRende();
+		MaxServicesRequestedPerRende = this.adminService.MaxServicesRequestedPerRende();
+		MinServicesRequestedPerRende = this.adminService.MinServicesRequestedPerRende();
+		StandardDesviationServicesRequestedPerRende = this.adminService.StandardDesviationServicesRequestedPerRende();
+		top5SellingServices = this.adminService.top5SellingServices();
+		
 
 		result = new ModelAndView("administrator/dashboard");
 
@@ -92,7 +110,16 @@ public class DashboardAdminController extends AbstractController {
 		result.addObject("ratioOfUsersWithRendesCreated", ratioOfUsersWithRendesCreated);
 		result.addObject("averageOfRepliesPerQuestion", averageOfRepliesPerQuestion);
 		result.addObject("desviationOfRepliesPerQuestion", desviationOfRepliesPerQuestion);
-
+		
+		//Acme-Rendezvous 2.0
+		result.addObject("topSellingServices",topSellingServices);
+		result.addObject("ManagersWithMoreServicesThanTheAverage",ManagersWithMoreServicesThanTheAverage);
+		result.addObject("AverageCategoriesPerRendezvous",AverageCategoriesPerRendezvous);
+		result.addObject("AverageServicesRequestedPerRende",AverageServicesRequestedPerRende);
+		result.addObject("MaxServicesRequestedPerRende",MaxServicesRequestedPerRende);
+		result.addObject("MinServicesRequestedPerRende",MinServicesRequestedPerRende);
+		result.addObject("StandardDesviationServicesRequestedPerRende",StandardDesviationServicesRequestedPerRende);
+		result.addObject("top5SellingServices",top5SellingServices);		
 
 		return result;
 	}

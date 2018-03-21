@@ -61,7 +61,7 @@ in the request.
 				{"user1", "", "Juan Cuesta Sanabria","MasterCard","5220277771031876",7,22,621, "service4", "rende2", IllegalArgumentException.class},
 				//El test consiste en probar que No se pueda hacer request de un servicio si no es válida la tarjeta de credito
 				{"user1", "", "Juan Cuesta Sanabria","MasterCard","0220277771031876",7,22,621, "service4", "rende1", javax.validation.ConstraintViolationException.class},
-				//El test consiste en probar que No se pueda hacer request de un servicio que esté cancelado
+				//El test consiste en probar que No se pueda hacer request de un servicio que esté cancelado(parte de requisito funcional 6.1)
 				{"user1", "", "Juan Cuesta Sanabria","MasterCard","5220277771031876",7,22,621, "service3", "rende1", IllegalArgumentException.class},
 	
 		};
