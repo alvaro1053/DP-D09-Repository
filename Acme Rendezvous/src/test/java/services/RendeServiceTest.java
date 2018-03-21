@@ -1,13 +1,11 @@
 package services;
 
 import java.sql.Date;
+import java.util.Collection;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import domain.Location;
 import domain.Rende;
 import domain.User;
-import forms.RendeForm;
 import utilities.AbstractTest;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -108,7 +104,7 @@ public class RendeServiceTest extends AbstractTest {
 				//Los admins deben de poder listar sin restricciones
 				{"admin",this.getEntityId("rende2"),null}, 
 				//Los usuarios no registrados no deberían de poder listar todos los rendezvous al igual que los usuarios menores
-				//De edad (Acme-Rendezvous 14)
+				//De edad (Acme-Rendezvous 14)/Acme-Rendezvous 4.3
 				{null,this.getEntityId("rende2"),null},
 				//Es el mismo caso que el anterior, se usa en los siguientes tests
 				{null,this.getEntityId("rende1"),null}
@@ -190,7 +186,7 @@ public class RendeServiceTest extends AbstractTest {
 	public void diverEditRende(){
 		Object testingData[][]= {
 				//"An actor who is authenticated as a user must be able to:
-				//Do the same as an actor who is not authenticated, but register to the system. 5.1"
+				//Edit and delete the Rendes. 5.3"
 				//El usuario 1 es el creador del rende1 por lo que debe poder editarlo
 				{"user1",this.getEntityId("rende1"),null},
 				//El usuario 2 no es el creador del rende1 por lo que debe saltar excepción
@@ -224,6 +220,52 @@ public class RendeServiceTest extends AbstractTest {
 			rende.setName("Prueba"); //Las pruebas de constraints se harán en el create puesto que se comprueban en el save tambien
 			rende.setDescription("Test de rende");
 			rendeService.save(rende);
+			rendeService.flush();
+			unauthenticate();
+		} catch(Throwable oops){
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
+	
+	
+	@Test
+	public void diverDeleteByUserRende(){
+		Object testingData[][]= {
+				//"An actor who is authenticated as a user must be able to:
+				//Edit and delete the Rendes. 5.3"
+				//El usuario 1 es el creador del rende1 por lo que debe poder editarlo
+				{"user1",this.getEntityId("rende1"),null},
+				//El usuario 2 no es el creador del rende1 por lo que debe saltar excepción
+				{"user2",this.getEntityId("rende1"),IllegalArgumentException.class}, 
+				//El usuario 1 no es el creador del rende4
+				{"user1",this.getEntityId("rende4"),IllegalArgumentException.class},  
+				//Los managers no deben de poder editar rendes ya que no los crean
+				{"manager1",this.getEntityId("rende4"),IllegalArgumentException.class},
+				//Sobre los administradores no se habla nada sobre que puedan editar ni crear rendes, tan sólo eliminarlos por lo que
+				//Debe saltar error
+				{"admin",this.getEntityId("rende2"),IllegalArgumentException.class}, 
+				//Por supuesto, los usuarios no registrados no pueden borrar rendes
+				{null,this.getEntityId("rende2"),IllegalArgumentException.class},
+				{null,this.getEntityId("rende1"),IllegalArgumentException.class}
+		};
+		
+		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
+			templateDeleteByUserRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+			this.rollbackTransaction();
+		}
+	}
+
+	
+	protected void templateDeleteByUserRende(String username, Integer rendeId, Class<?> expected){
+		Class<?> caught;
+		caught = null;
+		try{
+			authenticate(username);
+			Rende rende = rendeService.findOne(rendeId);
+			rendeService.delete(rende);
 			rendeService.flush();
 			unauthenticate();
 		} catch(Throwable oops){
@@ -358,6 +400,7 @@ public class RendeServiceTest extends AbstractTest {
 	@Test
 	public void diverRSVP(){
 		Object testing[][]= {
+				//Casos de uso Acme-Rendezvous 5.4
 				//User1 es el propietario del rende1 por lo que no puede hacer RSVP ya que está obligado a asistir a ese Rende
 				//Por lo tanto es como si ya hubiera hecho RSVP
 				
@@ -394,6 +437,100 @@ public class RendeServiceTest extends AbstractTest {
 			} else{
 				this.rendeService.rsvp(rende, principal);
 			}
+			rendeService.flush();
+			unauthenticate();
+		} catch(Throwable oops){
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
+	
+	
+	@Test
+	public void diverListRSVP(){
+		Object testingData[][]= {
+				//"An actor who is authenticated as a user must be able to:
+				//List the rendezvouses that he or shes RSVPd.
+				//TEST POSITIVO
+				{"user1",this.getEntityId("rende1"),null},
+				//TEST POSITIVO
+				{"user2",this.getEntityId("rende1"),null}, 
+				//TEST POSITIVO
+				{"user1",this.getEntityId("rende4"),null},  
+				//TEST NEGATIVO: Los managers no pueden tener RSVP
+				{"manager1",this.getEntityId("rende4"),IllegalArgumentException.class},
+				//TEST NEGATIVO: Los admins tampoco
+				{"admin",this.getEntityId("rende2"),IllegalArgumentException.class}, 
+				//TEST NEGATIVO: Los usuarios no registrados tampoco
+				{null,this.getEntityId("rende2"),IllegalArgumentException.class},
+				//TEST NEGATIVO: Los usuarios no registrados tampoco
+				{null,this.getEntityId("rende1"),IllegalArgumentException.class}
+		};
+		
+		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
+			templateListRSVP((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+			this.rollbackTransaction();
+		}
+	}
+
+	
+	protected void templateListRSVP(String username, Integer rendeId, Class<?> expected){
+		Class<?> caught;
+		caught = null;
+		try{
+			authenticate(username);
+			rendeService.findRSVPSByUser();
+			rendeService.flush();
+			unauthenticate();
+		} catch(Throwable oops){
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
+	
+	@Test
+	public void diverLinkRende(){
+		Object testingData[][]= {
+				//"An actor who is authenticated as a user must be able to:
+				//. Link one of the rendezvouses that he or shes created to other similar rendezvouses. 16.4
+				//El usuario 1 es el creador del rende1 por lo que debe poder editarlo
+				{"user1",this.getEntityId("rende1"),null},
+				//El usuario 2 no es el creador del rende1 por lo que debe saltar excepción
+				{"user2",this.getEntityId("rende1"),IllegalArgumentException.class}, 
+				//El usuario 1 no es el creador del rende4
+				{"user1",this.getEntityId("rende4"),IllegalArgumentException.class},  
+				//Los managers no deben de poder editar rendes ya que no los crean
+				{"manager1",this.getEntityId("rende4"),IllegalArgumentException.class},
+				//Sobre los administradores no se habla nada sobre que puedan editar ni crear rendes, tan sólo eliminarlos por lo que
+				//Debe saltar error
+				{"admin",this.getEntityId("rende2"),IllegalArgumentException.class}, 
+				//Por supuesto, los usuarios no registrados no pueden editar rendes
+				{null,this.getEntityId("rende2"),IllegalArgumentException.class},
+				{null,this.getEntityId("rende1"),IllegalArgumentException.class}
+		};
+		
+		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
+			templateLinkRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+			this.rollbackTransaction();
+		}
+	}
+
+	
+	protected void templateLinkRende(String username, Integer rendeId, Class<?> expected){
+		Class<?> caught;
+		caught = null;
+		try{
+			authenticate(username);
+			Rende rendeToLink = rendeService.findOne(rendeId);
+			Rende linked = this.rendeService.findOne(this.getEntityId("rende3"));
+			Collection<Rende> linkeds = rendeToLink.getLinked();
+			linkeds.add(linked);
+			rendeToLink.setLinked(linkeds);
+			rendeService.save(rendeToLink);
 			rendeService.flush();
 			unauthenticate();
 		} catch(Throwable oops){
