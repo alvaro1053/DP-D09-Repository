@@ -339,5 +339,22 @@ public class AdminService {
 		return res;
 	}
 	
+	public Collection<Manager> managersMoreServicesCancelled() {
+		final Collection<Manager> res = new ArrayList<Manager>();
+		final List<Manager> listaDeManagersOrdenada = new ArrayList<Manager>(this.managersMoreServicesCancelled());
+		Manager top =listaDeManagersOrdenada.get(0);
+		res.add(top);	
+		Double maxServiciosEliminados = this.adminRepository.numberOfDeletedServices(top.getId());
+		
+		for (int i = 1; i < listaDeManagersOrdenada.size(); i++){
+			Manager aComprobar = listaDeManagersOrdenada.get(i);
+			if(this.adminRepository.numberOfDeletedServices(aComprobar.getId()) < maxServiciosEliminados)
+				break;
+			else{
+				res.add(aComprobar);
+			}
+		}
+		return res;
+	}
 	
 }

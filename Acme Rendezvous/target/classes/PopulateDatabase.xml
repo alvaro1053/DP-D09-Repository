@@ -1022,10 +1022,9 @@
 	<property name="picture" value=""/>
 	<property name="isDeleted" value="false"/>
 	<property name="manager" ref="manager1"/>
-	<property name ="category" ref="category2"/>
+	<property name ="category" ref="category4"/>
 	<property name="request">
 	<list>
-		<ref bean ="request3"/>
 	</list>
 	</property>
 	</bean>
@@ -1037,9 +1036,10 @@
 	<property name="picture" value=""/>
 	<property name="isDeleted" value="true"/>
 	<property name="manager" ref="manager3"/>
-	<property name ="category" ref="category4"/>
+	<property name ="category" ref="category2"/>
 	<property name="request">
 	<list>
+	<ref bean ="request3"/>
 	</list>
 	</property>
 	</bean>
