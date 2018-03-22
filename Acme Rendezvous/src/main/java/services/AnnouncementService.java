@@ -142,12 +142,13 @@ public class AnnouncementService {
 
 	public Collection<Announcement> announcementsChronologicalByUser(final int userId) {
 		Collection<Announcement> result;
-//		User principal = this.userService.findByPrincipal();
+		User principal = this.userService.findByPrincipal();
 		User given = this.userService.findOne(userId);
 		
 		Assert.notNull(userId);
 		result = this.announcementRepository.announcementsChronologicalByUser(userId);
 		Assert.isTrue(!(given.getrSVPS().isEmpty()));
+		Assert.isTrue(principal.getId()==userId);
 		
 		Assert.notNull(result);
 		
