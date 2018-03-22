@@ -116,5 +116,5 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	Collection<Manager> managersMoreServicesCancelled();
 	
 	@Query ("select count(s.category) from Rende r join r.request req join req.service s group by r")
-	Collection<Double> categoriesPerRende();
+	Collection<Long> categoriesPerRende();
 }

@@ -28,7 +28,7 @@ public class AdminService {
 	private AdminRepository	adminRepository;
 	
 	@Autowired
-	private CategoryService	categoryService;
+	private RendeService	rendeService;
 
 
 	// Supporting services
@@ -304,10 +304,13 @@ public class AdminService {
 	}
 
 	public Double AverageCategoriesPerRendezvous(){
-		Admin principal;
-		principal = this.findByPrincipal();
-		Assert.notNull(principal);
-		Double res = this.adminRepository.AverageCategoriesPerRendezvous();
+		Double sum = 0.0;
+		Double res = 0.0;
+		Collection<Long> categoriesPerRende = this.adminRepository.categoriesPerRende();
+		for (Long categories: categoriesPerRende){
+			sum += categories * 1.0;
+		}
+		res = sum/this.rendeService.findAll().size();
 		return res;
 	}
 	
@@ -381,15 +384,5 @@ public class AdminService {
 		
 	}
 	
-	public Double AverageCategoriesPerRende(){
-		Double sum = 0.0;
-		Double res = 0.0;
-		Collection<Double> categoriesPerRende = this.adminRepository.categoriesPerRende();
-		for (Double categories: categoriesPerRende){
-			sum += categories;
-		}
-		res = sum/this.categoryService.findAll().size();
-		return res;
-	}
 	
 }

@@ -42,12 +42,11 @@
 <!-- name -->
 	<spring:message code="service.name"
 		var="nameHeader" />
-	<display:column title="${nameHeader}" property="name"/>
+	<display:column title="${nameHeader}" property="name" sortable="true" />
 <!-- description -->
 	<spring:message code="service.description"
 		var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}"
-		sortable="true" />
+	<display:column property="description" title="${descriptionHeader}"/>
 <!-- Picture -->
 	<spring:message code="service.picture"
 		var="picture" />
