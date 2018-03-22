@@ -107,4 +107,11 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	
 	@Query("select s.name from Service s order by s.request.size desc")
 	Collection<Rende> top5SellingServices(); //Limitar en servicio a 5
+	
+	
+	@Query("select avg((select 1.0*count(s) from Service s where s.category = c)/(select count(s) from Service s)) from Category c")
+	Double AverageOfRatioOfServicesPerCategory();
+	
+
+
 }
