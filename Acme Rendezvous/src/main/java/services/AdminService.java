@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
 
+import org.junit.experimental.categories.Categories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class AdminService {
 	// Managed Repository
 	@Autowired
 	private AdminRepository	adminRepository;
+	
+	@Autowired
+	private CategoryService	categoryService;
 
 
 	// Supporting services
@@ -339,24 +343,32 @@ public class AdminService {
 		return res;
 	}
 	
-	public Collection<Manager> managersMoreServicesCancelled() {
+	public Collection<Manager> ManagersWithMoreServicesCancelled(){
+		 	Admin principal;
+		    principal = this.findByPrincipal();
+		    Assert.notNull(principal);
+		    final Collection<Manager> res = new ArrayList<Manager>();
+		    final List<Manager> listaDeManagersOrdenada = new ArrayList<Manager>(this.adminRepository.ManagersWithMoreServicesCancelled());
+		    Manager top =listaDeManagersOrdenada.get(0);
+		    res.add(top);  
+		    Double maxServiciosEliminados = this.adminRepository.numberOfDeletedServices(top.getId());
+		    
+		    for (int i = 1; i < listaDeManagersOrdenada.size(); i++){
+		      Manager aComprobar = listaDeManagersOrdenada.get(i);
+		      if(this.adminRepository.numberOfDeletedServices(aComprobar.getId()) < maxServiciosEliminados)
+		        break;
+		      else{
+		        res.add(aComprobar);
+		      }
+		    }
+		    return res;
+	}
+	
+	public Double AverageRatioOfServicesInEachCategory(){
 		Admin principal;
 		principal = this.findByPrincipal();
 		Assert.notNull(principal);
-		final Collection<Manager> res = new ArrayList<Manager>();
-		final List<Manager> listaDeManagersOrdenada = new ArrayList<Manager>(this.adminRepository.managersMoreServicesCancelled());
-		Manager top =listaDeManagersOrdenada.get(0);
-		res.add(top);	
-		Double maxServiciosEliminados = this.adminRepository.numberOfDeletedServices(top.getId());
-		
-		for (int i = 1; i < listaDeManagersOrdenada.size(); i++){
-			Manager aComprobar = listaDeManagersOrdenada.get(i);
-			if(this.adminRepository.numberOfDeletedServices(aComprobar.getId()) < maxServiciosEliminados)
-				break;
-			else{
-				res.add(aComprobar);
-			}
-		}
+		Double res = this.adminRepository.AverageRatioOfServicesInEachCategory();
 		return res;
 	}
 	
@@ -367,6 +379,17 @@ public class AdminService {
 		Double res = this.adminRepository.AverageOfRatioOfServicesPerCategory();
 		return res;
 		
+	}
+	
+	public Double AverageCategoriesPerRende(){
+		Double sum = 0.0;
+		Double res = 0.0;
+		Collection<Double> categoriesPerRende = this.adminRepository.categoriesPerRende();
+		for (Double categories: categoriesPerRende){
+			sum += categories;
+		}
+		res = sum/this.categoryService.findAll().size();
+		return res;
 	}
 	
 }

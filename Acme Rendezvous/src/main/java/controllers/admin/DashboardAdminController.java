@@ -47,9 +47,9 @@ public class DashboardAdminController extends AbstractController {
 		Double ratioOfUsersWithRendesCreated; 
 		
 		Collection<Service> topSellingServices;
-		Collection<Manager> ManagersWithMoreServicesThanTheAverage;
+		Collection<Manager> ManagersWithMoreServicesThanTheAverage, ManagersWithMoreServicesCancelled;
 		Double AverageCategoriesPerRendezvous, AverageServicesRequestedPerRende, MaxServicesRequestedPerRende,
-		MinServicesRequestedPerRende, StandardDesviationServicesRequestedPerRende;
+		MinServicesRequestedPerRende, StandardDesviationServicesRequestedPerRende, AverageRatioOfServicesInEachCategory;
 		Collection<Rende> top5SellingServices;
 
 		//Stadistics
@@ -88,7 +88,9 @@ public class DashboardAdminController extends AbstractController {
 		MinServicesRequestedPerRende = this.adminService.MinServicesRequestedPerRende();
 		StandardDesviationServicesRequestedPerRende = this.adminService.StandardDesviationServicesRequestedPerRende();
 		top5SellingServices = this.adminService.top5SellingServices();
-		
+		ManagersWithMoreServicesCancelled = this.adminService.ManagersWithMoreServicesCancelled();
+		AverageRatioOfServicesInEachCategory = this.adminService.AverageRatioOfServicesInEachCategory();
+				
 
 		result = new ModelAndView("administrator/dashboard");
 
@@ -120,6 +122,8 @@ public class DashboardAdminController extends AbstractController {
 		result.addObject("MinServicesRequestedPerRende",MinServicesRequestedPerRende);
 		result.addObject("StandardDesviationServicesRequestedPerRende",StandardDesviationServicesRequestedPerRende);
 		result.addObject("top5SellingServices",top5SellingServices);		
+		result.addObject("ManagersWithMoreServicesCancelled", ManagersWithMoreServicesCancelled);
+		result.addObject("AverageRatioOfServicesInEachCategory", AverageRatioOfServicesInEachCategory);
 
 		return result;
 	}

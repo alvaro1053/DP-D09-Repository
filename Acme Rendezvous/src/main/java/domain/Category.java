@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 
 @Entity
@@ -27,6 +28,7 @@ public class Category extends DomainEntity {
 	
 	@NotBlank
 	@Column(unique = true)
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getName() {
 		return name;
 	}
@@ -54,6 +56,7 @@ public class Category extends DomainEntity {
 	}
 	
 	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getDescription() {
 		return description;
 	}

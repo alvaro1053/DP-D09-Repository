@@ -251,49 +251,23 @@
 		
 		<tr>
 			<th><spring:message code="administrator.query" /></th>
-			<th><spring:message code="administrator.value" /></th>
-		
-		</tr>
-		
-		<tr>
-			<td><spring:message code="administrator.AverageServicesRequestedPerRende" /></td>
-			<td>${AverageServicesRequestedPerRende }</td>
-		</tr>
-	</table>
-	
-		<!-- 5 -->
-	<table class="displayStyle">
-		
-		<tr>
-			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.average" /></th>
 			<th><spring:message code="administrator.value.Min" /></th>
 			<th><spring:message code="administrator.value.Max" /></th>
-		
-		</tr>
-		
-		<tr>
-			<td><spring:message code="administrator.MinMaxServicesRequestedPerRende" /></td>
-			<td>${MinServicesRequestedPerRende }</td>
-			<td>${MaxServicesRequestedPerRende }</td>
-		</tr>
-	</table>
-	
-		<!-- 6 -->
-	<table class="displayStyle">
-		
-		<tr>
-			<th><spring:message code="administrator.query" /></th>
-			<th><spring:message code="administrator.value" /></th>
+			<th><spring:message code="administrator.deviation" /></th>
 		
 		</tr>
 		
 		<tr>
 			<td><spring:message code="administrator.StandardDesviationServicesRequestedPerRende" /></td>
+			<td>${AverageServicesRequestedPerRende }</td>
+			<td>${MinServicesRequestedPerRende }</td>
+			<td>${MaxServicesRequestedPerRende }</td>
 			<td>${StandardDesviationServicesRequestedPerRende }</td>
 		</tr>
 	</table>
 	
-		<!-- 7 -->
+		<!-- 5 -->
 	<table class="displayStyle">
 		
 		<tr>
@@ -305,6 +279,40 @@
 		<tr>
 			<td><spring:message code="administrator.top5SellingServices" /></td>
 			<td>${top5SellingServices }</td>
+		</tr>
+	</table>
+	
+	<!-- 6 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.ManagersWithMoreServicesCancelled" /></td>
+			
+			<jstl:forEach items="${ManagersWithMoreServicesCancelled}" var="manager">  
+				<td><jstl:out value ="${manager.name}" /></td>
+			</jstl:forEach>
+			
+		</tr>
+	</table>
+	
+	<!-- 7 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.AverageRatioOfServicesInEachCategory" /></td>
+			<td>${AverageRatioOfServicesInEachCategory }</td>
 		</tr>
 	</table>
 	
