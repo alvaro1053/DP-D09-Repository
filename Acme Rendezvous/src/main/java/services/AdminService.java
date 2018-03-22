@@ -340,8 +340,11 @@ public class AdminService {
 	}
 	
 	public Collection<Manager> managersMoreServicesCancelled() {
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
 		final Collection<Manager> res = new ArrayList<Manager>();
-		final List<Manager> listaDeManagersOrdenada = new ArrayList<Manager>(this.managersMoreServicesCancelled());
+		final List<Manager> listaDeManagersOrdenada = new ArrayList<Manager>(this.adminRepository.managersMoreServicesCancelled());
 		Manager top =listaDeManagersOrdenada.get(0);
 		res.add(top);	
 		Double maxServiciosEliminados = this.adminRepository.numberOfDeletedServices(top.getId());
@@ -355,6 +358,15 @@ public class AdminService {
 			}
 		}
 		return res;
+	}
+	
+	public Double AverageOfRatioOfServicesPerCategory(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.AverageOfRatioOfServicesPerCategory();
+		return res;
+		
 	}
 	
 }
