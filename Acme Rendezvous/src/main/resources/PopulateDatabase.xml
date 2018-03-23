@@ -68,18 +68,6 @@
 		</property>
 	</bean>
 	
-	<bean id="userAccount8" class="security.UserAccount">
-		<property name="username" value="user4" />
-		<property name="password" value="3f02ebe3d7929b091e3d8ccfde2f3bc6" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="USER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-	
 	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="manager1" />
 		<property name="password" value="c240642ddef994358c96da82c0361a58" />
@@ -266,46 +254,7 @@
 	
 	</bean>
 	
-		<!-- User4 -->
 	
-	<bean class="domain.User" id="user4">
-	<property name="name" value="Imaginario" />
-	<property name="surname" value="Imaginario" />
-	<property name="email" value="imaginario@gmail.com"/>
-	<property name="phone" value=""/>	<!-- ya que es opcional -->
-	<property name="address" value=""/>   <!-- ya que es opcional -->
-	<property name="dateBirth" value="1960/12/10"/>
-	
-	<property name="userAccount" ref="userAccount8"/>
-	
-	<property name="comments">
-	<list>
-	</list>
-	</property>
-	
-	<property name="rSVPS">
-	<list>
-	</list>
-	</property>
-	
-	<property name="repliesComments">
-	<list>
-	</list>
-	</property>
-	
-	<property name="repliesQuestions">
-	<list>
-	</list>
-	</property>
-	
-	<property name="rendes">
-	<list>
-	</list>
-	</property>
-	
-	</bean>
- 
- 
 	<!-- Admins -->
 	
 	<bean class="domain.Admin" id="admin1">

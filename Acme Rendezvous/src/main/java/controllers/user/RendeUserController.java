@@ -354,7 +354,7 @@ public class RendeUserController extends AbstractController {
 	private ModelAndView createEditModelAndView(final Boolean finalModeOption, final RendeForm rendeForm) {
 
 		final ModelAndView result;
-		final Collection<Rende> rendes = this.rendeService.findAll();
+		final Collection<Rende> rendes = this.rendeService.selectNotAdultRendes();
 
 		result = new ModelAndView("rende/edit");
 		result.addObject("rendeForm", rendeForm);
@@ -366,7 +366,7 @@ public class RendeUserController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final RendeForm rendeForm, final String message) {
 		final ModelAndView result;
-		final Collection<Rende> rendes = this.rendeService.findAll();
+		final Collection<Rende> rendes = this.rendeService.selectNotAdultRendes();
 
 		result = new ModelAndView("rende/edit");
 		result.addObject("rendeForm", rendeForm);

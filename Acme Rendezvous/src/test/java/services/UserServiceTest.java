@@ -272,12 +272,6 @@ public class UserServiceTest extends AbstractTest {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	//Auxiliary method for registring a new user to the system
 	
 	protected ActorForm registringActor(String name, String surname, String email,
