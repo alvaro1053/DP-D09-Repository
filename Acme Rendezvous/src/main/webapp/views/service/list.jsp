@@ -94,9 +94,11 @@
 <security:authorize access="hasRole('USER')">
 
 <spring:message code="service.request" var="request"/>
-<display:column title="${request}">
+		<display:column title="${request}">
+			<jstl:if test="${row.isDeleted == false}">
 				<a href="request/user/create.do?serviceId=${row.id}">${request}</a>
-			</display:column>
+			</jstl:if>
+		</display:column>
 </security:authorize>
 	
 	
