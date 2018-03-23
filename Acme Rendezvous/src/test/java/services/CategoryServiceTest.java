@@ -22,34 +22,6 @@ public class CategoryServiceTest extends AbstractTest {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@Autowired
-	private RendeService rendeService;
-	
-	@Test
-	public void driverListRendezvousByCategory(){
-		Object testingData[][]= {
-				{null,this.getEntityId("category2"),null},
-				{null, 50, null}
-		};
-		
-		for (int i = 0; i < testingData.length;i++){
-			templateListRendezvousByCategory((String) testingData[i][0], (int) testingData[i][1] ,(Class<?>) testingData[i][2]); 
-		
-		}
-	}
-
-	protected void templateListRendezvousByCategory(String username, int categoryId,Class<?> expected){
-		Class<?> caught;
-		caught = null;
-		try{
-			authenticate(username);
-			this.rendeService.findRendezvousByCategory(categoryId);
-			unauthenticate();
-		} catch(Throwable oops){
-			caught = oops.getClass();
-		}
-		checkExceptions(expected, caught);
-	}
 	
 	
 	@Test

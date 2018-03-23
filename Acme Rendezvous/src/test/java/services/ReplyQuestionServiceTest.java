@@ -20,6 +20,7 @@ import utilities.AbstractTest;
 @Transactional
 public class ReplyQuestionServiceTest extends AbstractTest {
 	
+	//Under test service
 	@Autowired
 	private ReplyQuestionService replyQuestionService;
 	
