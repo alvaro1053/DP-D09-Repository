@@ -173,7 +173,7 @@ public class RendeServiceTest extends AbstractTest {
 		caught = null;
 		try{
 			authenticate(username);
-			Rende rende = rendeService.findOne(rendeId);
+			rendeService.findOne(rendeId);
 			rendeService.flush();
 			unauthenticate();
 		} catch(Throwable oops){

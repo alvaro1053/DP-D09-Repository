@@ -57,7 +57,8 @@ public class CategoryService {
 
 	public Collection<Category> findAll() {
 		Collection<Category> result;
-
+		
+	
 
 		result = this.categoryRepository.findAll();
 
@@ -228,7 +229,7 @@ public class CategoryService {
 
 	}
 
-	public Collection<Category> findAllPossibleParrentCategories(final Category category) {
+	public Collection<Category> findAllPossibleParentCategories(final Category category) {
 		Admin principal;
 
 		Collection<Category> allCategories;

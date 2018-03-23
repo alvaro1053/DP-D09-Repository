@@ -1,5 +1,9 @@
 #./src/main/resources/Entities.map
-#Thu Mar 22 13:23:56 CET 2018
+<<<<<<< HEAD
+#Fri Mar 23 11:29:45 CET 2018
+=======
+#Thu Mar 22 16:54:11 CET 2018
+>>>>>>> 4cd0653bab4fa9980ad0029adfce7e339350844f
 question1=485
 request4=532
 request3=531

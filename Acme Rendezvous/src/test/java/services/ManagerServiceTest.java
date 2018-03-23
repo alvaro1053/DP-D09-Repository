@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import domain.Manager;
-import domain.User;
 import forms.ActorForm;
 
 import security.UserAccount;

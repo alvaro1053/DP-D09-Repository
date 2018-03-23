@@ -77,7 +77,7 @@ public class AnnouncementUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Announcement> announcements;
 		final User principal = this.userService.findByPrincipal();
-		Boolean permisos = false;
+		Boolean permisos;
 		announcements = this.announcementService.announcementsChronologicalByUser(principal.getId());
 
 		permisos = true;

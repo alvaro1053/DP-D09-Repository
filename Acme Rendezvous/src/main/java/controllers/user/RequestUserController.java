@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.RequestService;
 import services.ServiceService;
@@ -53,7 +54,7 @@ public class RequestUserController extends AbstractController {
 	// Create
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView filter(@RequestParam final int serviceId, @CookieValue(value = "CreditCard" ,defaultValue = "0")String cookie) {
+	public ModelAndView filter(@RequestParam final int serviceId, @CookieValue(value = "CreditCard" ,defaultValue = "0")String cookie, RedirectAttributes redir) {
 		ModelAndView result;
 		Request request = new Request();
 		try{
@@ -69,6 +70,7 @@ public class RequestUserController extends AbstractController {
 		result = createEditModelAndView(request);
 		}catch(Throwable oops){
 			result = new ModelAndView("redirect:../../service/list.do");
+			redir.addFlashAttribute("message", "service.permision");
 		}
 		
 		

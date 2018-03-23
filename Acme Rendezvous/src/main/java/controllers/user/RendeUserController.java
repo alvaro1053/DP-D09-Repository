@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.CategoryService;
 import services.RendeService;
@@ -204,14 +205,14 @@ public class RendeUserController extends AbstractController {
 	// Edition ----------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int rendeId) {
+	public ModelAndView edit(@RequestParam final int rendeId,RedirectAttributes redir) {
 		ModelAndView result;
 		User principal;
 		Rende rende;
 		Boolean permisos;
 		RendeForm rendeForm;
 		final Boolean finalModeOption = true;
-
+		try{
 		principal = this.userService.findByPrincipal();
 		Assert.notNull(principal);
 
@@ -225,6 +226,10 @@ public class RendeUserController extends AbstractController {
 
 		result.addObject("permisos", permisos);
 		result.addObject("isDeleted", isDeleted);
+		} catch (Throwable oops){
+		result = new ModelAndView("redirect:../user/list.do");
+		redir.addFlashAttribute("message", "rende.permision");
+		}
 
 		return result;
 	}

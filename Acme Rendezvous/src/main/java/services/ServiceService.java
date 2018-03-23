@@ -108,6 +108,7 @@ public class ServiceService {
 		domain.Service result;
 
 		result = this.serviceRepository.findOne(ServiceId);
+		Assert.notNull(result);
 
 		return result;
 

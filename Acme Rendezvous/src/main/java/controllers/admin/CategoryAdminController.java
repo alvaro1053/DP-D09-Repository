@@ -133,7 +133,7 @@ public class CategoryAdminController extends AbstractController {
 		Collection<Category> allPossibleParents;
 
 		if (category.getId() != 0)
-			allPossibleParents = this.categoryService.findAllPossibleParrentCategories(category);
+			allPossibleParents = this.categoryService.findAllPossibleParentCategories(category);
 		else
 			allPossibleParents = this.categoryService.findAll();
 

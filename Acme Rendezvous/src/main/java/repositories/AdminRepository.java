@@ -112,6 +112,9 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	@Query("select avg((select 1.0*count(s) from Service s where s.category = c)/(select count(s) from Service s)) from Category c")
 	Double AverageOfRatioOfServicesPerCategory();
 	
-
-
+	@Query("select s.manager from Service s where s.isDeleted=true group by s.manager order by count(s) DESC")
+	Collection<Manager> managersMoreServicesCancelled();
+	
+	@Query ("select count(s.category) from Rende r join r.request req join req.service s group by r")
+	Collection<Long> categoriesPerRende();
 }
