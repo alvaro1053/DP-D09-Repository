@@ -36,7 +36,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 	
 	@Test
-	public void diverListRende(){
+	public void driverListRende(){
 		Object testingData[][]= {
 				//"An actor who is authenticated as a user must be able to:
 				//Do the same as an actor who is not authenticated, but register to the system. 5.1"
@@ -85,7 +85,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 	
 	@Test
-	public void diverListFilterRende(){
+	public void driverListFilterRende(){
 		Object testingData[][]= {
 				//"An actor who is authenticated as a user must be able to:
 				//Do the same as an actor who is not authenticated, but register to the system. 5.1"
@@ -134,7 +134,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 	
 	@Test
-	public void diverDisplayRende(){
+	public void driverDisplayRende(){
 		Object testingData[][]= {
 				//"An actor who is authenticated as a user must be able to:
 				//Do the same as an actor who is not authenticated, but register to the system. 5.1"
@@ -183,7 +183,7 @@ public class RendeServiceTest extends AbstractTest {
 	}
 	
 	@Test
-	public void diverEditRende(){
+	public void driverEditRende(){
 		Object testingData[][]= {
 				//"An actor who is authenticated as a user must be able to:
 				//Edit and delete the Rendes. 5.3"
@@ -231,7 +231,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 	
 	@Test
-	public void diverDeleteByUserRende(){
+	public void driverDeleteByUserRende(){
 		Object testingData[][]= {
 				//"An actor who is authenticated as a user must be able to:
 				//Edit and delete the Rendes. 5.3"
@@ -279,7 +279,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 
 	@Test
-	public void diverDeleteByAdmin(){
+	public void driverDeleteByAdmin(){
 		Object testingData[][]= {
 			//En este test debe de saltar error cualquier rol que intente borrar un rende que no sea un admin
 				//Acme Rendezvous (6.2)
@@ -319,7 +319,7 @@ public class RendeServiceTest extends AbstractTest {
 
 	
 	@Test
-	public void diverCreateRende(){
+	public void driverCreateRende(){
 		Object testingData[][]= {
 				//TEST POSITIVO: Los usuarios pueden crear rendezvous 5.2
 				//En este caso la URL está vacía pues es opcional
@@ -398,7 +398,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 
 	@Test
-	public void diverRSVP(){
+	public void driverRSVP(){
 		Object testing[][]= {
 				//Casos de uso Acme-Rendezvous 5.4
 				//User1 es el propietario del rende1 por lo que no puede hacer RSVP ya que está obligado a asistir a ese Rende
@@ -448,7 +448,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 	
 	@Test
-	public void diverListRSVP(){
+	public void driverListRSVP(){
 		Object testingData[][]= {
 				//"An actor who is authenticated as a user must be able to:
 				//List the rendezvouses that he or shes RSVPd.
@@ -492,7 +492,7 @@ public class RendeServiceTest extends AbstractTest {
 	
 	
 	@Test
-	public void diverLinkRende(){
+	public void driverLinkRende(){
 		Object testingData[][]= {
 				//"An actor who is authenticated as a user must be able to:
 				//. Link one of the rendezvouses that he or shes created to other similar rendezvouses. 16.4
@@ -539,5 +539,36 @@ public class RendeServiceTest extends AbstractTest {
 		checkExceptions(expected, caught);
 	}
 	
+	
+	//=====================================================
+	 //Listar rendezvous por categoria
+	 //
+	 //Requisito bajo testing Acme Rendezvous 2.0 - B(10.1)
+	 //====================================================
+	 
+	 @Test
+	 public void driverListRendezvousByCategory(){
+	  Object testingData[][]= {
+		    {null,this.getEntityId("category2"),null},
+	  };
+	  
+	  for (int i = 0; i < testingData.length;i++){
+		  templateListRendezvousByCategory((String) testingData[i][0], (int) testingData[i][1] ,(Class<?>) testingData[i][2]); 
+	  
+	  }
+	 }
+
+	 protected void templateListRendezvousByCategory(String username, int categoryId,Class<?> expected){
+	  Class<?> caught;
+	  caught = null;
+	  try{
+		   authenticate(username);
+		   this.rendeService.findRendezvousByCategory(categoryId);
+		   unauthenticate();
+	  } catch(Throwable oops){
+		  caught = oops.getClass();
+	  }
+	  checkExceptions(expected, caught);
+	 }
 	
 }
