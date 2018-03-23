@@ -26,7 +26,16 @@ public class CategoryServiceTest extends AbstractTest {
 	
 	@Test
 	public void driverListCategoriesAsAdmin(){
+/*
+ 11. An actor who is authenticated as an administrator must be able to:
+1. Manage the categories of services, which includes LISTING, creating, updating, delet-ing, and re-organising them in the category hierarchies.		
+ */
+		
 		Object testingData[][]= {
+				//==========================================================================//
+				//TEST POSITIVO
+				//
+				//Comprueba que pueda listar correctamente las categorías un admin
 				{"admin",null}
 		};
 		
@@ -52,8 +61,23 @@ public class CategoryServiceTest extends AbstractTest {
 	
 	@Test
 	public void driverCreateCategoriesAsAdmin(){
+
+ /*
+ 11. An actor who is authenticated as an administrator must be able to:
+1. Manage the categories of services, which includes listing, CREATING, updating, delet-ing, and re-organising them in the category hierarchies.		
+ */		
+ 
+		
 		Object testingData[][]= {
+				//==========================================================================//
+				//TEST POSITIVO
+				//
+				//Comprueba que una admin pueda crear correctamente una categoría
 				{"admin",null},
+				//==========================================================================//
+				//TEST NEGATIVO 
+				//
+				//Comprueba que un actor no identificado NO pueda crear una categoría
 				{null, IllegalArgumentException.class}
 		};
 		
@@ -77,43 +101,29 @@ public class CategoryServiceTest extends AbstractTest {
 		
 	}
 	
-	@Test
-	public void driverSaveCategoryAsAdmin(){
-		Object testingData[][]= {
-				{"admin", super.getEntityId("category2"),null},
-				{null, super.getEntityId("category2"),IllegalArgumentException.class}
-		};
-		
-		for (int i = 0; i < testingData.length;i++){
-			templateSaveCategoryAsAdmin((String) testingData[i][0], (int) testingData[i][1],(Class<?>) testingData[i][2]); 
-		
-		}
-	}
-
-	protected void templateSaveCategoryAsAdmin(String username, int categoryId ,Class<?> expected) {
-		Class<?> caught;
-		caught = null;
-		
-		try{
-			super.authenticate(username);
-			Category category =  this.categoryService.findOne(categoryId);
-			this.categoryService.save(category);
-			super.unauthenticate();
-		}catch(Throwable oops){
-			caught = oops.getClass();
-		}
-		checkExceptions(expected, caught);
-		
-	}
-
 	
-	//Reorganizar categorias tambien
+	
 	@Test
 	public void driverUpdateCategoryAsAdmin(){
+/*
+ 11. An actor who is authenticated as an administrator must be able to:
+1. Manage the categories of services, which includes listing, creating, UPDATING, delet-ing, AND REORGANIZING them in the category hierarchies.		
+*/		
+		
 		Object testingData[][]= {
+				//==========================================================================//
+				//TESTS POSITIVOS
+				//
+				//Comprueba que una admin pueda updatear correctamente una categoría
 				{"admin", super.getEntityId("category2"),false,null},
-				{null, super.getEntityId("category2"),false,IllegalArgumentException.class},
+				//Comprueba que una admin pueda reorganizar la jerarquía de una categoría
 				{"admin", super.getEntityId("category4"), true, null},
+				//==========================================================================//
+				//TESTS NEGATIVOS
+				//
+				//Comprueba que un actor no identificado NO pueda updatear una categoría
+				{null, super.getEntityId("category2"),false,IllegalArgumentException.class},
+				//Comprueba que un actor no identificado NO pueda reorganizar la jerarquía deuna categoría
 				{null, super.getEntityId("category4"), true, IllegalArgumentException.class}
 		};
 		
@@ -148,11 +158,23 @@ public class CategoryServiceTest extends AbstractTest {
 	}
 
 	
-	//Reorganizar categorias tambien
 		@Test
 		public void driverDeleteCategoryAsAdmin(){
+/*
+ 11. An actor who is authenticated as an administrator must be able to:
+1. Manage the categories of services, which includes listing, creating, updating, DELETING, and re-organising them in the category hierarchies.		
+ */			
+			
 			Object testingData[][]= {
+					//==========================================================================//
+					//TEST POSITIVO
+					//
+					//Comprueba que una admin pueda eliminar correctamente una categoría
 					{"admin", super.getEntityId("category2"),null},
+					//==========================================================================//
+					//TEST NEGATIVO
+					//
+					//Comprueba que un actor no identificado NO pueda eliminar una categoría
 					{null, super.getEntityId("category2"),IllegalArgumentException.class}
 			};
 			

@@ -28,6 +28,9 @@ public class ManagerServiceTest extends AbstractTest{
 	
 	@Test
 	public void driverRegistringNewUsers(){
+/*		
+3.1 An actor who is not authenticated must be able to register to the system as a manager.
+*/
 		Date over18 = new Date();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

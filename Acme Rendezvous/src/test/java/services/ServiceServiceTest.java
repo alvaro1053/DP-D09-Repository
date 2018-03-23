@@ -29,6 +29,7 @@ public class ServiceServiceTest extends AbstractTest {
 	@Autowired
 	private CategoryService categoryService;
 				
+//Tests pertenecientes a Acme-Rendezvous 2.0
 	
 	@Test
 	public void diverListServices(){ 
@@ -79,7 +80,7 @@ public class ServiceServiceTest extends AbstractTest {
 		Object testingData[][]= {
 				
 /*
-6.1 An actor who is authenticated as an administrator must be able to cancel a service that he or she finds inappropriate.
+6.1 An actor who is authenticated as an administrator must be able to CANCEL a service that he or she finds inappropriate.
  Such services cannot be re-quested for any rendezvous. They must be flagged appropriately when listed.
 */
 				//==========================================================================//
@@ -125,7 +126,9 @@ public class ServiceServiceTest extends AbstractTest {
 	@Test
 	public void diverEditService(){
 		Object testingData[][]= {
-				//"An actor who is authenticated as a manager must be able to edit a service (5.2)
+/*
+ 5.2 "An actor who is authenticated as a manager must be able to UPDATE a service"
+*/
 				//TEST POSITIVO
 				{"manager1",this.getEntityId("service1"),null},
 				//TEST NEGATIVO Los users no deben poder editar servicios
@@ -161,7 +164,9 @@ public class ServiceServiceTest extends AbstractTest {
 	@Test
 	public void diverDeleteService(){
 		Object testingData[][]= {
-				//"An actor who is authenticated as a manager must be able to edit a service (5.2)
+/*
+ 5.2 "An actor who is authenticated as a manager must be able to DELETE a service"
+*/
 				//El servicio 1 tiene request asociados por lo que no se debe poder borrar
 				//TEST NEGATIVO
 				{"manager1",this.getEntityId("service1"),IllegalArgumentException.class},
@@ -198,6 +203,9 @@ public class ServiceServiceTest extends AbstractTest {
 	@Test
 	public void diverCreateService(){
 		Object testingData[][]= {
+/*
+  5.2 "An actor who is authenticated as a manager must be able to CREATE a service"
+ */
 				//TEST POSITIVO: Los manager pueden crear services 5.2
 				//En este caso la URL está vacía pues es opcional. 
 				{"manager1","name","Description","https://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java",false,

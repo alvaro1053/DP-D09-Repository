@@ -40,7 +40,6 @@ one of the rendezvouses that he or she´s created previously.
 */
 				
 				//==========================================================================//
-
 				//Tests POSITIVOS 
 				//
 				//Se pueden crear announcements si se les asocia un rendezvous y se está logeado como user
@@ -53,8 +52,6 @@ one of the rendezvouses that he or she´s created previously.
 				//
 				//El test consiste en probar que NO se pueda crear un announcement sin estar logeado
 				{null, "rende1", currentDate, "title", "description", IllegalArgumentException.class},
-				//El test consiste en probar que NO se pueda crear un announcement con un usuario inexistente
-				{"user100", "rende1", currentDate, "title", "description", IllegalArgumentException.class},
 				//El test consiste en probar que NO se pueda crear un announcement con un actor sin permiso
 				{"manager1", "rende1", currentDate, "title", "description", IllegalArgumentException.class},
 				//El test consiste en probar que NO se pueda crear un announcement con un title vacío
@@ -63,7 +60,6 @@ one of the rendezvouses that he or she´s created previously.
 				{"user1", "rende1", currentDate, "title", "", javax.validation.ConstraintViolationException.class},
 				//El test consiste en probar que NO se pueda crear un announcement con un rende que no haya creado previamente ese user
 				{"user1", "rende2", currentDate, "title", "description", IllegalArgumentException.class}
-				
 				//==========================================================================//
 				
 		};
@@ -161,11 +157,17 @@ one of the rendezvouses that he or she´s created previously.
 */
 				//==========================================================================//
 				//Tests POSITIVOS 
+				//
+				//Un actor no autentificado SÍ puede listar los announcements asociados a un rendezvous
 				{null, "rende1", null},
+				//Un usuario autentificado SÍ puede listar los announcements asociados a un rendezvous
 				{"user1", "rende1", null},
+				//Un admin autentificado SÍ puede listar los announcements asociados a un rendezvous
 				{"admin", "rende1", null},
 				//==========================================================================//
 				//Tests NEGATIVOS 
+				//
+				//Un manager NO puede listar los annoucements
 				{"manager1", "rende1", IllegalArgumentException.class}
 
 		};
@@ -180,7 +182,7 @@ one of the rendezvouses that he or she´s created previously.
 		
 		try{
 			authenticate(username);
-			announcementService.announcementsChronological(rendeId);//devuelve la lista de announcement dado una id de un rende (ordenado cronológicamente.
+			announcementService.announcementsChronological(rendeId);//devuelve la lista de announcement dado una id de un rende (ordenado cronológicamente).
 			unauthenticate();
 		} catch(Throwable oops){
 			caught = oops.getClass();
@@ -206,7 +208,7 @@ one of the rendezvouses that he or she´s created previously.
 				//==========================================================================//
 				//Tests NEGATIVOS 
 				//Un user que NO tenga hecha/s RSVP no debe poder hacer display de los anuncios asociados a sus reservas (ya que no tiene)
-				{"user1","user4", IllegalArgumentException.class}
+				{"user4","user4", IllegalArgumentException.class}
 		};
 		for (int i = 0; i < testingData.length; i++){
 			templateStreamOfAnnouncements((String) testingData[i][0], super.getEntityId((String) testingData[i][1]), (Class<?>) testingData[i][2]);

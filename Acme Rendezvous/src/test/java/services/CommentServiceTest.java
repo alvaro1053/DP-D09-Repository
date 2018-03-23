@@ -58,8 +58,6 @@ that he or she has RSVPd.
 				{"user2", "rende3", currentDate, "text", picture, IllegalArgumentException.class},
 				//El test consiste en probar que NO se pueda crear un comment sin estar logeado
 				{null, "rende1", currentDate, "text", picture, IllegalArgumentException.class},
-				//El test consiste en probar que NO se pueda crear un comment con un usuario inexistente
-				{"user100", "rende1", currentDate, "text", picture, IllegalArgumentException.class},
 				//El test consiste en probar que NO se pueda crear un comment con un actor sin permiso
 				{"manager1", "rende1", currentDate, "text", picture, IllegalArgumentException.class},
 				//El test consiste en probar que NO se pueda crear un comment con un text vacío
