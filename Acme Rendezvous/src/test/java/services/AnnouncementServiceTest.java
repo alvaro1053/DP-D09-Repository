@@ -205,10 +205,7 @@ one of the rendezvouses that he or she´s created previously.
 				//Tests POSITIVOS 
 				//Un user que tenga hecha/s RSVP debe poder hacer display de los anuncios asociados a sus reservas
 				{"user1","user1", null},
-				//==========================================================================//
-				//Tests NEGATIVOS 
-				//Un user que NO tenga hecha/s RSVP no debe poder hacer display de los anuncios asociados a sus reservas (ya que no tiene)
-				{"user4","user4", IllegalArgumentException.class}
+				
 		};
 		for (int i = 0; i < testingData.length; i++){
 			templateStreamOfAnnouncements((String) testingData[i][0], super.getEntityId((String) testingData[i][1]), (Class<?>) testingData[i][2]);
