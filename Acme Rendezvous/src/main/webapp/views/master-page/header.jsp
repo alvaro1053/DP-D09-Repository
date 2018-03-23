@@ -15,7 +15,7 @@
 
 
 <div>
-	<a href="/"><img src="${bannerWelcome}" alt="Sample Co., Inc." /></a>
+	<a href="/Acme-Rendezvous"><img src="${bannerWelcome}" alt="Sample Co., Inc." /></a>
 </div>
 
 <div>
