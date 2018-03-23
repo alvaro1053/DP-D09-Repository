@@ -401,9 +401,12 @@ public class RendeServiceTest extends AbstractTest {
 	public void driverRSVP(){
 		Object testing[][]= {
 				//Casos de uso Acme-Rendezvous 5.4
+				//El user 1 puede reservar el rende 2 ya que no es de su propiedad y tampoco ha hecho rsvp
+				//Anteriormente
+				//TEST POSITIVO
+				{"user1",this.getEntityId("rende2"),null,false},
 				//User1 es el propietario del rende1 por lo que no puede hacer RSVP ya que está obligado a asistir a ese Rende
 				//Por lo tanto es como si ya hubiera hecho RSVP
-				
 				{"user1",this.getEntityId("rende1"),IllegalArgumentException.class,false},
 				//Al igual que no puede hacer RSVP, no puede cancelarlo
 				{"user1",this.getEntityId("rende1"),IllegalArgumentException.class,true}, //Cancelar rsvp de un rende propio

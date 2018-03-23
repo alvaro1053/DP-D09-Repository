@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 
 import domain.User;
@@ -300,4 +301,38 @@ public class UserServiceTest extends AbstractTest {
 		
 		return actorForm;
 	}
+	
+	@Test
+	public void driverDisplayUser(){
+		Object testingData[][]= {
+				//Use case 15.3
+				//POSITIVO
+				{"user1",this.getEntityId("user2"),null},
+				{"user1",this.getEntityId("user88"),IllegalArgumentException.class}
+		};
+		
+		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
+			templateDisplayRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+			this.rollbackTransaction();
+		}
+	}
+
+	
+	protected void templateDisplayRende(String username, Integer rendeId, Class<?> expected){
+		Class<?> caught;
+		caught = null;
+		try{
+			authenticate(username);
+			User user = userService.findOne(rendeId);
+			userService.flush();
+			Assert.notNull(user);
+			unauthenticate();
+		} catch(Throwable oops){
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
+	
 }
