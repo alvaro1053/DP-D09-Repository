@@ -299,21 +299,25 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverDisplayUser(){
 		Object testingData[][]= {
-				//Use case 15.3
-				//POSITIVO
+/*
+ * 4.3 An actor who is not authenticated must be able to: List the rendezvouses in the system and NAVIGATE to the profiles
+ *  of the correspond-ing creators and attendants.
+ */
+				//==========================================================================//
+				//Test POSITIVO 
+				//
 				{"user1",this.getEntityId("user2"),null},
-				{"user1",this.getEntityId("user88"),IllegalArgumentException.class}
 		};
 		
 		for (int i = 0; i < testingData.length;i++){
 			this.startTransaction();
-			templateDisplayRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+			templateDisplayUser((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
 			this.rollbackTransaction();
 		}
 	}
 
 	
-	protected void templateDisplayRende(String username, Integer rendeId, Class<?> expected){
+	protected void templateDisplayUser(String username, Integer rendeId, Class<?> expected){
 		Class<?> caught;
 		caught = null;
 		try{
