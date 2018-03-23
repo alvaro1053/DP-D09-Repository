@@ -271,48 +271,6 @@ public class UserServiceTest extends AbstractTest {
 		
 	}
 	
-	@Test
-	  public void driverDisplayUser(){
-/*
- * 4.3. "An actor who is not authenticated must be able to: 
- * List the rendezvouses in the system and NAVIGATE to the PROFILES	 of the correspond-ing creators and attendants."
- */
-	    Object testingData[][]= {
-	    	//==========================================================================//
-			//Test POSITIVO
-			//
-	    	//Comprueba que efectivamente puede hacer display de un user sin estar autentificado
-	        {"user1",this.getEntityId("user2"),null}
-	        
-	    };
-	    
-	    for (int i = 0; i < testingData.length;i++){
-	      this.startTransaction();
-	      templateDisplayRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
-	      this.rollbackTransaction();
-	    }
-	  }
-
-	  
-	  protected void templateDisplayRende(String username, Integer rendeId, Class<?> expected){
-	    Class<?> caught;
-	    caught = null;
-	    try{
-	      authenticate(username);
-	      User user = userService.findOne(rendeId);
-	      userService.flush();
-	      Assert.notNull(user);
-	      unauthenticate();
-	    } catch(Throwable oops){
-	      caught = oops.getClass();
-	    }
-	    checkExceptions(expected, caught);
-	  }
-	
-	
-	
-	
-	
 	
 	//Auxiliary method for registring a new user to the system
 	
@@ -337,4 +295,38 @@ public class UserServiceTest extends AbstractTest {
 		
 		return actorForm;
 	}
+	
+	@Test
+	public void driverDisplayUser(){
+		Object testingData[][]= {
+				//Use case 15.3
+				//POSITIVO
+				{"user1",this.getEntityId("user2"),null},
+				{"user1",this.getEntityId("user88"),IllegalArgumentException.class}
+		};
+		
+		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
+			templateDisplayRende((String) testingData[i][0], (Integer) testingData[i][1],(Class<?>) testingData[i][2]); 
+			this.rollbackTransaction();
+		}
+	}
+
+	
+	protected void templateDisplayRende(String username, Integer rendeId, Class<?> expected){
+		Class<?> caught;
+		caught = null;
+		try{
+			authenticate(username);
+			User user = userService.findOne(rendeId);
+			userService.flush();
+			Assert.notNull(user);
+			unauthenticate();
+		} catch(Throwable oops){
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
+	
 }
