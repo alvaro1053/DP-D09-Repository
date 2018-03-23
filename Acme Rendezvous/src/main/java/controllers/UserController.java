@@ -39,7 +39,7 @@ public class UserController extends AbstractController {
 	//list
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-		final String uri = "";
+		String uri = "";
 		ModelAndView result;
 		Collection<User> users;
 
