@@ -53,7 +53,7 @@ public class RendeManagerController extends AbstractController {
 		rende = this.rendeService.findOne(rendeId);
 		if ((años < 18) && rende.getAdultOnly() == true)
 			permisos = false;
-
+		
 		result = new ModelAndView("rende/display");
 		result.addObject("rende", rende);
 		result.addObject("principal", principal);

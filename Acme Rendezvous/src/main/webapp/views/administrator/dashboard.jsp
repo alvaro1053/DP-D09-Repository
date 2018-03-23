@@ -15,8 +15,9 @@
 
 <security:authorize access="hasRole('ADMIN')">
 	
-	<h3><spring:message code="administrator.statistics" /></h3>
-	
+	<h1 id="h1Statistics"><spring:message code="administrator.statistics" /></h1>
+	<br/>
+	<h2 id="hDeCategory">Acme-Rendezvous 1.0</h2>
 	<!-- 1 -->
 	<table class="displayStyle">
 
@@ -193,6 +194,125 @@
 			<td><spring:message code="administrator.averageAndDesviationOfRepliesPerQuestion" /></td>
 			<td>${averageOfRepliesPerQuestion }</td>
 			<td>${desviationOfRepliesPerQuestion }</td>
+		</tr>
+	</table>
+	
+	
+	<br/>
+	<!-- Acme-Rendezvous 2.0 -->
+	<h2 id="hDeCategory">Acme-Rendezvous 2.0</h2>
+		<!-- 1 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.topSellingServices" /></td>
+			<td>${topSellingServices }</td>
+		</tr>
+	</table>
+	
+		<!-- 2 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.ManagersWithMoreServicesThanTheAverage" /></td>
+			<td>${ManagersWithMoreServicesThanTheAverage }</td>
+		</tr>
+	</table>
+	
+		<!-- 3 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.AverageCategoriesPerRendezvous" /></td>
+			<td>${AverageCategoriesPerRendezvous }</td>
+		</tr>
+	</table>
+	
+		<!-- 4 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.average" /></th>
+			<th><spring:message code="administrator.value.Min" /></th>
+			<th><spring:message code="administrator.value.Max" /></th>
+			<th><spring:message code="administrator.deviation" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.StandardDesviationServicesRequestedPerRende" /></td>
+			<td>${AverageServicesRequestedPerRende }</td>
+			<td>${MinServicesRequestedPerRende }</td>
+			<td>${MaxServicesRequestedPerRende }</td>
+			<td>${StandardDesviationServicesRequestedPerRende }</td>
+		</tr>
+	</table>
+	
+		<!-- 5 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.top5SellingServices" /></td>
+			<td>${top5SellingServices }</td>
+		</tr>
+	</table>
+	
+	<!-- 6 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.ManagersWithMoreServicesCancelled" /></td>
+			
+			<jstl:forEach items="${ManagersWithMoreServicesCancelled}" var="manager">  
+				<td><jstl:out value ="${manager.name}" /></td>
+			</jstl:forEach>
+			
+		</tr>
+	</table>
+	
+	<!-- 7 -->
+	<table class="displayStyle">
+		
+		<tr>
+			<th><spring:message code="administrator.query" /></th>
+			<th><spring:message code="administrator.value" /></th>
+		
+		</tr>
+		
+		<tr>
+			<td><spring:message code="administrator.AverageRatioOfServicesInEachCategory" /></td>
+			<td>${AverageRatioOfServicesInEachCategory }</td>
 		</tr>
 	</table>
 	

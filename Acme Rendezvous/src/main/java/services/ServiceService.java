@@ -81,6 +81,7 @@ public class ServiceService {
 		Assert.notNull(principal);
 
 		Assert.isTrue(this.findByManagerId(principal.getId()).contains(service));
+		Assert.isTrue(service.getRequest().size() == 0);
 		service.setIsDeleted(true);
 
 		this.serviceRepository.delete(service);
@@ -107,6 +108,7 @@ public class ServiceService {
 		domain.Service result;
 
 		result = this.serviceRepository.findOne(ServiceId);
+		Assert.notNull(result);
 
 		return result;
 
@@ -170,6 +172,7 @@ public class ServiceService {
 		
 		manager = this.managerService.findByPrincipal();
 		Assert.notNull(manager);
+		service.setManager(manager);
 		
 		result = this.serviceRepository.save(service);
 		
@@ -192,6 +195,11 @@ public class ServiceService {
 		result.getRequest().removeAll(service.getRequest());
 		
 		return result;
+	}
+
+	public void flush() {
+	this.serviceRepository.flush();
+		
 	}
 
 

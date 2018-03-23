@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import repositories.AdminRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Admin;
+import domain.Manager;
 import domain.Rende;
 
 @Service
@@ -22,6 +25,9 @@ public class AdminService {
 	// Managed Repository
 	@Autowired
 	private AdminRepository	adminRepository;
+	
+	@Autowired
+	private RendeService	rendeService;
 
 
 	// Supporting services
@@ -263,5 +269,119 @@ public class AdminService {
 		res = this.adminRepository.desviationOfRepliesPerQuestion();
 		return res;
 	}
+	
+	
+	//Acme 2.0
+	
+	public Collection<domain.Service> topSellingServices(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Collection<domain.Service> res = this.adminRepository.topSellingServices();
+		return res;
+		
+	}
+	
+	public Collection<Manager> ManagersWithMoreServicesThanTheAverage(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Collection<domain.Manager> res = this.adminRepository.ManagersWithMoreServicesThanTheAverage();
+		return res;
+		
+	}
+	
+	
+	public Collection<Rende> top5SellingServices(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		List<domain.Rende> res = new ArrayList<Rende>(this.adminRepository.top5SellingServices());
+		List<Rende> top = res.subList(0, 4);
+		return top;
+		
+	}
 
+	public Double AverageCategoriesPerRendezvous(){
+		Double sum = 0.0;
+		Double res = 0.0;
+		Collection<Long> categoriesPerRende = this.adminRepository.categoriesPerRende();
+		for (Long categories: categoriesPerRende){
+			sum += categories * 1.0;
+		}
+		res = sum/this.rendeService.findAll().size();
+		return res;
+	}
+	
+	public Double AverageServicesRequestedPerRende(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.AverageServicesRequestedPerRende();
+		return res;
+	}
+	
+	public Double MaxServicesRequestedPerRende(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.MaxServicesRequestedPerRende();
+		return res;
+	}
+	
+	public Double MinServicesRequestedPerRende(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.MinServicesRequestedPerRende();
+		return res;
+	}
+	
+	public Double StandardDesviationServicesRequestedPerRende(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.StandardDesviationServicesRequestedPerRende();
+		return res;
+	}
+	
+	public Collection<Manager> ManagersWithMoreServicesCancelled(){
+		 	Admin principal;
+		    principal = this.findByPrincipal();
+		    Assert.notNull(principal);
+		    final Collection<Manager> res = new ArrayList<Manager>();
+		    final List<Manager> listaDeManagersOrdenada = new ArrayList<Manager>(this.adminRepository.ManagersWithMoreServicesCancelled());
+		    Manager top =listaDeManagersOrdenada.get(0);
+		    res.add(top);  
+		    Double maxServiciosEliminados = this.adminRepository.numberOfDeletedServices(top.getId());
+		    
+		    for (int i = 1; i < listaDeManagersOrdenada.size(); i++){
+		      Manager aComprobar = listaDeManagersOrdenada.get(i);
+		      if(this.adminRepository.numberOfDeletedServices(aComprobar.getId()) < maxServiciosEliminados)
+		        break;
+		      else{
+		        res.add(aComprobar);
+		      }
+		    }
+		    return res;
+	}
+	
+	public Double AverageRatioOfServicesInEachCategory(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.AverageRatioOfServicesInEachCategory();
+		return res;
+	}
+	
+	public Double AverageOfRatioOfServicesPerCategory(){
+		Admin principal;
+		principal = this.findByPrincipal();
+		Assert.notNull(principal);
+		Double res = this.adminRepository.AverageOfRatioOfServicesPerCategory();
+		return res;
+		
+	}
+	
+	
 }

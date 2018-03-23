@@ -88,7 +88,8 @@ public class CategoryAdminController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Category category, final BindingResult binding) {
 		ModelAndView result;
-
+		Boolean permiso;
+		permiso = !(this.categoryService.findRootCategory().equals(category));
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(category);
 		else
@@ -99,6 +100,7 @@ public class CategoryAdminController extends AbstractController {
 				result = this.createEditModelAndView(category, "category.commit.error");
 			}
 
+		result.addObject("permiso",permiso);
 		return result;
 	}
 

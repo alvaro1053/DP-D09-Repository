@@ -20,6 +20,7 @@ import domain.Admin;
 import domain.Announcement;
 
 import domain.Comment;
+import domain.Manager;
 import domain.Question;
 import domain.Rende;
 import domain.ReplyComment;
@@ -83,12 +84,25 @@ public class RendeService {
 
 		return rendeForm;
 	}
+	
+	public Rende createRende() {
+		User principal;
+		Rende rende;
+
+		principal = this.userService.findByPrincipal();
+		Assert.notNull(principal);
+		rende = new Rende();
+		rende.setIsDraft(true);
+
+		return rende;
+	}
 
 	//  An actor who is not authenticated must be able to browse the list of Rendes and display them
 	public Collection<Rende> findAll() {
 		Actor principal = this.actorService.findByPrincipal();
 		Assert.notNull(principal);
 		final Collection<Rende> result = this.rendeRepository.findAll();
+		Assert.isTrue(!(principal instanceof Manager));
 		Assert.notNull(result);
 		if (principal instanceof User){
 			final LocalDate now = new LocalDate();
@@ -187,7 +201,15 @@ public class RendeService {
 		Assert.isTrue(principal.getRendes().contains(rendeToSave));
 		}
 		
+		final LocalDate now = new LocalDate();
+		final LocalDate nacimiento = new LocalDate(principal.getDateBirth());
+		final int años = Years.yearsBetween(nacimiento, now).getYears();
+		
+		if(años<18){
+		Assert.isTrue(rendeToSave.getAdultOnly() == false);
+		}
 		result = this.rendeRepository.save(rendeToSave);
+	
 
 		if (rendeToSave.getId() == 0) {
 			final Collection<User> attendants = new ArrayList<User>();
@@ -255,15 +277,19 @@ public class RendeService {
 	}
 
 	public Collection<Rende> selectNotAdultRendes() {
+		Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(!(principal instanceof Manager));
 		Collection<Rende> result;
 		result = this.rendeRepository.selectNotAdultRendes();
 		return result;
 
 	}
 
+
 	public User rsvp(final Rende rende, final User user) {
 		User result;
-
+		User principal = this.userService.findByPrincipal();
+		Assert.isTrue(!principal.getRendes().contains(rende)&& !principal.getrSVPS().contains(rende));
 		if (!rende.getAttendants().contains(user)) {
 			rende.getAttendants().add(user);
 			user.getrSVPS().add(rende);
@@ -274,7 +300,9 @@ public class RendeService {
 
 	public User cancelRsvp(final Rende rende, final User user) {
 		User result;
-
+		User principal = this.userService.findByPrincipal();
+		Assert.isTrue(!principal.getRendes().contains(rende)&& principal.getrSVPS().contains(rende));
+		
 		if (rende.getAttendants().contains(user)) {
 			rende.getAttendants().remove(user);
 			user.getrSVPS().remove(rende);
@@ -287,6 +315,7 @@ public class RendeService {
 		result = user;
 		return result;
 	}
+	
 	
 	
 	public Collection<Rende> findRendezvousByCategory(Integer categoryId){

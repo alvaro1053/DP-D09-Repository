@@ -17,6 +17,7 @@ import repositories.ManagerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 import domain.Manager;
 import forms.ActorForm;
 
@@ -29,6 +30,8 @@ public class ManagerService {
 	private ManagerRepository	ManagerRepository;
 	@Autowired
 	private Validator		validator;
+	@Autowired
+	private ActorService		actorService;
 
 
 	// Supporting services
@@ -52,15 +55,17 @@ public class ManagerService {
 	public Manager save(final Manager Manager) {
 		Manager saved;
 		Assert.notNull(Manager);
-
+		Actor principal = null;
+		try{
+		principal = this.actorService.findByPrincipal();
+		}catch(Throwable oops){
+			
+		}
+		Assert.isNull(principal);
+		
 		if (Manager.getId() == 0) {
 			final Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 			Manager.getUserAccount().setPassword(passwordEncoder.encodePassword(Manager.getUserAccount().getPassword(), null));
-		} else {
-			Manager principal;
-			principal = this.findByPrincipal();
-			Assert.notNull(principal);
-
 		}
 
 		saved = this.ManagerRepository.save(Manager);
@@ -144,5 +149,10 @@ public class ManagerService {
 		res = String.valueOf(a) + String.valueOf(b) +"-"+ String.valueOf(c) + String.valueOf(d)+"-"+ String.valueOf(e)+ String.valueOf(f)+ String.valueOf(g);
 		
 		return res;
+	}
+
+	public void flush() {
+		this.ManagerRepository.flush();
+		
 	}
 }

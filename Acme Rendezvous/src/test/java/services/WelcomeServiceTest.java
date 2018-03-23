@@ -1,5 +1,7 @@
 package services;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,20 +53,21 @@ public class WelcomeServiceTest extends AbstractTest {
 				//y guardar esa misma modificiación de la página 
 				//de inicio
 				//==================================================
-				{"admin", null, null},
+				{"admin", null, ConstraintViolationException.class},
 				//==================================================
 				//TEST 3 NEGATIVO
 				//
 				//Un usuario registrado que no está registrado 
 				//como admin no puede modificar la página de inicio
-				//
 				//y guardar esa misma modificiación de la página 
 				//de inicio
 				//==================================================
 				{"user1", "prueba unitaria", IllegalArgumentException.class}
 		};
 		for (int i = 0; i < testingData.length;i++){
+			super.startTransaction();
 			templateFindByPrincipal((String) testingData[i][0], (String) testingData[i][1] ,(Class<?>) testingData[i][2]); 
+			super.rollbackTransaction();
 		}
 		
 	}

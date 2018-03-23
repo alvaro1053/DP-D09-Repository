@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+
+	
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	
+	<!-- Admins -->
+	
+	<bean class="domain.Admin" id="admin1">
+	<property name="name" value="Manuel" />
+	<property name="surname" value="Bartual Moreno" />
+	<property name="email" value="admintodopoderoso@email.com"/>
+	<property name="phone" value=""/>	
+	<property name="address" value=""/>
+	<property name="dateBirth" value="1957/05/22"/>
+	
+	<property name="userAccount" ref="userAccount1"/>
+	
+	</bean>
+	
+	
+
+	
+	
+	<bean class="domain.WelcomePage" id="welcomePage">
+	<property name="name" value="Acme Rendezvous" />
+	<property name="englishWelcome" value="Your place to organise your adventure meetups!" />
+	<property name="spanishWelcome" value="Tu sitio para organizar quedadas de aventura" />
+	<property name="banner" value="https://i.imgur.com/mz4KOzY.png"/>
+	
+	</bean>
+	
+	
+
+	
+		
+	
+
+
+</beans>

@@ -29,7 +29,7 @@
 	<acme:select items="${categories}" itemLabel="name" code="service.category" path="category"/>
 		
 	<acme:submit name="save" code="service.save"/>
-	<jstl:if test="${serviceForm.id != 0}">	
+	<jstl:if test="${serviceForm.id != 0 && not empty (service.request)}">	
 		<spring:message code = "service.confirm" var = "confirmService"/>
 		<acme:submit name = "delete" code="service.delete" onclick="return confirm('${confirmService}')" />
 	</jstl:if>

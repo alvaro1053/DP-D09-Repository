@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 
 @Entity
@@ -22,7 +22,7 @@ public class Request extends DomainEntity {
 	private Service 					service;
 	
 	
-	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getComment() {
 		return comment;
 	}

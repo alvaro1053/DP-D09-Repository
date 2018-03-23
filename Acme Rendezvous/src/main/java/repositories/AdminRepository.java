@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Admin;
+import domain.Manager;
 import domain.Rende;
+import domain.Service;
 
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
@@ -70,4 +72,49 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	@Query("select sqrt(sum(c.repliesComments.size*c.repliesComments.size)/count(c.repliesComments.size)-(avg(c.repliesComments.size)*avg(c.repliesComments.size))) from Comment c")
 	Double desviationOfRepliesPerComment();
 
+	//Acme-Rendezvous 2.0
+	
+	@Query("select s.name from Service s where s.request.size = (select max(s2.request.size) from Service s2)")
+	Collection<Service> topSellingServices();
+	
+	@Query("select m.name from Manager m where ( m.services.size > 1 * (select avg(m2.services.size) from Manager m2))")
+	Collection<Manager> ManagersWithMoreServicesThanTheAverage();
+	
+	@Query("select s.manager from Service s where s.isDeleted=true group by s.manager order by count(s) DESC")
+	Collection<Manager> ManagersWithMoreServicesCancelled();
+	
+	@Query("select count(s) from Manager m join m.services s where s.isDeleted = true and m.id = ?") //Query auxiliar para la anterior
+	Double numberOfDeletedServices(int managerId);
+	
+	@Query("select avg((select 1.0*count(s) from Service s where s.category = c)/(select count(s) from Service s)) from Category c")
+	Double AverageRatioOfServicesInEachCategory();
+	
+	//No va bien
+	@Query("select avg(re.service.category) from Rende r join r.request re") 
+	Double AverageCategoriesPerRendezvous();
+	
+	@Query("select avg(r.request.size) from Rende r")
+	Double AverageServicesRequestedPerRende();
+	
+	@Query("select max(r.request.size) from Rende r")
+	Double MaxServicesRequestedPerRende();
+	
+	@Query("select min(r.request.size) from Rende r")
+	Double MinServicesRequestedPerRende();
+	
+	@Query("select sqrt(sum(r.request.size* r.request.size)/count(r.request.size)-(avg(r.request.size)*avg(r.request.size))) from Rende r")
+	Double StandardDesviationServicesRequestedPerRende();
+	
+	@Query("select s.name from Service s order by s.request.size desc")
+	Collection<Rende> top5SellingServices(); //Limitar en servicio a 5
+	
+	
+	@Query("select avg((select 1.0*count(s) from Service s where s.category = c)/(select count(s) from Service s)) from Category c")
+	Double AverageOfRatioOfServicesPerCategory();
+	
+	@Query("select s.manager from Service s where s.isDeleted=true group by s.manager order by count(s) DESC")
+	Collection<Manager> managersMoreServicesCancelled();
+	
+	@Query ("select count(s.category) from Rende r join r.request req join req.service s group by r")
+	Collection<Long> categoriesPerRende();
 }

@@ -47,7 +47,7 @@ public class QuestionServiceTest extends AbstractTest {
 				//rendezvous que él no haya creado.
 				//
 				//====================================================================
-				{"user1", this.getEntityId("question2"), javax.validation.ConstraintViolationException.class},
+				{"user1", this.getEntityId("question2"), IllegalArgumentException.class},
 				//===================================================================
 				//TEST 3 NEGATIVO
 				//
@@ -55,7 +55,7 @@ public class QuestionServiceTest extends AbstractTest {
 				//rendezvous.
 				//
 				//====================================================================
-				{"manager1", this.getEntityId("question1"), javax.validation.ConstraintViolationException.class}
+				{"manager1", this.getEntityId("question1"), IllegalArgumentException.class}
 		};
 			
 		for (int i = 0; i < testingData.length;i++){

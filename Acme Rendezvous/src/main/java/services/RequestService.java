@@ -64,6 +64,12 @@ public class RequestService {
 		principal = this.userService.findByPrincipal();
 
 		Assert.notNull(principal);
+		
+		//me aseguro de que el usuario que hace una request de un servicio a una rende lo hace sobre una que haya creado.
+		Assert.isTrue(principal.getRendes().contains(request.getRende()));
+		
+		//me aseguro de que si se hace request de un servicio no esté cancelado.
+		Assert.isTrue(request.getService().getIsDeleted() == false);
 
 		result = this.requestRepository.save(request);
 		
@@ -154,4 +160,8 @@ public class RequestService {
 		return result;
 	}
 	
+	public void flush() {
+	this.requestRepository.flush();
+		
+	}
 }

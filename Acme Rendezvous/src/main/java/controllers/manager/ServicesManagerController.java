@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.ActorService;
 import services.CategoryService;
@@ -81,13 +82,17 @@ public class ServicesManagerController {
 	}
 
 	@RequestMapping(value="/edit", method= RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int serviceId){
+	public ModelAndView edit(@RequestParam final int serviceId, RedirectAttributes redir){
 		ModelAndView result;
 		Service service;
-		
+		try{
 		service = this.serviceService.findOne(serviceId);
-		
 		result = this.createEditModelAndView(service);
+		} catch (Throwable oops){
+		result = new ModelAndView("redirect:/service/list.do");
+		redir.addFlashAttribute("message", "service.permision");
+		
+		}
 		
 		return result;
 		

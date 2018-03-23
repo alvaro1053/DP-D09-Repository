@@ -121,7 +121,9 @@ public class ReplyQuestionServiceTest extends AbstractTest {
 		};
 			
 		for (int i = 0; i < testingData.length;i++){
+			this.startTransaction();
 			templateReplyingToQuestion((String) testingData[i][0],(int) testingData[i][1],(int) testingData[i][2],(int) testingData[i][3] ,(Class<?>) testingData[i][4]); 
+			this.rollbackTransaction();
 		}
 	}
 	
