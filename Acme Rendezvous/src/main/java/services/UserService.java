@@ -18,6 +18,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 import domain.Comment;
+import domain.Manager;
 import domain.Rende;
 import domain.ReplyComment;
 import domain.ReplyQuestion;
@@ -89,6 +90,7 @@ public class UserService {
 	}
 
 	public Collection<User> findAll() {
+		Assert.isTrue(!(this.actorService.findByPrincipal() instanceof Manager));
 		Collection<User> result;
 		result = this.UserRepository.findAll();
 		Assert.notNull(result);

@@ -61,7 +61,7 @@
 		<security:intercept-url pattern="/rende/admin/**" access="hasRole('ADMIN')" />
 
 		<!-- Acme Rendezvous user -->
-		<security:intercept-url pattern="/user/list.do" access="permitAll" /> 
+		<security:intercept-url pattern="/user/list.do" access="hasAnyRole('ADMIN', 'USER') || isAnonymous()" /> 
 		<security:intercept-url pattern="/user/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/register.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/displayAttendant.do" access="permitAll" /> 
