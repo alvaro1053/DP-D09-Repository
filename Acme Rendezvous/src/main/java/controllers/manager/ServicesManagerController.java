@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -85,8 +86,10 @@ public class ServicesManagerController {
 	public ModelAndView edit(@RequestParam final int serviceId, RedirectAttributes redir){
 		ModelAndView result;
 		Service service;
+		Manager principal = this.managerService.findByPrincipal();
 		try{
 		service = this.serviceService.findOne(serviceId);
+		Assert.isTrue(service.getManager().equals(principal));
 		result = this.createEditModelAndView(service);
 		} catch (Throwable oops){
 		result = new ModelAndView("redirect:/service/list.do");
